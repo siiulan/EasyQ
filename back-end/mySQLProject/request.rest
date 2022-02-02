@@ -1,0 +1,31 @@
+POST http://localhost:3000/API/user/registration
+Content-Type: application/json
+
+{
+    "username": "siiulan79@gmail.com",
+	"password": "123456",
+	"invitation_code": "",
+	"name": "Test"
+}
+
+
+
+###
+
+POST http://localhost:3000/API/user/login
+Content-Type: application/json
+
+{
+    "username": "r63gao@uwaterloo.ca",
+	"password": "admin"
+}
+
+###
+
+POST http://localhost:3000/API/user/login
+Content-Type: application/json
+
+{
+    "username": "siiulan79@gmail.com",
+	"password": "123456"
+}
