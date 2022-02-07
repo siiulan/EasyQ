@@ -29,7 +29,8 @@ async function dbFind(db, dbName, attribute, value) {
 	let users;
 	try{
 		const users = await db.promise().query(`SELECT EMAIL_ADRESS FROM ${dbName} WHERE ${attribute} = ?`, [value]);
-		console.log(users)
+		console.log('1111111')
+		console.log(users[0])
 		if (users) {
 			return users;
 		} else {
@@ -55,7 +56,6 @@ app.post('/API/user/registration', function(req,res){
     var password = req.body.password;
 	var invicode = req.body.invitation_code;
 	var name = req.body.name;
-	console.log('reqeust ' + req.body)
 
 	// variable initialization
 	var invitationCodeMatched = false;
@@ -139,11 +139,11 @@ app.post('/API/user/registration', function(req,res){
 		console.log(rows);
 	});
 
-	con.end((err) => {
-		// The connection is terminated gracefully
-		// Ensures all remaining queries are executed
-		// Then sends a quit packet to the MySQL server.
-	});
+	// con.end((err) => {
+	// 	// The connection is terminated gracefully
+	// 	// Ensures all remaining queries are executed
+	// 	// Then sends a quit packet to the MySQL server.
+	// });
 	//send json file to the front end
 	// 'use strict';
 	// const fs = require('fs');

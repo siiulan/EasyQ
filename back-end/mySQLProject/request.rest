@@ -1,18 +1,19 @@
-POST http://localhost:3000/API/user/registration
+POST http://localhost:8080/api/user/registration
 Content-Type: application/json
 
 {
-    "username": "siiulan79@gmail.com",
-	"password": "123456",
-	"invitation_code": "",
-	"name": "Test"
+    "username" : "test@gmail.com",
+	"password" : "123456",
+	"invitation_code" : "",
+	"firstname" : "Test",
+	"lastname" : "Test"
 }
 
 
 
 ###
 
-POST http://localhost:3000/API/user/login
+POST http://localhost:8080/api/user/login
 Content-Type: application/json
 
 {
@@ -22,10 +23,10 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/API/user/login
+POST http://localhost:8080/api/user/login
 Content-Type: application/json
 
 {
-    "username": "siiulan79@gmail.com",
-	"password": "123456"
+    "username" : "test@gmail.com",
+	"password" : "123456"
 }
