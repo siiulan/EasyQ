@@ -3,12 +3,11 @@
    <div class="bg">
       <div class="container py-5 h-100">
         <div class="row d-flex align-items-center justify-content-center h-100">
-             <h2>Sign up here :)</h2>
+          <h2 class="display-5"> Sign up </h2>
           <div class="col-md-8 col-lg-7 col-xl-6">
         <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image"> -->
          <img :src="LoginImage" class="img-fluid" alt="Phone image" width="1500" height="1500">
-          </div>
-          
+          </div>         
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
             <form @submit.prevent=" handleSignup">
               <!-- Email input -->

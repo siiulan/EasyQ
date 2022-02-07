@@ -27,6 +27,11 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: () => import('../views/Signup.vue')
+    },
+    {
+      path: '/resetpwd',
+      name: 'resetpwd',
+      component: () => import('../views/resetpwd.vue')
     }
   ]
 })
