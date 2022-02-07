@@ -2,14 +2,11 @@ POST http://localhost:8080/api/user/registration
 Content-Type: application/json
 
 {
-    "username" : "test@gmail.com",
+    "username" : "siiulan79@gmail.com",
 	"password" : "123456",
-	"invitation_code" : "",
 	"firstname" : "Test",
 	"lastname" : "Test"
 }
-
-
 
 ###
 
@@ -27,6 +24,26 @@ POST http://localhost:8080/api/user/login
 Content-Type: application/json
 
 {
-    "username" : "test@gmail.com",
+    "username" : "siiulan79@gmail.com",
 	"password" : "123456"
+}
+
+###
+
+POST http://localhost:8080/api/user/reset/passwordreset
+Content-Type: application/json
+
+{
+    "username" : "siiulan79@gmail.com"
+}
+
+###
+
+POST http://localhost:8080/api/user/reset/request/0
+Content-Type: application/json
+
+{
+    "username" : "siiulan79@gmail.com",
+	"newPassword" : "newPassword",
+	"verifyToken" : "0"
 }
