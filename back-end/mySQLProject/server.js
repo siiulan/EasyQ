@@ -2,8 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 var corsOptions = {
-  origin: "http://localhost:8080"
+  origin: "http://localhost:8081"
 };
+// simple route
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to EasyQ" });
+});
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
 app.use(express.json());
