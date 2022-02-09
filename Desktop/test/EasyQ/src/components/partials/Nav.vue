@@ -25,8 +25,8 @@
         <div class="navbar-item">
           <div class="buttons">
             <a class="button is-dark">
-              <!-- <router-link to = "/signup" class = "navbar-item">Sign In</router-link> -->
-              <strong>Sign In</strong>
+              <router-link to = "/signin" class = "navbar-item">Sign In</router-link>
+              <!-- <strong>Sign In</strong> -->
             </a>
           </div>
         </div>
