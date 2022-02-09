@@ -31,7 +31,7 @@ export default new Router({
     {
       path: '/resetpwd',
       name: 'resetpwd',
-      component: () => import('../views/resetpwd.vue')
+      component: () => import('../views/ResetPwd.vue')
     }
   ]
 })

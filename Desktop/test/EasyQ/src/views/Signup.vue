@@ -9,6 +9,9 @@
          <img :src="LoginImage" class="img-fluid" alt="Phone image" width="1500" height="1500">
           </div>         
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+            <div class="alert alert-danger" v-show="regerror === true">
+             <strong>Sign up Failure account already exists </strong>
+            </div>
             <form @submit.prevent=" handleSignup">
               <!-- Email input -->
               <div class="form-outline mb-4">
@@ -62,6 +65,7 @@
 
 <script>
 // import LoginImage from '/Users/xushuoni/Desktop/login-image copy.png'
+import axios from 'axios'
     export default {
         data() {
             return {
@@ -74,7 +78,7 @@
                 },
                 pwdMatched : true,
                 LoginImage : "https://www.ucl.ac.uk/students/sites/students/files/new_students_resized.png",
-                regerror:true,
+                regerror:null,
                 typechecked : true
             }
         },
@@ -92,24 +96,31 @@
                     return false;
                 }
             },
-   /*async*/  handleSignup() {
+   async    handleSignup() {
                var wit = this.typecheck();
                this.typechecked = wit;
-               console.log(this.typechecked)
-              /*
+               console.log(this.typechecked);
               try{
-              const response = await axios.post('api/register',{
-                firstName:this.firstName,
-                lastName:this.lastName,
+              const response = await axios.post('http://52.55.84.132/api/user//registration',{
                 username:this.input.email,
-                password:this.input.pwd
+                password:this.input.pwd,
+                firstname:this.input.firstName,
+                lastname:this.input.lastName,
                 },{headers: {'Content-type': 'application/json',}});
-              //this.$router.push('login');
+                console.log(response);
+              if(response.data.isRegistered === true){
+                this.regerror = true;
+                this.email = ''
+              }
+              else {
+                  this.regerror = false;
+                  //this.$router.push('login');
+              }
               }
               catch{
                 this.regerror = true
                 this.email = ''
-              }*/
+              }
               
             }
         }

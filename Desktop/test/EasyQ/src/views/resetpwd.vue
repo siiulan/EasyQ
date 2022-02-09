@@ -81,6 +81,9 @@
                 password:this.input.pwd
                 },{headers: {'Content-type': 'application/json',}});
               //this.$router.push('Homepage');
+              if(success){
+                this.$router.push('ResetSuccess');
+              }
               }
               catch{
                 this.reseterror = true
