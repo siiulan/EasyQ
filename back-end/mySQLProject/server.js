@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to EasyQ" });
 });
 // app.use(cors(corsOptions));
-app.use(cors);
+app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
