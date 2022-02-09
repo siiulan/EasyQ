@@ -3,6 +3,9 @@ const nodemailer = require("nodemailer");
 const user = "easyqece651@gmail.com";
 const pass = "Qwe.1234";
 
+const url = "http://52.55.84.132/";
+const localURL = "http://localhost:8080";
+
 const transport = nodemailer.createTransport({
   service: "Gmail",
   auth: {
@@ -20,7 +23,7 @@ function sendConfirmationEmail (name, email, confirmationCode){
       html: `<h1>Email Confirmation</h1>
           <h2>Hello ${name}</h2>
           <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-          <a href=http://localhost:8080/API/user/confirm/${confirmationCode}> Click here</a>
+          <a href=${url}/api/user/confirm/${confirmationCode}> Click here</a>
           </div>`,
     }).catch(err => console.log(err));
 }
@@ -34,7 +37,7 @@ function sendResetEmail (name, email, confirmationCode){
     html: `<h1>Password Reset</h1>
         <h2>Hello ${name}</h2>
         <p>We heard you've lost your EasyQ password, sorry about that. Please reset your password by clicking on the following link</p>
-        <a href=http://localhost:8080/api/user/reset/${confirmationCode}> Click here</a>
+        <a href=${url}/api/user/reset/${confirmationCode}> Click here</a>
         </div>`,
   }).catch(err => console.log(err));
 }
