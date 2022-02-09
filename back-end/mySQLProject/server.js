@@ -1,14 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
+// var corsOptions = {
+//   origin: "http://localhost:8080"
+// };
 // simple route
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to EasyQ" });
 });
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors);
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
