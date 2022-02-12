@@ -3,9 +3,9 @@
   <div class="container py-5 h-100">
    <div class="row d-flex justify-content-center align-items-center h-100">
     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+      <h4 class="display-6 mb-4"> Reset password  </h4>
       <div class="card shadow-2-strong" style="border-radius: 1rem;">          
         <div class="card-body p-5" >
-            <h3 class="mb-5"> Reset your password </h3>
              <div class="alert alert-danger" role="alert" v-if="typechecked !== true">
                     <p class="text-danger"> * At least 8 characters</p>
                     <p class="text-danger"> * A mixture of both uppercase and lowercases letters </p>

@@ -37,6 +37,21 @@ export default new Router({
       path: '/signin',
       name: 'signin',
       component: () => import('../views/Signin.vue')
+    },
+    {
+      path: '/resetsuccess',
+      name: 'resetsuccess',
+      component: () => import('../views/ResetSuccess.vue')
+    },
+    {
+      path: '/pwdlink',
+      name: 'pwdlink',
+      component: () => import('../views/PwdLink.vue')
+    },
+    {
+      path: '/signuplink',
+      name: 'signuplink',
+      component: () => import('../views/SignupLink.vue')
     }
   ]
 })
