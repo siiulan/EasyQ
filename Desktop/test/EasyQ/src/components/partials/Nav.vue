@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar container" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/">
+      <h2 class="navbar-item" href="/">
         <strong class="is-size-4">EasyQ</strong>
-      </a>
+      </h2>
       <a
         role="button"
         class="navbar-burger burger"
@@ -23,7 +23,7 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
-          <div class="buttons">
+          <div class="buttons" v-if="$route.path != '/signin' && $route.path != '/signup'" >
             <a class="button is-dark">
               <router-link to = "/signin" class = "navbar-item">Sign In</router-link>
               <!-- <strong>Sign In</strong> -->
@@ -45,7 +45,7 @@
     margin-bottom: 30px;
     a {
       font-weight: bold;
-      color: #2c3e50;
+      color: #d88d00;
       &.router-link-exact-active {
         color: #d88d00;
       }
