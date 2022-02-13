@@ -1,8 +1,10 @@
 const sql = require("../db.js");
 var uuid = require('uuid');
 const { reject } = require("async");
-const lib = require("../configs/nodemailer.config");
+const lib = require("./emailSender.model.js");
 const { response } = require("express");
+const bcrypt = require('bcrypt')
+
 // const { user } = require("../configs/db.config.js");
 // constructor
 const User = function(user) {
@@ -29,12 +31,13 @@ function check_user_registration (username){
 
 function check_user_login (username, password){
     return new Promise((resolve, reject) => {
-        sql.query(`SELECT * FROM login_authentication WHERE EMAIL_ADRESS = ? AND PSWORD = ?`, [username, password], (err, res) => {
+        let qry = `SELECT * FROM login_authentication WHERE EMAIL_ADRESS = ? AND PSWORD = ?`
+        sql.query(qry, [username, password], (err, res) => {
             if (err) {
                 console.log("error: ", err);
                 reject(err);
             }
-            resolve(res)       
+            resolve(res)
         });
     })
 }
@@ -77,13 +80,28 @@ function verifyToken (token){
     })
 }
 
+async function hashPassword(password) {
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+    console.log(hash)
+    return hash
+}
+
+async function matchPassword(password, password2) { // updated
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    const isSame = await bcrypt.compare(password2, hash) // updated
+    console.log(isSame) // updated  
+    return isSame
+}
+
 // function command
 // create a new user
 User.signUp = async (user, result) => {
     flag = true
     // Does Email adress has been registered?
     let userRes = await check_user_registration(user.username)
-
+    let hashedPassword = await hashPassword(user.password)
     if(userRes.length){
         flag = false
         let judge = { 
@@ -99,7 +117,7 @@ User.signUp = async (user, result) => {
         const uLoginAuth = {
             USER_ID: user.id,
             EMAIL_ADRESS: user.username, 
-            PSWORD:user.password,
+            PSWORD: hashedPassword,
             VERIFIED: false
         };
 
@@ -143,7 +161,8 @@ User.signUp = async (user, result) => {
 
 // match the username and password of user
 User.loginMatch = async (username, password, result) => {
-    let item = await check_user_login(username, password)
+    let hashedpwd = hashPassword(password)
+    let item = await check_user_login(username, hashedpwd)
     if (item.length) {
         console.log("found user: ", item[0]);
         let uRole = await findUserByID(item[0].USER_ID, 'user_info')
@@ -169,23 +188,6 @@ User.loginMatch = async (username, password, result) => {
     return;
 };
 
-// find user by their id
-User.findById = (id, result) => {
-    sql.query(`SELECT * FROM user_info WHERE USER_ID = ${id}`, (err, res) => {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-            return;
-        }
-        if (res.length) {
-            console.log("found user: ", res[0]);
-            result(null, res[0]);
-            return;
-        }
-        // not found Tutorial with the id
-        result({ kind: "not_found" }, null);
-    });
-};
 
 // update user info by their ID:
 User.updateById = (id, table, attribute, updateValue, result) => {
@@ -222,9 +224,10 @@ User.confirmEmail = async (verifyToken, result) => {
               console.log(`Changed ${result.changedRows} row(s)`);
             }
         );
+        result(null, true)
     } else {
         console.log("User ID not found while sending confirm EMail ");
-        result("user id not found", null)
+        result(null, false)
         return;
     }
 }
@@ -245,15 +248,14 @@ User.resetPassword = async (username, result) => {
             }
         );
         let response = {
-            username: username,
+            resetToken: resetToken,
             isUserRegistered: true
         }
         result(null, response)
         return    
     } else {
         let response = {
-            resetToken: resetToken,
-            username: username,
+            resetToken: "",
             isUserRegistered: false
         }
         result(null, response)
@@ -261,13 +263,14 @@ User.resetPassword = async (username, result) => {
     }
 }
 
-User.passwordChange = async (username, newPassword, token, result) => {
+User.passwordChange = async (newPassword, token, result) => {
     let user  = await verifyToken(token)
     if (user.length) {
         row = user[0]
+        let pwd = await hashPassword(newPassword)
         sql.query(
             'UPDATE login_authentication SET PSWORD = ? WHERE USER_ID = ?',
-            [newPassword, row.USER_ID],
+            [pwd, row.USER_ID],
             (err, result) => {
               if (err) throw err;
               console.log(`Changed ${result.changedRows} row(s)`);
@@ -286,7 +289,7 @@ User.passwordChange = async (username, newPassword, token, result) => {
             success : true
         }
         let name = row.FIRST_NME + ' ' + row.LAST_NME
-        lib.sendSuccessEmail (name, username)
+        lib.sendSuccessEmail (name, row.EMAIL_ADRESS)
         result(null, response)
         return    
     } else {
@@ -298,6 +301,11 @@ User.passwordChange = async (username, newPassword, token, result) => {
         return    
     }
 
+}
+
+User.emailTesting= (email, name, result) => {
+    lib.emailTesting(email, name)
+    result(null, true)
 }
 
 module.exports = User

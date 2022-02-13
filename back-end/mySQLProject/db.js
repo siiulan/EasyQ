@@ -7,6 +7,9 @@ const connection = mysql.createConnection({
   password: dbConfig.password,
   database: dbConfig.database
 });
+
+// console.log("password used: "  + dbConfig.password)
+
 // open the MySQL connection
 connection.connect(error => {
   if (error) throw error;

@@ -42,7 +42,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/api/user/reset/passwordreset
+POST http://localhost:8080/api/user/reset/forgotPassword
 Content-Type: application/json
 
 {
@@ -58,4 +58,13 @@ Content-Type: application/json
     "username" : "siiulan79@gmail.com",
 	"newPassword" : "newPassword",
 	"verifyToken" : "0"
+}
+
+###
+
+GET http://localhost:8080/api/user/test/email
+Content-Type: application/json
+
+{
+    "email" : "siiulan79@gmail.com"
 }

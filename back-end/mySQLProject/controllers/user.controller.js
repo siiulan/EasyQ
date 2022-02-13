@@ -70,6 +70,13 @@ exports.confirmEmail = (req, res) => {
               message:
                 err.message || "Some error occurred while sending confirmation email"
             });
+        if (data){
+            // redirecting url to
+            res.redirect('')
+        } else {
+            // redirecting url to
+            res.redirect('')
+        }
     });
 
 }
@@ -85,12 +92,20 @@ exports.resetPassword = (req, res) => {
     var username = req.body.username
     
     User.resetPassword(username, (err, data) => {
-        if (err)
+        if (err){
             res.status(500).send({
               message:
                 err.message || "Some error occurred while sending confirmation email"
             });
-        else res.json(data)
+        } else {
+            if(data.isUserRegistered){
+                // redirecting url to
+            res.redirect('')
+            } else {
+                // redirecting url to
+                res.redirect('')
+            }
+        }
     });
 
 }
@@ -103,17 +118,16 @@ exports.passwordChange = (req, res) => {
         })
     }
 
-    var username = req.body.username
-    var newPassword = req.body.newPassword
-    var verifyToken = req.body.verifyToken
-    var vToken = req.params.verityToken
+    let newPassword = req.body.newPassword
+    let verifyToken = req.body.verifyToken
+    let vToken = req.params.verityToken
 
     if(vToken != verifyToken){
         res.status(400).send({
             message: "Reset Failure: Token not matched"
         })
     } else {
-        User.passwordChange(username, newPassword, vToken, (err, data) => {
+        User.passwordChange(newPassword, vToken, (err, data) => {
             if (err)
                 res.status(500).send({
                   message:
@@ -122,7 +136,25 @@ exports.passwordChange = (req, res) => {
             else res.json(data)
         });
     }
+}
 
+exports.emailTesting = (req, res) => {
+    // validate request
+    if (!req.body){
+        res.status(400).send({
+            message: "Cotent can not be empty"
+        })
+    }
 
+    let email = req.body.email
+    let name = "tester"
 
+    User.emailTesting(email, name, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                err.message || "Some error occurred while sending confirmation email"
+            });
+        else console.log("testing email sent")
+    });
 }

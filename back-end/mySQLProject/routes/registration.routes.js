@@ -6,7 +6,8 @@ module.exports = app => {
     //Login: match the user info
     router.post('/login', users.loginMatch)
     router.get('/confirm/:confirmationCode', users.confirmEmail)
-    router.post('/reset/passwordreset', users.resetPassword)
+    router.post('/reset/forgotPassword', users.resetPassword)
     router.post('/reset/request/:verityToken', users.passwordChange)
+    router.get('/test/email', users.emailTesting)
     app.use('/api/user', router)
 };
