@@ -9,30 +9,42 @@
          <img :src="LoginImage" class="img-fluid" alt="Phone image" width="1500" height="1500">
           </div>         
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-            <div class="alert alert-danger" v-show="regerror === true">
-             <strong>Sign up Failure account already exists </strong>
+            <div class="alert alert-danger" v-show="regerror === true && pwdMatched === false">
+             <strong>Sign up Failure : passwords don't match </strong>
+            </div>
+            <div class="alert alert-danger" v-show="regerror === true && typechecked === false">
+             <strong>Sign up Failure : password in wrong format </strong>
+            </div>
+            <div class="alert alert-danger" v-show="regerror === true && emailvalid === false">
+             <strong>Sign up Failure : email invalid </strong>
+            </div>
+            <div class="alert alert-danger" v-show="regerror === true && isReg === true">
+             <strong>Sign up Failure : This account already exists </strong>
             </div>
             <form @submit.prevent=" handleSignup">
               <!-- Email input -->
               <div class="form-outline mb-4">
                <label class="form-label" style="font-size:20px;" for="emailaddr"><strong> First name </strong></label>
-                <input type="text" id="firstname" class="form-control form-control-lg" v-model="input.firstName"/>
+                <input type="text" id="firstname" class="form-control form-control-lg" required="required" v-model="input.firstName"/>
               </div>
 
               <div class="form-outline mb-4">
                <label class="form-label" style="font-size:20px;" for="emailaddr"><strong> Last name </strong></label>
-                <input type="text" id="lastname" class="form-control form-control-lg" v-model="input.lastName"/>
+                <input type="text" id="lastname" class="form-control form-control-lg" required="required" v-model="input.lastName"/>
               </div>
 
               <div class="form-outline mb-4">
                <label class="form-label" style="font-size:20px;" for="emailaddr"><strong>Email address </strong></label>
-                <input type="email" id="emailaddr" class="form-control form-control-lg" v-model="input.email"/>
+                <input type="email" id="emailaddr" class="form-control form-control-lg" required="required" v-model="input.email" @blur="mailvalidation"/>
+              </div>
+              <div class="alert alert-danger" role="alert" v-if="emailvalid == false">
+                    <p class="text-danger"> invalid format of email address</p>
               </div>
     
               <!-- Password input -->
               <div class="form-outline mb-4">
                 <label class="form-label" style="font-size:20px;" for="signuppwd"> <strong>Password </strong></label>
-                <input type="password" id="loginpwd" class="form-control form-control-lg" v-model="input.pwd" />
+                <input type="password" id="loginpwd" class="form-control form-control-lg" required="required" v-model="input.pwd"/>
               </div>
               <div class="alert alert-danger" role="alert" v-if="typechecked !== true">
                     <p class="text-danger"> * At least 8 characters</p>
@@ -41,14 +53,14 @@
               </div>
               <div class="form-outline mb-4">
                 <label class="form-label" style="font-size:20px;" for="signuppwdConfirm"> <strong>Confirm Password </strong></label>
-                <input type="password" id="loginpwdConfirm" class="form-control form-control-lg" v-model="input.pwdConfirmed" />
+                <input type="password" id="loginpwdConfirm" class="form-control form-control-lg" required="required" v-model="input.pwdConfirmed" />
               </div>  
-              <div class="alert alert-danger" role="alert" v-if="pwdMatched !== true">
+              <div class="alert alert-danger" role="alert" v-bind = "mailvalid" v-if="pwdMatched !== true">
                     Password does not match !
               </div>  
               <div class="d-flex justify-content-around align-items-center mb-4">
-                <a href="#!"> Already have an account ? Sign in here !</a>
-                <!--<router-link :to="{name: 'signup'}"> Don't have an account ? Join Now !</router-link>-->
+                
+                <router-link to = "/signin" > Already have an account ? Sign in here ! </router-link>
               </div>
     
               <!-- Submit button -->
@@ -76,31 +88,48 @@ import axios from 'axios'
                 pwd : '',
                 pwdConfirmed : ''
                 },
-                pwdMatched : true,
+                emailvalid : null, //email validation
+                pwdMatched : true, //if confimed pwd matches the original
                 LoginImage : "https://www.ucl.ac.uk/students/sites/students/files/new_students_resized.png",
                 regerror:null,
-                typechecked : true
+                typechecked : true, //for pwd type check
+                isReg : null
             }
         },
         methods:{
+            mailvalidation(){
+              const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/;
+              this.emailvalid = emailRegex.test(this.input.email);
+              console.log(this.mailvalid)
+            },
             typecheck(){
-                console.log('typecheck started')
                 var decimal =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
                 if(this.input.pwd.length < 8){
-                    return false;
+                    this.typechecked = false;
                 }
                 else if(this.input.pwd.match(decimal)){
-                    return true;
+                    this.typechecked = true;
                 }
                 else{
-                    return false;
+                    this.typechecked = false;
                 }
             },
+            ifMatchPwd(){
+              if(this.pwd == this.pwdConfirmed){
+                this.pwdMatched = true;
+              }
+              else{
+                this.pwdMatched = false;
+              }            
+            },
    async    handleSignup() {
-               var wit = this.typecheck();
-               this.typechecked = wit;
-               console.log(this.typechecked);
               try{
+              this.typecheck();
+               //console.log(this.typechecked);
+              this.ifMatchPwd();
+              if(this.typechecked == false || this.emailvalid == false || this.pwdMatched == false ){
+                throw "validation failed"
+              }
               const response = await axios.post('http://52.55.84.132/api/user//registration',{
                 username:this.input.email,
                 password:this.input.pwd,
@@ -108,18 +137,20 @@ import axios from 'axios'
                 lastname:this.input.lastName,
                 },{headers: {'Content-type': 'application/json',}});
                 console.log(response);
-              if(response.data.isRegistered === true){
+               if(response.data.isRegistered === true){
+
                 this.regerror = true;
-                this.email = ''
-              }
-              else {
+                this.isReg == true;
+                return false;//onsubmit === false
+               }
+               else {
                   this.regerror = false;
-                  //this.$router.push('login');
-              }
+                  this.$router.push('/signuplink');
+               }
               }
               catch{
-                this.regerror = true
-                this.email = ''
+                this.regerror = true;
+                return false; //onsubmit === false
               }
               
             }
