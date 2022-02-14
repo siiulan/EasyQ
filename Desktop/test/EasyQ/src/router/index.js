@@ -57,6 +57,11 @@ export default new Router({
       path: '/regconfirm',
       name: 'regconfirm',
       component: () => import('../views/RegConfirm.vue')
+    },
+    {
+      path: '/verify',
+      name: 'verify',
+      component: () => import('../views/Verify.vue')
     }
   ]
 })

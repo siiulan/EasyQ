@@ -1,6 +1,6 @@
 <template>
   <div id="bd">
-    <div id="qp d-flex">
+    <div id="qp">
       <div id="login" class="d-flex flex-column qpanel" v-if="show1">
         <strong class="center h1 font-weight-bold">Log in to EasyQ</strong>
         <input class="inp" id="email" placeholder="Email" v-model="vem" />
@@ -56,7 +56,6 @@ export default {
   mounted: function () {
     resize();
   },
-  el: "#qp",
   data() {
     return {
       vem: "",
@@ -72,16 +71,21 @@ export default {
         username: this.vem,
         password: window.btoa(this.vpw),
       };
+      var f = data.username + " " + data.password;
+      setCookie(f);
       let xhr = new XMLHttpRequest();
-      xhr.open("POST", "/api/login", true);
+      xhr.open("POST", "/api/user/login", true);
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       xhr.onloadend = function () {
+        console.log(xhr.responseText);
         var data2 = JSON.parse(xhr.responseText);
         if (data2.isVerified == true && data2.isMatched == true) {
           this.isFail = false;
           window.location.href = "/";
-        } else {
+        } else if (data2.isMatched == false) {
           this.isFail = true;
+        } else {
+          window.location.href = "/verify";
         }
       };
       xhr.send(JSON.stringify(data));
@@ -98,10 +102,10 @@ export default {
     },
     sendemail() {
       var data2 = {
-        email: this.vem2,
+        username: this.vem2,
       };
       let xhr = new XMLHttpRequest();
-      xhr.open("POST", "/api/sendemail", true);
+      xhr.open("POST", "/api/user/reset/forgotPassword", true);
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       xhr.send(JSON.stringify(data2));
     },
@@ -146,6 +150,14 @@ function resize() {
   document.getElementById("forgotpanel").style.marginLeft =
     0.5 * (screen.width - w1).toString() + "px";
 }
+/*
+function getCookie() {
+  return document.cookie.split(';').slice(-1)[0];
+}
+*/
+function setCookie(c) {
+  document.cookie = c;
+}
 </script>
 <style>
 #bd {
@@ -156,7 +168,7 @@ function resize() {
 
 .qpanel {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .center {
