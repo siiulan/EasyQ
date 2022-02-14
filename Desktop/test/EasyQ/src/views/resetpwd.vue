@@ -3,6 +3,9 @@
   <div class="container py-5 h-100">
    <div class="row d-flex justify-content-center align-items-center h-100">
     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+      <!--<div class="alert alert-danger" v-show="reseterror === true && pwdMatched === false">
+             <strong>Reset failure Failure : passwords don't match </strong>
+      </div> -->
       <h4 class="display-6 mb-4"> Reset password  </h4>
       <div class="card shadow-2-strong" style="border-radius: 1rem;">          
         <div class="card-body p-5" >
@@ -16,11 +19,11 @@
               <!-- Password input -->
               <div class="form-outline mb-4">
                 <label class="form-label" style="font-size:20px;" for="resetpwd"> <strong>New Password </strong></label>
-                <input type="password" id="resetpwd" class="form-control form-control-lg" v-model="input.pwd" />
+                <input type="password" id="resetpwd" class="form-control form-control-lg" required="required" v-model="input.pwd" />
               </div>
               <div class="form-outline mb-4">
                 <label class="form-label" style="font-size:20px;" for="resetpwdConfirm"> <strong>Confirm Password </strong></label>
-                <input type="password" id="resetpwdConfirm" class="form-control form-control-lg" v-model="input.pwdConfirmed" />
+                <input type="password" id="resetpwdConfirm" class="form-control form-control-lg" required="required" v-model="input.pwdConfirmed" />
               </div>  
               <div class="alert alert-danger" role="alert" v-if="pwdMatched !== true">
                     Password does not match !
@@ -44,6 +47,7 @@
 
 <script>
 //mport LoginImage from '/Users/rextang/Desktop/FEvue/vue-first-app/src/assets/login-image.png'
+import axios from 'axios'
     export default {
         data() {
             return {
@@ -52,6 +56,7 @@
                 pwd : '',
                 pwdConfirmed : ''
                 },
+                token : null,
                 pwdMatched : true,
                 reseterror:true,
                 typechecked : true
@@ -59,7 +64,6 @@
         },
         methods:{
             typecheck(){
-                console.log('typecheck started')
                 var decimal =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
                 if(this.input.pwd.length < 8){
                     return false;
@@ -71,23 +75,34 @@
                     return false;
                 }
             },
-   /*async*/  handleReset() {
-               var wit = this.typecheck();
-               this.typechecked = wit;
-               console.log(this.typechecked)
-              /*
-              try{
-              const response = await axios.post('api/resetpwd',{
-                password:this.input.pwd
-                },{headers: {'Content-type': 'application/json',}});
-              //this.$router.push('Homepage');
-              if(success){
-                this.$router.push('ResetSuccess');
+            ifMatchPwd(){
+              if(this.pwd == this.pwdConfirmed){
+                this.pwdMatched = true;
               }
+              else{
+                this.pwdMatched = false;
+              }            
+            },
+   async  handleReset() {
+              try{
+                this.typecheck();
+                this.ifMatchPwd();
+                if(this.typechecked == false || this.pwdMatched == false ){
+                  throw "validation failed"
+                }
+                const response = await axios.post('api/resetpwd',{
+                password:this.input.pwd,
+                token: this.token
+                },{headers: {'Content-type': 'application/json',}});
+                if(response.data.success === true){
+                  this.reseterror = false;
+                  this.$router.push('/resetsuccess');
+                }
               }
               catch{
                 this.reseterror = true
-              }*/
+                return false; //onsubmit === false
+              }
               
             }
         }

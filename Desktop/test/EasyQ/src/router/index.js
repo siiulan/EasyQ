@@ -52,6 +52,11 @@ export default new Router({
       path: '/signuplink',
       name: 'signuplink',
       component: () => import('../views/SignupLink.vue')
+    },
+    {
+      path: '/regconfirm',
+      name: 'regconfirm',
+      component: () => import('../views/RegConfirm.vue')
     }
   ]
 })
