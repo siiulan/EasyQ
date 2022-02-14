@@ -1,0 +1,4 @@
+# all configuration
+configs/
+# bcrpyt module: conflict with EC2 ubuntu container
+node_modules/bcrpyt/
