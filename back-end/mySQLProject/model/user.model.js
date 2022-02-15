@@ -102,9 +102,9 @@ async function hashPassword(password) {
 
 async function matchPassword(password, password2) { // updated
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
-    const isSame = await bcrypt.compare(password2, hash) // updated
-    console.log(isSame) // updated  
+    //const hash = await bcrypt.hash(password, salt);
+    const isSame = await bcrypt.compare(password2, password) // updated
+    console.log("matchign password: " + isSame) // updated  
     return isSame
 }
 
