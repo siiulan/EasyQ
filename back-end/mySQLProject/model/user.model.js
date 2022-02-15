@@ -31,8 +31,8 @@ function check_user_registration (username){
 
 function check_user_login (username, password){
     return new Promise((resolve, reject) => {
-        let qry = `SELECT * FROM login_authentication WHERE EMAIL_ADRESS = ? AND PSWORD = ?`
-        sql.query(qry, [username, password], (err, res) => {
+        let qry = `SELECT * FROM login_authentication WHERE EMAIL_ADRESS = ?`
+        sql.query(qry, [username], (err, res) => {
             if (err) {
                 console.log("error: ", err);
                 reject(err);
@@ -175,20 +175,24 @@ User.signUp = async (user, result) => {
 // match the username and password of user
 User.loginMatch = async (username, password, result) => {
     let hashedpwd = hashPassword(password)
+    console.log(hashedpwd)
     let item = await check_user_login(username, hashedpwd)
     if (item.length) {
-        console.log("found user: ", item[0]);
-        let uRole = await findUserByID(item[0].USER_ID, 'user_info')
-        console.log(uRole[0])
-        let judge = { 
-            id: item[0].USER_ID,
-            isVerified: item[0].VERIFIED,
-            isMatched: true,
-            role: uRole[0].USER_ROLE
-        };
-        result(null, judge)
-        console.log("1")
-        return;
+        let recordpwd = item[0].PSWORD
+        if(matchPassword(password,recordpwd)){
+            console.log("found user: ", item[0]);
+            let uRole = await findUserByID(item[0].USER_ID, 'user_info')
+            console.log(uRole[0])
+            let judge = { 
+                id: item[0].USER_ID,
+                isVerified: item[0].VERIFIED,
+                isMatched: true,
+                role: uRole[0].USER_ROLE
+            };
+            result(null, judge)
+            console.log("1")
+            return;
+        }   
     }
     // not found Tutorial with the id
     let judge = { 

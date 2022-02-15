@@ -35,15 +35,10 @@ exports.loginMatch = (req, res) => {
         })
     }
     //user creation
-    const user = new User({
-        username : req.body.username,
-        fistName : req.body.firstname,
-        lastName : req.body.lastname,
-        role : 'student',
-        password : req.body.password,
-    });
+    let username = req.body.username
+    let password = req.body.password
     // create user in the database
-    User.loginMatch(user.username, user.password, (err, data) => {
+    User.loginMatch(username, password, (err, data) => {
         if (err)
             res.status(500).send({
               message:
