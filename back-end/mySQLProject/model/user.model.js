@@ -179,7 +179,9 @@ User.loginMatch = async (username, password, result) => {
     let item = await check_user_login(username, hashedpwd)
     if (item.length) {
         let recordpwd = item[0].PSWORD
-        if(matchPassword(password,recordpwd)){
+        let matchRes = await matchPassword(password,recordpwd)
+        console.log(`match info: ${matchRes}`)
+        if(matchRes){
             console.log("found user: ", item[0]);
             let uRole = await findUserByID(item[0].USER_ID, 'user_info')
             console.log(uRole[0])

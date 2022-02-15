@@ -1,5 +1,6 @@
 const { password } = require("../configs/db.config.js");
 const User = require("../model/user.model.js");
+let lib = require("../configs/nodemailer.config.js")
 
 exports.signUp = (req, res) => {
     // validate request
@@ -67,10 +68,10 @@ exports.confirmEmail = (req, res) => {
             });
         if (data){
             // redirecting url to
-            res.redirect('')
+            res.redirect(`${lib.url}/regconfirm`)
         } else {
             // redirecting url to
-            res.redirect('')
+            res.redirect(`${lib.url}//regfail`)
         }
     });
 
