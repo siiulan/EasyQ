@@ -175,7 +175,7 @@ User.signUp = async (user, result) => {
 // match the username and password of user
 User.loginMatch = async (username, password, result) => {
     let hashedpwd = hashPassword(password)
-    console.log(hashedpwd)
+    // console.log(hashedpwd)
     let item = await check_user_login(username, hashedpwd)
     if (item.length) {
         let recordpwd = item[0].PSWORD
@@ -190,7 +190,7 @@ User.loginMatch = async (username, password, result) => {
                 role: uRole[0].USER_ROLE
             };
             result(null, judge)
-            console.log("1")
+            // console.log("1")
             return;
         }   
     }
@@ -282,12 +282,12 @@ User.resetPassword = async (username, result) => {
 
 User.passwordChange = async (newPassword, token, result) => {
     let user  = await verifyToken(token)
+    let hashedPassword = await hashPassword(newPassword)
     if (user.length) {
         row = user[0]
-        let pwd = await hashPassword(newPassword)
         sql.query(
             'UPDATE login_authentication SET PSWORD = ? WHERE USER_ID = ?',
-            [pwd, row.USER_ID],
+            [hashedPassword, row.USER_ID],
             (err, result) => {
               if (err) throw err;
               console.log(`Changed ${result.changedRows} row(s)`);
