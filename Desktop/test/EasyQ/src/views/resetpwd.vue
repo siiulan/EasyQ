@@ -60,7 +60,7 @@ import axios from 'axios'
                 },
                 ResetToken : null,
                 pwdMatched : true,
-                reseterror:true,
+                reseterror:null,
                 typechecked : true
             }
         },
@@ -87,6 +87,7 @@ import axios from 'axios'
             },
             getToken(){
               this.ResetToken = this.$route.params.ResetToken;
+              console.log(this.ResetToken)
             },
         async  handleReset() {
               try{
