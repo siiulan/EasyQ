@@ -3,25 +3,27 @@
         <h3>
           <strong>Registration confirmed!</strong>
         </h3>
-      <router-link :to="{name: '/signin'}"> Sign in here </router-link>
+      <router-link to = "/signin" > Sign in here ! </router-link>
 </div> 
 </template>
 
 <script>
- /*   export default { 
+   export default { 
         data() {
             return {
-                token : null,  
+                confirmed : null,  
             }
         },
-        methods:{
-            async verifyUser(code){
-                const response = await axios.get(API_URL + "confirm/" + code);
-                this.token = response.data;
+        methods:{}/*
+            async verifyUser(verifyToken){
+                const response = await axios.get("http://52.55.84.132/api/user/confirm/" + verifyToken);
+                this.confirmed = response.data.isConfirmed;
             }
-
-        }
-    }*/
+        },
+        created() {
+            this.verifyUser(this.$route.params.token);
+        }*/
+    }
 </script>
 <style scoped>
 </style>

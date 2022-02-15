@@ -3,9 +3,12 @@
   <div class="container py-5 h-100">
    <div class="row d-flex justify-content-center align-items-center h-100">
     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-      <!--<div class="alert alert-danger" v-show="reseterror === true && pwdMatched === false">
-             <strong>Reset failure Failure : passwords don't match </strong>
-      </div> -->
+      <div class="alert alert-danger" v-show="pwdMatched === false">
+             <strong>Reset password Failure : passwords don't match </strong>
+      </div>
+      <div class="alert alert-danger" v-show="reseterror == true">
+             <strong>Reset password Failure </strong>
+      </div> 
       <h4 class="display-6 mb-4"> Reset password  </h4>
       <div class="card shadow-2-strong" style="border-radius: 1rem;">          
         <div class="card-body p-5" >
@@ -51,12 +54,11 @@ import axios from 'axios'
     export default {
         data() {
             return {
-                email : null,
                 input: {
                 pwd : '',
                 pwdConfirmed : ''
                 },
-                token : null,
+                ResetToken : null,
                 pwdMatched : true,
                 reseterror:true,
                 typechecked : true
@@ -83,16 +85,19 @@ import axios from 'axios'
                 this.pwdMatched = false;
               }            
             },
-   async  handleReset() {
+            getToken(){
+              this.ResetToken = this.$route.params.ResetToken;
+            },
+        async  handleReset() {
               try{
                 this.typecheck();
                 this.ifMatchPwd();
                 if(this.typechecked == false || this.pwdMatched == false ){
                   throw "validation failed"
                 }
-                const response = await axios.post('api/resetpwd',{
+                const response = await axios.post('http://52.55.84.132/api/user/reset/request/' + this.ResetToken,{
                 password:this.input.pwd,
-                token: this.token
+                token: this.ResetToken,
                 },{headers: {'Content-type': 'application/json',}});
                 if(response.data.success === true){
                   this.reseterror = false;
@@ -105,6 +110,9 @@ import axios from 'axios'
               }
               
             }
+        },
+        created(){
+          this.getToken()
         }
     }
 </script>

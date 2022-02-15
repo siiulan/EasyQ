@@ -29,7 +29,7 @@ export default new Router({
       component: () => import('../views/Signup.vue')
     },
     {
-      path: '/resetpwd',
+      path: '/resetpassword/:ResetToken',
       name: 'resetpwd',
       component: () => import('../views/ResetPwd.vue')
     },
@@ -57,6 +57,11 @@ export default new Router({
       path: '/regconfirm',
       name: 'regconfirm',
       component: () => import('../views/RegConfirm.vue')
+    },
+    {
+      path: '/regfail',
+      name: 'regfail',
+      component: () => import('../views/RegFail.vue')
     },
     {
       path: '/verify',
