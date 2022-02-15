@@ -183,7 +183,7 @@ User.loginMatch = async (username, password, result) => {
         let recordpwd = item[0].PSWORD
         console.log(`input: ${password}, record: ${recordpwd}`)
         let matchRes = false
-        if (hashedpwd == recordpwd){
+        if (password == recordpwd){
             matchRes = true
         }
         //let matchRes = await matchPassword(password,recordpwd)
