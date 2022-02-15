@@ -26,7 +26,7 @@ function sendResetEmail (name, email, confirmationCode){
     html: `<h1>Password Reset</h1>
         <h2>Hello ${name}</h2>
         <p>We heard you've lost your EasyQ password, sorry about that. Please reset your password by clicking on the following link</p>
-        <a href=${url}/api/user/reset/${confirmationCode}> Click here</a>
+        <a href=${url}/resetpassword/${confirmationCode}> Click here</a>
         </div>`,
   }).catch(err => console.log(err));
 }

@@ -80,6 +80,19 @@ function verifyToken (token){
     })
 }
 
+function getConfirmationToken(username){
+    return new Promise((resolve, reject) => {
+        sql.query('SELECT * FROM user_info WHERE EMAIL_ADRESS = ?',
+        [username], (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            resolve(res)  
+        });
+    })
+}
+
 async function hashPassword(password) {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
@@ -303,9 +316,29 @@ User.passwordChange = async (newPassword, token, result) => {
 
 }
 
-User.emailTesting= (email, name, result) => {
+User.emailTesting = (email, name, result) => {
     lib.emailTesting(email, name)
     result(null, true)
+    return
+}
+
+User.resendVerifyEmail = async (email, result) => {
+    let user = await getConfirmationToken(email)
+    if(user.length){
+        let confirmationToken = user[0].VERIFYCODE
+        let name = user[0].firstName + ' ' + user[0].lastName
+        lib.sendConfirmationEmail(name, email, confirmationToken)
+        let response = {
+            success : true
+        }
+        result(null, response)
+    } else {
+        let response = {
+            success : false
+        }
+        result(null, response)
+    }
+    return
 }
 
 module.exports = User

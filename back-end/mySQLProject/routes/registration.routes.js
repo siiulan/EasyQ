@@ -9,5 +9,6 @@ module.exports = app => {
     router.post('/reset/forgotPassword', users.resetPassword)
     router.post('/reset/request/:verityToken', users.passwordChange)
     router.get('/test/email', users.emailTesting)
+    router.post('/verify/resend', users.resendVerifyEmail)
     app.use('/api/user', router)
 };

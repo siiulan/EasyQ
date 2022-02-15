@@ -98,13 +98,7 @@ exports.resetPassword = (req, res) => {
                 err.message || "Some error occurred while sending confirmation email"
             });
         } else {
-            if(data.isUserRegistered){
-                // redirecting url to
-            res.redirect('')
-            } else {
-                // redirecting url to
-                res.redirect('')
-            }
+            res.json(data)
         }
     });
 
@@ -150,11 +144,34 @@ exports.emailTesting = (req, res) => {
     let name = "tester"
 
     User.emailTesting(email, name, (err, data) => {
+        if (err){
+            res.status(500).send({
+                message:
+                err.message || "Some error occurred while sending confirmation email"
+            });
+        } else {
+            console.log("testing email sent")
+            res.json(data)
+        }
+    });
+}
+
+exports.resendVerifyEmail = (req, res) => {
+    // validate request
+    if (!req.body){
+        res.status(400).send({
+            message: "Cotent can not be empty"
+        })
+    }
+
+    let email = req.body.email
+
+    User.resendVerifyEmail(email, (err, data) => {
         if (err)
             res.status(500).send({
                 message:
                 err.message || "Some error occurred while sending confirmation email"
             });
-        else console.log("testing email sent")
+        else res.json(data)
     });
 }
