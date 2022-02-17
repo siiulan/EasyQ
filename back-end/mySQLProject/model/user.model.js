@@ -94,16 +94,14 @@ function getConfirmationToken(username){
 }
 
 async function hashPassword(password) {
-    const salt = await bcrypt.genSalt(10)
+    const salt = 10
     const hash = await bcrypt.hash(password, salt)
-    console.log(hash)
+    console.log("hashed password: " + hash)
     return hash
 }
 
 async function matchPassword(password, password2) { // updated
-    const salt = await bcrypt.genSalt(10);
-    //const hash = await bcrypt.hash(password, salt);
-    const isSame = await bcrypt.compare(password2, password) // updated
+    const isSame = await bcrypt.compare(password, password2) // updated
     console.log("matchign password: " + isSame) // updated  
     return isSame
 }
@@ -114,7 +112,7 @@ User.signUp = async (user, result) => {
     flag = true
     // Does Email adress has been registered?
     let userRes = await check_user_registration(user.username)
-    //let hashedPassword = await hashPassword(user.password)
+    let hashedPassword = await hashPassword(user.password)
     if(userRes.length){
         flag = false
         let judge = { 
@@ -130,8 +128,8 @@ User.signUp = async (user, result) => {
         const uLoginAuth = {
             USER_ID: user.id,
             EMAIL_ADRESS: user.username, 
-            // PSWORD: hashedPassword,
-            PSWORD: password,
+            PSWORD: hashedPassword,
+            // PSWORD: password,
             VERIFIED: false
         };
 
@@ -175,18 +173,18 @@ User.signUp = async (user, result) => {
 
 // match the username and password of user
 User.loginMatch = async (username, password, result) => {
-    // let hashedpwd = hashPassword(password)
-    // console.log(hashedpwd)
-    // let item = await check_user_login(username, hashedpwd)
+    // let hashedpwd = await hashPassword(password)
+    // console.log("Hashed input: " + hashedpwd)
     let item = await check_user_login(username, password)
+    // let item = await check_user_login(username, password)
     if (item.length) {
         let recordpwd = item[0].PSWORD
-        console.log(`input: ${password}, record: ${recordpwd}`)
-        let matchRes = false
-        if (password == recordpwd){
-            matchRes = true
-        }
-        //let matchRes = await matchPassword(password,recordpwd)
+        // console.log(`input: ${hashedpwd}, record: ${recordpwd}`)
+        // let matchRes = false
+        // if (password == recordpwd){
+        //     matchRes = true
+        // }
+        let matchRes = await matchPassword(password, recordpwd)
         console.log(`match info: ${matchRes}`)
         if(matchRes){
             console.log("found user: ", item[0]);
@@ -196,7 +194,7 @@ User.loginMatch = async (username, password, result) => {
                 id: item[0].USER_ID,
                 isVerified: item[0].VERIFIED,
                 isMatched: true,
-                role: uRole[0].USER_ROLE
+                role: uRole.USER_ROLE
             };
             result(null, judge)
             // console.log("1")
@@ -291,12 +289,12 @@ User.resetPassword = async (username, result) => {
 
 User.passwordChange = async (newPassword, token, result) => {
     let user  = await verifyToken(token)
-    // let hashedPassword = await hashPassword(newPassword)
+    let hashedPassword = await hashPassword(newPassword)
     if (user.length) {
         row = user[0]
         sql.query(
             'UPDATE login_authentication SET PSWORD = ? WHERE USER_ID = ?',
-            [newPassword, row.USER_ID],
+            [hashedPassword, row.USER_ID],
             (err, result) => {
               if (err) throw err;
               console.log(`Changed ${result.changedRows} row(s)`);
