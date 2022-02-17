@@ -136,7 +136,6 @@ import axios from 'axios'
                 firstname:this.input.firstName,
                 lastname:this.input.lastName,
                 },{headers: {'Content-type': 'application/json',}});
-                console.log(response);
                if(response.data.isRegistered === true){
 
                 this.regerror = true;
