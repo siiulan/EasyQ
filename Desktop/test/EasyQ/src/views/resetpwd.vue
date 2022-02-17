@@ -97,8 +97,8 @@ import axios from 'axios'
                   throw "validation failed"
                 }
                 const response = await axios.post('http://52.55.84.132/api/user/reset/request/' + this.ResetToken,{
-                password:this.input.pwd,
-                token: this.ResetToken,
+                newPassword:this.input.pwd,
+                verifyToken: this.ResetToken,
                 },{headers: {'Content-type': 'application/json',}});
                 if(response.data.success === true){
                   this.reseterror = false;
