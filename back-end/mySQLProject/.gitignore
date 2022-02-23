@@ -1,4 +1,8 @@
 # all configuration
 configs/
+
 # bcrpyt module: conflict with EC2 ubuntu container
 node_modules/bcrpyt/
+
+# Prevent mac users to commit .DS_Store files
+.DS_Store
