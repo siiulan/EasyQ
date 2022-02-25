@@ -130,7 +130,7 @@ import axios from 'axios'
               if(this.typechecked == false || this.emailvalid == false || this.pwdMatched == false ){
                 throw "validation failed"
               }
-              const response = await axios.post('http://52.55.84.132/api/user//registration',{
+              const response = await axios.post('http://http://54.163.38.93/api/user//registration',{
                 username:this.input.email,
                 password:this.input.pwd,
                 firstname:this.input.firstName,
