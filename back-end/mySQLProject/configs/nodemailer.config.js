@@ -8,7 +8,7 @@ const pass = "Qwe.1234";
 var url = "http://localhost:8080";
 // server url
 if(devSetting.devMode == 1){
-  url = "http://52.55.84.132";
+  url = "http://54.163.38.93";
 }
 
 const transport = nodemailer.createTransport({
