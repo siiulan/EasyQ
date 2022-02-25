@@ -4,11 +4,10 @@
       <div id="forgotpanel" class="d-flex flex-column qpanel">
         <strong class="center top1 h2">Verify your account</strong>
         <p class="inp">
-          Enter your email here, and we will send you a link so you can verify
+          We will send you a link to your email so you can verify
           your account.
         </p>
-        <div class="inp2 text-danger">Enter your email</div>
-        <input class="inp3" id="email2" placeholder="Email" v-model="vem2" />
+        <div id="emailtext" class="inp2 text-danger"></div>
         <button class="bt2" id="sendem" @click="sendemail">Send Link</button>
         <div class="inp3 d-flex justify-content-center">
           <div class="backrow text-primary" @click="back2">
@@ -23,6 +22,9 @@
 export default {
   mounted: function () {
     resize();
+    var em = getCookie("username");
+    console.log(em);
+    document.getElementById("emailtext").textContent = "Click button to send a link to "+em;
   },
   data() {
     return {
@@ -39,10 +41,10 @@ export default {
     },
     sendemail() {
       var data2 = {
-        username: this.vem2,
+        email: getCookie("username")
       };
       let xhr = new XMLHttpRequest();
-      xhr.open("POST", "/api/user/reset/forgotPassword", true);
+      xhr.open("POST", "http://54.163.38.93/api/user/verify/resend", true);
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       xhr.send(JSON.stringify(data2));
     },
@@ -53,8 +55,8 @@ export default {
 function resize() {
   let h1 = screen.height / 3;
   let w1 = screen.width / 2.3;
-  if (w1 < 400) {
-    w1 = 400;
+  if (w1 < 450) {
+    w1 = 450;
   }
   if (h1 < 250) {
     h1 = 250;
@@ -69,11 +71,27 @@ function resize() {
   document.getElementById("forgotpanel").style.marginTop =
     h1 * (0.2).toString() + "px";
 
-  document.getElementById("forgotpanel").style.width = "auto";
+  //document.getElementById("forgotpanel").style.width = "auto";
   document.getElementById("forgotpanel").style.marginRight =
     0.5 * (screen.width - w1).toString() + "px";
   document.getElementById("forgotpanel").style.marginLeft =
     0.5 * (screen.width - w1).toString() + "px";
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
 </script>
 <style>
@@ -86,6 +104,7 @@ function resize() {
 .qpanel {
   background-color: white;
   border-radius: 20px;
+  min-width: 450px;
 }
 
 .center {
@@ -111,7 +130,7 @@ function resize() {
 }
 
 .inp2 {
-  margin-top: 15px;
+  margin-top: 35px;
   margin-left: 10%;
   margin-right: 10%;
   height: 10%;
@@ -137,6 +156,6 @@ function resize() {
   height: 15%;
 }
 .top1 {
-  margin-top: 1%;
+  margin-top: 7%;
 }
 </style>
