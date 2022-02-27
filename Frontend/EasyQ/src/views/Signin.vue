@@ -187,22 +187,10 @@ function resize() {
     0.24 * (screen.height - h1).toString() + "px";
 
   document.getElementById("login").style.height = h1.toString() + "px";
-
-  document.getElementById("login").style.width = "auto";
-  document.getElementById("login").style.marginRight =
-    0.5 * (screen.width - w1).toString() + "px";
-  document.getElementById("login").style.marginLeft =
-    0.5 * (screen.width - w1).toString() + "px";
-
   document.getElementById("forgotpanel").style.height = h1.toString() + "px";
   document.getElementById("forgotpanel").style.marginTop =
     h1 * (0.2).toString() + "px";
 
-  document.getElementById("forgotpanel").style.width = "auto";
-  document.getElementById("forgotpanel").style.marginRight =
-    0.5 * (screen.width - w1).toString() + "px";
-  document.getElementById("forgotpanel").style.marginLeft =
-    0.5 * (screen.width - w1).toString() + "px";
 }
 /*
 function getCookie() {
@@ -223,12 +211,17 @@ function setCookie(cname, cvalue, exdays) {
   background-image: url("https://www.u-bordeaux.com/var/ezdemo_site/storage/images/media/university-of-bordeaux/images/partners/waterloo-sp-webpage/404068-2-fre-FR/Waterloo-SP-webpage_Grande.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  overflow-x:scroll;
+  white-space:nowrap;
 }
 
 .qpanel {
   background-color: white;
   border-radius: 20px;
   min-width:450px;
+  width:34vw;
+  margin-left: 33vw;
+
 }
 
 .center {
@@ -282,4 +275,5 @@ function setCookie(cname, cvalue, exdays) {
 .top1 {
   margin-top: 1%;
 }
+
 </style>
