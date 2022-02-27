@@ -81,7 +81,7 @@ export default {
         this.errormsg = "Login Failed";
       }
       setCookie("username", data.username, 30);
-      setCookie("password", data.password, 30);
+      //setCookie("password", data.password, 30);
 
       /*
       let xhr = new XMLHttpRequest();
@@ -92,6 +92,8 @@ export default {
         var data2 = JSON.parse(xhr.responseText);
         if (data2.isVerified == true && data2.isMatched == true) {
           this.isFail = false;
+          setCookie("id", data2.id, 30);
+          setCookie("loggedin", "true", 30);
           window.location.href = "/";
         } else if (data2.isMatched == false) {
           this.isFail = true;
@@ -192,11 +194,7 @@ function resize() {
     h1 * (0.2).toString() + "px";
 
 }
-/*
-function getCookie() {
-  return document.cookie.split(';').slice(-1)[0];
-}
-*/
+
 //https://www.w3schools.com/js/js_cookies.asp
 function setCookie(cname, cvalue, exdays) {
   const d = new Date();
