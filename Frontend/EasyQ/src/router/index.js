@@ -31,7 +31,7 @@ export default new Router({
     {
       path: '/resetpassword/:ResetToken',
       name: 'resetpwd',
-      component: () => import('../views/ResetPwd.vue')
+      component: () => import('../views/resetpwd.vue')
     },
     {
       path: '/signin',
