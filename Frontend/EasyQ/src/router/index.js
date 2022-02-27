@@ -67,6 +67,11 @@ export default new Router({
       path: '/verify',
       name: 'verify',
       component: () => import('../views/Verify.vue')
+    },
+    {
+      path: '/instructorhome',
+      name: 'instructorhome',
+      component: () => import('../views/InstructorHome.vue')
     }
   ]
 })
