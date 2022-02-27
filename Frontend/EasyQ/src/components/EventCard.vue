@@ -3,8 +3,7 @@
     <div class="card1" >
       <!-- <div class="card-content" style="margin-right : 100px"> -->
     </div>
-    <div class ="card2" style="margin-top : 100px">
-    
+    <div class ="card2" style="margin-top : 100px;">
         <!-- <h2 class="is-size-4 has-text-weight-bold">Event name</h2> -->
         <!-- <small class="event-date">Event date</small> -->
         <!-- <span>Event location</span> -->
@@ -25,6 +24,9 @@
     background-position: center;
     background-size: cover;
     text-align: center;
+    // display: block;
+    // margin:0 auto;
+    margin-left: 300px;
   }
   .card2 {
     background-image: url('https://uwaterloo.ca/sites/uwaterloo.ca/files/uploads/images/wusa.png');
@@ -35,8 +37,13 @@
     background-position: center;
     background-size: cover;
     text-align: center;
+    margin-left: 300px;
+    // vertical-align:middle;
+    // display: block;
+    // margin:0 auto;
   }
   // .card-content {
+  //   background-image: url('https://uwaterloo.ca/sites/uwaterloo.ca/files/uploads/images/wusa.png');
   //   padding-top: 50px;
   //   position: absolute;
   //   color: #fff;
@@ -45,18 +52,18 @@
   //   padding: 10px;
   //   height: 200px;
   //   width: 100%;
-    // margin: 2;
-    // span {
-    //   font-size: 18px;
-    //   text-align: center;
-    //   width: 100%;
-    //   position: absolute;
-    //   bottom: 10px;
-    //   right: 0;
-    // }
-    // h2 {
-    //   margin-top: 10px;
-    // }
+  //   margin: 2;
+  //   span {
+  //     font-size: 18px;
+  //     text-align: center;
+  //     width: 100%;
+  //     position: absolute;
+  //     bottom: 10px;
+  //     right: 0;
+  //   }
+  //   h2 {
+  //     margin-top: 10px;
+  //   }
   // }
   // .event-date {
   //   background-color: #151515;

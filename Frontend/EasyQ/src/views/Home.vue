@@ -13,13 +13,14 @@
       </div>
     </section>
     <Events-list />
-    <div class = "page-bottom">
+    <div class="footer">EasyQ @2022 ｜   Help   ｜  Agreement   ｜   About us </div>
+    <!-- <div class = "page-bottom">
       <a>
         <strong class="is-size-4">EasyQ</strong>
         <span aria-hidden="true"></span>
         <h1>@2022 </h1>
       </a>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -70,5 +71,9 @@ import EventsList from '../components/EventsList.vue';
   }
   .is-xl {
     font-size: 1.7rem;
+  }
+  .footer {
+    flex: 0;
+    text-align: center;
   }
 </style>

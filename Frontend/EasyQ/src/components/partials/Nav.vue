@@ -10,13 +10,15 @@
         aria-label="menu"
         aria-expanded="false"
         data-target="navbarBasicExample"
+        @click="isOpen = !isOpen" 
+        v-bind:class="{'is-active': isOpen}"
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
-    <div id="navbar" class="navbar-menu">
+    <div id="navbar" class="navbar-menu" v-bind:class="{'is-active': isOpen}">
       <div class="navbar-start">
         <router-link to="/" class="navbar-item">Home</router-link>
         <router-link to="/about" class="navbar-item">About</router-link>
@@ -45,6 +47,11 @@
         username: getCookie("username"),
       }
     },
+    data: function() {
+       return {
+           isOpen: false
+       }
+   }
   };
   //https://www.w3schools.com/js/js_cookies.asp
   
@@ -76,4 +83,8 @@
       }
     }
   }
+//   .navbar-item{
+//   display: flex;
+//   align-items: center;
+// }
 </style>
