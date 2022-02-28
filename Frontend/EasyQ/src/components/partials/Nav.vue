@@ -40,16 +40,11 @@
 <script>
   export default {
     name: 'Nav',
-
-    data() {
-      return {
-        loggedin: getCookie("loggedin"),
-        username: getCookie("username"),
-      }
-    },
     data: function() {
        return {
-           isOpen: false
+        isOpen: false,
+        loggedin: getCookie("loggedin"),
+        username: getCookie("username"),
        }
    }
   };
