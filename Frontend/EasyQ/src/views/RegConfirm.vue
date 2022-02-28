@@ -1,9 +1,9 @@
 <template> 
 <div className="container">
-        <h3>
-          <strong>Registration confirmed!</strong>
-        </h3>
-      <router-link to = "/signin" > Sign in here ! </router-link>
+        <div class="alert alert-primary" role="alert">
+  Registration has been confirmed !  <router-link to = "/signin" > Sign in here ! </router-link>. 
+        </div>
+      
 </div> 
 </template>
 

@@ -89,7 +89,7 @@ export default {
         this.isFail = false;
         setCookie("id", data2.id, 30);
         setCookie("loggedin", "true", 30);
-        window.location.href = "/";
+        window.location.href = "/instructorhome";
       } else if (data2.isMatched == false) {
         this.isFail = true;
       } else {
