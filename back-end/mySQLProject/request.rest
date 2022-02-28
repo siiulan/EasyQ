@@ -1,0 +1,77 @@
+POST http://localhost:8080/api/user/registration
+Content-Type: application/json
+
+{
+    "username" : "siiulan79@gmail.com",
+	"password" : "123456",
+	"firstname" : "Test",
+	"lastname" : "Test"
+}
+
+###
+
+POST http://localhost:8080/api/user/registration
+Content-Type: application/json
+
+{
+    "username":"123@com",
+	"password":"123",
+	"firstname":"sb",
+	"lastname":"ni"
+}
+
+###
+
+POST http://localhost:8080/api/user/login
+Content-Type: application/json
+
+{
+    "username": "r63gao@uwaterloo.ca",
+	"password": "admin"
+}
+
+###
+
+POST http://localhost:8080/api/user/login
+Content-Type: application/json
+
+{
+    "username" : "siiulan79@gmail.com",
+	"password" : "123456"
+}
+
+###
+
+POST http://localhost:8080/api/user/reset/forgotPassword
+Content-Type: application/json
+
+{
+    "username" : "siiulan79@gmail.com"
+}
+
+###
+
+POST http://localhost:8080/api/user/reset/request/0
+Content-Type: application/json
+
+{
+	"newPassword" : "newPassword",
+	"verifyToken" : "0"
+}
+
+###
+
+GET http://localhost:8080/api/user/test/email
+Content-Type: application/json
+
+{
+    "email" : "siiulan79@gmail.com"
+}
+
+###
+POST http://localhost:8080/api/user/verify/resend
+Content-Type: application/json
+
+{
+    "email" : "siiulan79@gmail.com"
+}

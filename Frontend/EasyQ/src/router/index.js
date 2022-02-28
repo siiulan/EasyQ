@@ -31,7 +31,7 @@ export default new Router({
     {
       path: '/resetpassword/:ResetToken',
       name: 'resetpwd',
-      component: () => import('../views/resetpwd.vue')
+      component: () => import('../views/ResetPwd.vue')
     },
     {
       path: '/signin',
@@ -67,6 +67,11 @@ export default new Router({
       path: '/verify',
       name: 'verify',
       component: () => import('../views/Verify.vue')
+    },
+    {
+      path: '/instructorhome',
+      name: 'instructorhome',
+      component: () => import('../views/InstructorHome.vue')
     }
   ]
 })
