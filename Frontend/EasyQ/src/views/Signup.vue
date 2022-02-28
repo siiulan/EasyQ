@@ -139,7 +139,7 @@ import axios from 'axios'
                if(response.data.isRegistered === true){
 
                 this.regerror = true;
-                this.isReg == true;
+                this.isReg = true;
                 return false;//onsubmit === false
                }
                else {
