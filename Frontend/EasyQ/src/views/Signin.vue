@@ -191,7 +191,6 @@ function setCookie(cname, cvalue, exdays) {
   background-size: cover;
   background-repeat: no-repeat;
   overflow-x:scroll;
-  white-space:nowrap;
 }
 
 .qpanel {
