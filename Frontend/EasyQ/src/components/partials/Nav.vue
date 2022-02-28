@@ -33,6 +33,14 @@
           </div>
         </div>
         <div class="navbar-item is-size-5" v-if="loggedin == 'true'">{{username}}</div>
+        <div class="navbar-item">
+          <div class="buttons" v-if="loggedin == 'true'" @click="signout">
+            <a class="button is-dark">
+              <router-link to = "/" class = "navbar-item">Sign Out</router-link>
+              <!-- <strong>Sign In</strong> -->
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -46,7 +54,15 @@
         loggedin: getCookie("loggedin"),
         username: getCookie("username"),
        }
-   }
+    },
+    methods: {
+      signout () {
+        setCookie("username", "", 30);
+        setCookie("id", "", 30);
+        setCookie("loggedin", "false", 30);
+        this.loggedin = "false";
+      },
+    },
   };
   //https://www.w3schools.com/js/js_cookies.asp
   
@@ -64,6 +80,12 @@
       }
     }
     return "";
+  }
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
 </script>
 <style lang="scss" scoped>
