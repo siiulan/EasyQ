@@ -81,7 +81,7 @@ export default {
         this.errormsg = "Login Failed";
       }
       setCookie("username", data.username, 30);
-      setCookie("password", data.password, 30);
+      //setCookie("password", data.password, 30);
 
       /*
       let xhr = new XMLHttpRequest();
