@@ -1,16 +1,25 @@
 const { password } = require("../configs/db.config.js");
 const TA = require("../model/ta.model.js");
 
+// exports.test = (req,res)=>{
+//     if(!req.body){
+//         res.status(400).send(
+//             {message:"Content cannot be empty！"}
+//         )
+//     }else res.json(00008);
+// }
+
+
 exports.startofficehour = (req,res)=>{
     if(!req.body){
         res.status(400).send(
             {message:"Content cannot be empty！"}
         )
     }
-    let taid = req.body.USER_ID
-    let classid = req.body.CLASS_ID
-    let meetinglink = req.body.MEETING_LINK
-    let description = req.body.DESCRIPTION
+    let taid = req.body.user_id
+    let classid = req.body.class_id
+    let meetinglink = req.body.meeting_link
+    let description = req.body.description
 
     TA.Startofficehour(classid,taid,meetinglink,description,(err,data) =>{
         if (err)
@@ -28,10 +37,10 @@ exports.popstudent = (req,res)=>{
             {message:"Content cannot be empty！"}
         )
     }
-    let taid = req.body.USER_ID
-    let classid = req.body.CLASS_ID
+    let taid = req.body.user_id
+    let officehourid = req.body.office_hour_id
     //judge if taid match with classid
-    TA.Popstudent(classid,(err,data) =>{
+    TA.Popstudent(officehourid,(err,data) =>{
         if (err)
             res.status(500).send({
                 message:
@@ -47,10 +56,10 @@ exports.getqueuelength = (req,res)=>{
             {message:"Content cannot be empty！"}
         )
     }
-    let taid = req.body.USER_ID
-    let classid = req.body.CLASS_ID
+    let taid = req.body.user_id
+    let officehourid = req.body.office_hour_id
     //judge if taid match with classid
-    TA.Getqueuelength(classid,(err,data) =>{
+    TA.Getqueuelength(officehourid,(err,data) =>{
         if (err)
             res.status(500).send({
                 message:
@@ -66,10 +75,10 @@ exports.endofficehour = (req,res)=>{
             {message:"Content cannot be empty！"}
         )
     }
-    let taid = req.body.USER_ID
-    let classid = req.body.CLASS_ID
+    let taid = req.body.user_id
+    let officehourid = req.body.office_hour_id
     //judge if taid match with classid
-    TA.Endofficehour(classid,(err,data) =>{
+    TA.Endofficehour(officehourid,(err,data) =>{
         if (err)
             res.status(500).send({
                 message:
@@ -86,7 +95,7 @@ exports.getClass = (req,res)=>{
             {message:"Content cannot be empty！"}
         )
     }
-    let id = req.body.user_ID
+    let id = req.body.TA_user_id
     TA.getClassesinfo(id,(err,data) =>{
         if (err)
             res.status(500).send({
@@ -98,12 +107,14 @@ exports.getClass = (req,res)=>{
 }
 
 exports.getsingleClassinfo = (req,res)=>{
+    console.log("in controller");
     if(!req.body){
         res.status(400).send(
             {message:"Content cannot be empty！"}
         )
     }
-    let id = req.body.classid
+    let id = req.body.course_id
+    console.log("classid",id)
     TA.getClassinfo(id,(err,data) =>{
         if (err)
             res.status(500).send({
@@ -111,6 +122,7 @@ exports.getsingleClassinfo = (req,res)=>{
                     err.message || "some error occured"
             });
         else res.json(data)
+        console.log("get data in controller:",data);
     })
 }
 
@@ -120,12 +132,12 @@ exports.editClass = (req,res)=>{
             {message:"Content cannot be empty！"}
         )
     }
-    let id = req.body.classid
-    let name = req.body.classname
-    let number = req.body.classnumber
-    let info = req.body.classinfo
-    let term = req.body.classterm
-    let instructor = req.body.classinstructor
+    let id = req.body.course_id
+    let name = req.body.coursename
+    let number = req.body.coursenumber
+    let info = req.body.schedule
+    let term = req.body.term
+    let instructor = req.body.instructor
     TA.editClassinfo(id,name,number,info,term,instructor,(err,data) =>{
         if (err)
             res.status(500).send({

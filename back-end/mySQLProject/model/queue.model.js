@@ -6,10 +6,24 @@ RDS_HOST = '127.0.0.1',    //服务器IP  要连接的A服务器redis
 RDS_PWD = '123456',     //密码  
 RDS_OPTS = {}                 //设置项  
 const client = redis.createClient(RDS_PORT,RDS_HOST,RDS_OPTS);  
+// const client = new redis(RDS_PORT,RDS_HOST,RDS_OPTS);  
+console.log("required redis");
 
+client.on('connect', () => {
+    console.log('connected');
+});
 client.auth(RDS_PWD,function(){  
-            console.log('通过认证');  
+    console.log('通过认证');  
 });  
+client.on('end', () => {
+    console.log('disconnected');
+});
+client.on('reconnecting', () => {
+    console.log('reconnecting');
+});
+client.on('error', (err) => {
+    console.log('error', { err });
+});
 
 //redis class and functions
 class OfficehourQueue{

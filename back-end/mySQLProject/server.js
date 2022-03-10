@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 require("./routes/registration.routes.js")(app);
 require("./routes/instructor.routes.js")(app);
+require("./routes/ta.routes.js")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

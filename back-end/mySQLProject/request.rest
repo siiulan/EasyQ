@@ -4,8 +4,8 @@ Content-Type: application/json
 {
     "username" : "siiulan79@gmail.com",
 	"password" : "123456",
-	"firstname" : "Test",
-	"lastname" : "Test"
+	"firstname" : "TA1",
+	"lastname" : "ta1"
 }
 
 ###
@@ -30,7 +30,7 @@ Content-Type: application/json
 	"password": "admin"
 }
 
-###
+##
 
 POST http://localhost:8080/api/user/login
 Content-Type: application/json
@@ -83,3 +83,63 @@ Content-Type: application/json
 {
     "user_ID" : "0"
 }
+
+###
+POST http://localhost:8080/api/user/ta/getsingleClass
+Content-Type: application/json
+
+{
+    "course_id" : "1"
+}
+
+
+###
+POST http://localhost:8080/api/user/ta/getClass
+Content-Type: application/json
+
+{
+    "TA_user_id" : "4"
+}
+
+###
+POST http://localhost:8080/api/user/ta/editClass
+Content-Type: application/json
+
+{
+    "course_id" : "4",
+	"coursename" : "name",
+	"coursenumber" : "number",
+	"schedule" : "schedule",
+	"term" : "Spring 2022",
+	"instructor": "5"
+}
+###
+POST http://localhost:8080/api/user/ta/startofficehour
+Content-Type: application/json
+
+{
+    "user_id" : "4",
+	"class_id" : "3",
+	"meeting_link" : "meetinglink",
+	"description" : "this is a office hour for class3 TA4"
+}
+
+###
+POST http://localhost:8080/api/user/ta/endofficehour
+Content-Type: application/json
+
+{
+    "user_id" : "4",
+	"office_hour_id" : "7237e07d-6c11-4b59-b403-2e20a14c0499"
+}
+
+
+###
+POST http://localhost:8080/api/user/ta/getqueuelength
+Content-Type: application/json
+
+{
+    "user_id" : "4",
+	"office_hour_id" : "7237e07d-6c11-4b59-b403-2e20a14c0499"
+}
+
