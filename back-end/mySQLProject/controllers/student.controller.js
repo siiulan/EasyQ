@@ -2,6 +2,24 @@ const { password } = require("../configs/db.config.js");
 const Student = require("../model/student.model.js");
 
 
+exports.test_con = (req, res) => {
+    if (!req.body){
+        res.status(400).send({
+            message: "Content can not be empty"
+        })
+    }
+    let id = req.body.user_ID;
+    let role = req.body.user_ROLE;
+    Student.test(id, role, (err, data) => {
+        if (err)
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while enrolling the class."
+            });
+        else res.json(data)
+    });
+};
+
 exports.addClass_con = (req, res) => {
     // validate request
     if (!req.body){
@@ -12,7 +30,7 @@ exports.addClass_con = (req, res) => {
     let id = req.body.user_ID;
     let class_number = req.body.class_NUMBER;
     let invi_code = req.body.invitation_CODE;
-    Student.addClass(id, class_number, invi_code, (err, data) => {
+    Student.classAdd(id, class_number, invi_code, (err, data) => {
         if (err)
             res.status(500).send({
               message:
@@ -46,7 +64,7 @@ exports.getClassOne_con = (req, res) => {
         })
     }
     let class_id = req.body.class_ID;
-    Student.getClassAll(class_id, (err, data) => {
+    Student.getClassOne(class_id, (err, data) => {
         if (err)
             res.status(500).send({
               message:

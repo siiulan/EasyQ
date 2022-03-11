@@ -81,5 +81,51 @@ POST http://localhost:8080/api/user/instructor/getClass
 Content-Type: application/json
 
 {
-    "user_ID" : "0"
+    "user_ID" : "2"
+}
+
+### class existed, student haven't been enrolled in this class and the code is right
+POST http://localhost:8080/api/user/student/addclass
+Content-Type: application/json
+
+{
+    "user_ID" : "6",
+	"class_NUMBER" : "YES100",
+	"invitation_CODE" : "123456"
+}
+
+###class existed, student haven't been enrolled in this class and the code is false
+POST http://localhost:8080/api/user/student/addclass
+Content-Type: application/json
+
+{
+    "user_ID" : "5",
+	"class_NUMBER" : "YES100",
+	"invitation_CODE" : "123"
+}
+
+###
+POST http://localhost:8080/api/user/student/classes
+Content-Type: application/json
+
+{
+    "user_ID" : "1"
+
+}
+###
+POST http://localhost:8080/api/user/student/classes/class
+Content-Type: application/json
+
+{
+    "class_ID" : "4"
+
+}
+###
+POST http://localhost:8080/api/user/student/test
+Content-Type: application/json
+
+{
+    "user_ID" : "1",
+	"user_ROLE" : "student"
+
 }
