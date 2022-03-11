@@ -130,7 +130,7 @@ Content-Type: application/json
 
 {
     "user_id" : "4",
-	"office_hour_id" : "7237e07d-6c11-4b59-b403-2e20a14c0499"
+	"office_hour_id" : "4a199883-1be5-40f7-894e-f6802aba23a3"
 }
 
 
@@ -140,6 +140,17 @@ Content-Type: application/json
 
 {
     "user_id" : "4",
-	"office_hour_id" : "7237e07d-6c11-4b59-b403-2e20a14c0499"
+	"office_hour_id" : "aaa71948-712a-4d14-b0a2-c77d034f37e6"
 }
+
+
+###
+POST http://localhost:8080/api/user/ta/popstudent
+Content-Type: application/json
+
+{
+    "user_id" : "4",
+	"office_hour_id" : "aaa71948-712a-4d14-b0a2-c77d034f37e6"
+}
+
 

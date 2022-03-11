@@ -46,16 +46,19 @@ class OfficehourQueue{
             }
         })
     }
-    
-    inlineUser = function () {
+    inlineUser = async (officehourid,result) =>{
         client.llen(this.key, function(err, res){
             if(!err){
-                console.log(`there are ${res} people in line`);
-                return res;
+                console.log(`there are ${res} people in line from redis`);
+                let response = res
+                result(null,response)
+                return
+            }
+            else{
+                console.log("error in queuelength!")
             }
         })
-        return 0;
-    }
+    }    
 
     rankUser = function (username) {
         client.lpos(this.key, username, function(err, data){
@@ -67,11 +70,16 @@ class OfficehourQueue{
         })   
     }
     
-    popUser = function(){
+    popUser = async (officehourid,result) =>{
         client.lpop(this.key, function(err, res){
             if(!err){
                 console.log(`${res} has been popped`);
-                return res;
+                let response = res
+                result(null,response)
+                return
+            }
+            else{
+                console.log("error in popuser!")
             }
         })
     }

@@ -5,7 +5,7 @@ module.exports = app => {
     router.post('/getsingleClass',tas.getsingleClassinfo) //okay
     router.post('/editClass',tas.editClass) //okay
     router.post('/startofficehour', tas.startofficehour) //okay
-    router.post('/popstudent',tas.popstudent)
+    router.post('/popstudent',tas.popstudent) //okay
     router.post('/getqueuelength',tas.getqueuelength) //okay
     router.post('/endofficehour', tas.endofficehour) //okay
 

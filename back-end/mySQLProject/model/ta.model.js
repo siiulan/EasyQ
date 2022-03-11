@@ -13,6 +13,7 @@ const TA = function(user) {
   this.password = user.password;
 };
 // input student's user_id, and return student's user_info table
+
 function getstudentinfobyid(stuid){
     return new Promise ((resolve,reject) =>{
         sql.query(`SELECT * FROM user_info WHERE USER_ID = ?`, [stuid], (err, res) => {
@@ -21,6 +22,7 @@ function getstudentinfobyid(stuid){
                 reject(err);
             }
             resolve(res)
+            console.log("in function",res)
         });
     })
 }
@@ -43,6 +45,7 @@ TA.Startofficehour = async (classid,taid,meetinglink,description,result) =>{
     let token = uuid.v4();
     // create a queue in redis by token
     officehour = new ohqueue(token);
+    console.log(officehour.inlineUser())
     // put officehour info into mysql:
     // classid,taid,meeting_link,description,active
     const ohInfo = {
@@ -60,7 +63,7 @@ TA.Startofficehour = async (classid,taid,meetinglink,description,result) =>{
             result(error, null);
             return;
         } 
-        console.log("created officehour");
+        console.log("created officehour in MYSQL");
     });
 
     //return office_hour_id to front_end.
@@ -73,25 +76,56 @@ TA.Startofficehour = async (classid,taid,meetinglink,description,result) =>{
 
 TA.Popstudent = async (officehourid,result) =>{
     let officehour = new ohqueue(officehourid);
-    let newstu = officehour.popUser(); /// popuser should return student's userid
-    let newstuinfo = getstudentinfobyid(newstu);
-    let name = newstuinfo[0].FIRST_NME + ' '+ newstuinfo[0].LAST_NME;
-    let response = {
-        EMAIL_ADDRESS : newstuinfo[0].EMAIL_ADDRESS,
-        NAME : name,
-    }
-    result(null,response)
-    return
+    // let newstu = officehour.popUser(); /// popuser should return student's userid
+    officehour.popUser(1,(err,data) =>{
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "some error occured"
+            })
+        else{
+            console.log("input of function:",data)
+            sql.query(`SELECT * FROM user_info WHERE USER_ID = ?`, [data], (err, res) => {
+                if (err) {
+                    console.log("error: ", err);
+                    reject(err);
+                }
+                console.log("in function",res)
+                let newstuinfo = res;
+                console.log("newstuinfo in tamodel",newstuinfo);
+                let name = newstuinfo[0].FIRST_NME + ' '+ newstuinfo[0].LAST_NME;
+                let response = {
+                    EMAIL_ADDRESS : newstuinfo[0].EMAIL_ADRESS,
+                    NAME : name
+                }
+                // let response = {
+                //     EMAIL_ADDRESS : 0,
+                //     NAME : 0
+                // }
+                result(null,response)
+                return
+            });
+        }
+    })
 }
 
 TA.Getqueuelength = async (officehourid,result) =>{
     let officehour = new ohqueue(officehourid);
-    let queuelength = officehour.inlineUser(); 
-    let response = {
-        QUEUE_LENGTH : queuelength
-    }
-    result(null,response)
-    return
+    officehour.inlineUser(1,(err,data) =>{
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "some error occured"
+            })
+        else{
+            let queuelength = data;
+            let response = {
+                QUEUE_LENGTH : queuelength
+            }
+            result(null,response)
+            return
+        }
+    })
 }
 
 TA.Endofficehour = async (officehourid,result) =>{
