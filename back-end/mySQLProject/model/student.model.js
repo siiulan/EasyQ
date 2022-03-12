@@ -99,7 +99,7 @@ function findNameInstructor(user_id){
         })
     })
 }
-
+//find TA name by user_id
 function findNameTA(user_id){
     return new Promise((resolve, reject) => {
         sql.query(`SELECT * FROM user_info WHERE USER_ID = ? AND USER_ROLE = 'TA'`, [user_id], (err,res) =>{
@@ -111,9 +111,22 @@ function findNameTA(user_id){
         })
     })
 }
+//find office hour info by class_id
 function findOffice(class_id){
     return new Promise((resolve, reject) => {
-        sql.query(`SELECT * FROM office_hour WHERE CLASS_ID = ? AND ACTIVE = ?`, [class_id], true, (err, res) => {
+        sql.query(`SELECT * FROM office_hour WHERE CLASS_ID = ? AND ACTIVE = true`, [class_id], (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            resolve(res);
+        })
+    })
+}
+//find office hour info by tocken
+function findOffice_by_tocken(officehour_id){
+    return new Promise((resolve, reject) => {
+        sql.query(`SELECT * FROM office_hour WHERE OFFICE_HOUR_ID = ? AND ACTIVE = true`, [officehour_id], (err, res) => {
             if (err) {
                 console.log("error: ", err);
                 reject(err);
@@ -134,7 +147,7 @@ function check_student_enrolled (id, class_id){
         });
     })
 }
-
+//check the invitation code is right or not
 function check_student_invitationcode (invi_code, class_id){
     return new Promise((resolve, reject) => {
         sql.query(`SELECT * FROM invitation_code WHERE INVITATION_CODE = ? AND CLASS_ID = ?`, [invi_code, class_id], (err, res) =>{
@@ -147,19 +160,8 @@ function check_student_invitationcode (invi_code, class_id){
     })
 }
 
-Student.test = async (id, role, result) => {
-    console.log(id);
-    let testset = await classtest(id, role);
-    console.log(testset.length);
-    let response = {
-        personList: testset[0].USER_ROLE
-    }
-    result(null, response)
-    return
-}   
-
 Student.classAdd = async (id , class_number, invi_code, result) => {
-    console.log(class_number);
+    //console.log(class_number);
     let item = await classGetinfo(class_number);
     if(!item.length){
         let judge = {
@@ -169,11 +171,11 @@ Student.classAdd = async (id , class_number, invi_code, result) => {
         return
     }
     let class_id = item[0].CLASS_ID;
-    console.log(class_id);
+    //console.log(class_id);
     flag_notenrolled = true
     // Does student has been enrolled in this class?
     let ifEnrolled = await check_student_enrolled(id, class_id)
-    console.log(ifEnrolled);
+    //console.log(ifEnrolled);
     //student has been enrolled in this class
     if(ifEnrolled.length){
         flag_notenrolled = false
@@ -187,7 +189,6 @@ Student.classAdd = async (id , class_number, invi_code, result) => {
     if (flag_notenrolled){
         flag_coderight = true;
         let ifCode = await check_student_invitationcode(invi_code, class_id);
-        console.log(ifCode)
         //invitation code is not right
         if (!ifCode.length){
             flag_coderight = false;
@@ -230,15 +231,12 @@ Student.getClassAll = async (id, result) => {
     classes_shortinfo = []; 
     const response = [];
     let classes_id = await classGetid(id);
-    console.log(classes_id);
     if (classes_id.length){
         for (let i=0; i<classes_id.length; i++){
             classes_shortinfo[i] = await classGetshortinfo(classes_id[i].CLASS_ID);
-            console.log(classes_shortinfo[i][0].INSTRUCTOR_ID);
         }
         for (let j=0; j<classes_shortinfo.length; j++){
             let item = await findNameInstructor(classes_shortinfo[j][0].INSTRUCTOR_ID);
-            console.log(item);
             var instructor_name = item[0].FIRST_NME+' '+ item[0].LAST_NME;
             let json_oneclass = {
                 CLASS_ID : classes_shortinfo[j][0].CLASS_ID,
@@ -270,14 +268,10 @@ Student.getClassOne = async (class_id, result) => {
         var Instructor_NAME = item_Instructor[0].FIRST_NME+' '+ item_Instructor[0].LAST_NME;
         if(TA_info.length){
             for(let i=0; i<TA_info.length; i++){
-                console.log('here is ', i)
                 let item_TA = await findNameTA(TA_info[i].USER_ID);
-                console.log(item_TA);
                 TA_allname[i] = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
-                console.log(TA_allname[i]);
             }
         }
-        console.log(TA_allname);
         let response = {
             CLASS_ID : class_info[0].CLASS_ID,
             CLASS_NUMBER : class_info[0].CLASS_NUMBER,
@@ -307,35 +301,81 @@ Student.joinOffice = async (class_id, user_id, result) => {
         result(null, judge);
         return;
     } else {
-        let item_TA = await findName(getOffice[0].USER_ID);
-        var TA_Name = item_TA.join();
+        let item_TA = await findNameTA(getOffice[0].USER_ID);
+        let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
+        console.log(TA_name);
         let item_classNumber = await classGetwholeinfo(class_id);
-        var Class_Number = item_classNumber.CLASS_NUMBER
+        var Class_Number = item_classNumber[0].CLASS_NUMBER;
         let Office_token = getOffice[0].OFFICE_HOUR_ID;
         var QueueSet  = new Queue(`${Office_token}`);
-        await QueueSet.addUser(user_id);
-        let queue_rank = await QueueSet.rankUser(user_id);
-        //let queue_total = await QueueSet.inlineUser();
-        if (queue_rank==0){
-            let response = {
-                OFFICE_HOUR_ID : Office_token,
-                CLASS_NUMBER : Class_Number,
-                QUEUE_INDEX : queue_rank,
-                TA_NAME : TA_Name
+        QueueSet.addUser(user_id);
+        QueueSet.rankUser(user_id,(err,data) =>{
+            if (err)
+                res.status(500).send({
+                    message:
+                        err.message || "some error occured"
+                })
+            else{
+                let response = {
+                    isinQueue: true,
+                    OFFICE_HOUR_ID : Office_token,
+                    CLASS_NUMBER : Class_Number,
+                    QUEUE_INDEX : data,
+                    TA_NAME : TA_name,
+                    TA_ID : getOffice[0].USER_ID
+                }
+                console.log('in the queue now')
+                result(null, response)
+                return;
             }
-            result(null, response)
-            return;
-        } else {
-            let response = {
-                OFFICE_HOUR_ID : Office_token,
-                CLASS_NUMBER : Class_Number,
-                TA_NAME : TA_Name,
-                OFFICE_HOUR_LINK : getOffice[0].MEETING_LINK 
-            }
-            result(null, response)
-            return;
-        }
+        })
     }
+}
+Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
+    let Office_info = await findOffice_by_tocken(officehour_id);
+    let item_TA = await findNameTA(Office_info[0].USER_ID);
+    let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
+    console.log(TA_name);
+    let item_classNumber = await classGetwholeinfo(class_id);
+    var Class_Number = item_classNumber[0].CLASS_NUMBER;
+    let Office_token = officehour_id;
+    var QueueSet  = new Queue(`${Office_token}`);
+    QueueSet.rankUser(user_id,(err,data) =>{
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "some error occured"
+            })
+        else{
+            console.log(data)
+            if(data!=null){
+                let response = {
+                    isinQueue: true,
+                    OFFICE_HOUR_ID : Office_token,
+                    CLASS_NUMBER : Class_Number,
+                    QUEUE_INDEX : data,
+                    TA_NAME : TA_name,
+                    TA_ID : item_TA[0].USER_ID
+                }
+                console.log('still in the queue')
+                result(null, response)
+                return;
+            } else if(data==null) {
+                let response = {
+                    isinQueue: false,
+                    MEETING_LINK : Office_info[0].MEETING_LINK,
+                    OFFICE_HOUR_ID : Office_token,
+                    CLASS_NUMBER : Class_Number,
+                    QUEUE_INDEX : data,
+                    TA_NAME : TA_name,
+                    TA_ID : Office_info[0].USER_ID
+                }
+                console.log('be popped')
+                result(null, response)
+                return;
+            }
+        }
+    })
 }
 
 Student.quitOffice = async (user_id, office_hour_id, result) => {

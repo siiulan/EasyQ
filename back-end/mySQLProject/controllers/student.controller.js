@@ -2,24 +2,6 @@ const { password } = require("../configs/db.config.js");
 const Student = require("../model/student.model.js");
 
 
-exports.test_con = (req, res) => {
-    if (!req.body){
-        res.status(400).send({
-            message: "Content can not be empty"
-        })
-    }
-    let id = req.body.user_ID;
-    let role = req.body.user_ROLE;
-    Student.test(id, role, (err, data) => {
-        if (err)
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while enrolling the class."
-            });
-        else res.json(data)
-    });
-};
-
 exports.addClass_con = (req, res) => {
     // validate request
     if (!req.body){
@@ -91,6 +73,24 @@ exports.joinOffice_con = (req, res) => {
         else res.json(data);
     })
 }
+exports.intheOffice_con = (req, res) => {
+    if (!req.body){
+        res.status(400).send({
+            message: "Content can not be empty"
+        })
+    }
+    let user_id = req.body.user_ID;
+    let officehour_id = req.body.officehour_ID;
+    let class_id = req.body.class_ID;
+    Student.intheOffice(user_id, officehour_id, class_id, (err, data) => {
+        if (err)
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while quitting the office hour."
+            });
+        else res.json(data);
+    })
+}
 
 exports.quitOffice_con = (req, res) => {
     if (!req.body){
@@ -99,7 +99,7 @@ exports.quitOffice_con = (req, res) => {
         })
     }
     let user_id = req.body.user_ID;
-    let office_hour_id = req.body.office_hour_ID;
+    let office_hour_id = req.body.officehour_ID;
     Student.quitOffice(user_id, office_hour_id, (err, data) =>{
         if (err)
             res.status(500).send({

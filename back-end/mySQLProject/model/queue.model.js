@@ -25,49 +25,34 @@ class OfficehourQueue{
     }
 
     removeUser = function (username) {
-        client.lrem(this.key, username, function(err, res){
+        //console.log('here')
+        client.lrem(this.key, 1, username, function(err, res){
             if(!err){
                 console.log(`${username} has been removed`);
             }
         })
     }
-    
-    inlineUser = function () {
-        client.llen(this.key, function(err, res){
-            if(!err){
-                console.log(`there are ${res} people in line`);
-                return res;
-            }
-        })
-        return 0;
-    }
-
-    rankUser = function (username) {
+ 
+    rankUser = async (username,result) =>{
         client.lpos(this.key, username, function(err, data){
-            //console.log(data);
             if(!err){
-                console.log(`${username}'s rank is`, data+1);
-                return data+1;
+                if (data!=null){
+                    let response = data+1
+                result(null,response)
+                return
+                } else {
+                    let response = data
+                    result(null,response)
+                    return
+                }
+                
             }
-        }) 
-    }
-    
-    popUser = function(){
-        client.lpop(this.key, function(err, res){
-            if(!err){
-                console.log(`${res} has been popped`);
-                return res;
+            else{
+                console.log("error in queuelength!")
             }
         })
     }
 
-    deleteSet = function(){
-        client.del(this.key, function(err, res){
-            if (!err){
-                console.log(`the ${this.key} has been deleted`);
-            }
-        })
-    }
 };
 
 

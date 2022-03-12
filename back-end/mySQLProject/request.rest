@@ -89,7 +89,7 @@ POST http://localhost:8080/api/user/student/addclass
 Content-Type: application/json
 
 {
-    "user_ID" : "6",
+    "user_ID" : "7",
 	"class_NUMBER" : "YES100",
 	"invitation_CODE" : "123456"
 }
@@ -99,7 +99,7 @@ POST http://localhost:8080/api/user/student/addclass
 Content-Type: application/json
 
 {
-    "user_ID" : "5",
+    "user_ID" : "8",
 	"class_NUMBER" : "YES100",
 	"invitation_CODE" : "123"
 }
@@ -121,11 +121,30 @@ Content-Type: application/json
 
 }
 ###
-POST http://localhost:8080/api/user/student/test
+POST http://localhost:8080/api/user/student/officehour
+Content-Type: application/json
+
+{
+    "class_ID" : "4",
+	"user_ID" : "1"
+
+}
+###
+POST http://localhost:8080/api/user/student/officehour/inqueue
 Content-Type: application/json
 
 {
     "user_ID" : "1",
-	"user_ROLE" : "student"
+	"officehour_ID" : "00202",
+	"class_ID" : "4"
+
+}
+###
+POST http://localhost:8080/api/user/student/officehour/quit
+Content-Type: application/json
+
+{
+    "user_ID" : "1",
+	"officehour_ID" : "00202"
 
 }
