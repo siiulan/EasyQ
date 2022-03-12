@@ -28,9 +28,9 @@ function classtest(id, role){
 }
 
 //find the class information by class_number
-function classGetinfo(class_number){
+function classGetinfo(class_number, term){
     return new Promise((resolve, reject) =>{
-        sql.query(`SELECT * FROM class WHERE CLASS_NUMBER = ?`, [class_number] ,(err,res) => {
+        sql.query(`SELECT * FROM class WHERE CLASS_NUMBER = ? AND CLASS_TERM = ?`, [class_number, term] ,(err,res) => {
             if (err) {
                 console.log("error: ", err);
                 reject(err);
@@ -160,9 +160,8 @@ function check_student_invitationcode (invi_code, class_id){
     })
 }
 
-Student.classAdd = async (id , class_number, invi_code, result) => {
-    //console.log(class_number);
-    let item = await classGetinfo(class_number);
+Student.classAdd = async (id , term, class_number, invi_code, result) => {
+    let item = await classGetinfo(class_number, term);
     if(!item.length){
         let judge = {
             isclassexisted : false
@@ -171,7 +170,6 @@ Student.classAdd = async (id , class_number, invi_code, result) => {
         return
     }
     let class_id = item[0].CLASS_ID;
-    //console.log(class_id);
     flag_notenrolled = true
     // Does student has been enrolled in this class?
     let ifEnrolled = await check_student_enrolled(id, class_id)
@@ -291,7 +289,33 @@ Student.getClassOne = async (class_id, result) => {
         return;
     }
 }
-
+Student.displayOffice = async (class_id, user_id, result) => {
+    let getOffice = await findOffice(class_id);
+    if (!getOffice.length){
+        let judge = {
+            isActive : false
+        }
+        result(null, judge);
+        return;
+    } else {
+        let item_TA = await findNameTA(getOffice[0].USER_ID);
+        let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
+        let item_classNumber = await classGetwholeinfo(class_id);
+        var Class_Number = item_classNumber[0].CLASS_NUMBER;
+        var class_Name = item_classNumber[0].CLASS_NAME;
+        let Office_token = getOffice[0].OFFICE_HOUR_ID;
+        let response = {
+            OFFICE_HOUR_ID : Office_token,
+            CLASS_NUMBER : Class_Number,
+            CLASS_ID : class_id,
+            CLASS_NAME : class_Name,
+            TA_NAME : TA_name,
+            TA_ID : getOffice[0].USER_ID
+        }
+        result(null, response)
+        return
+    }
+}
 Student.joinOffice = async (class_id, user_id, result) => {
     let getOffice = await findOffice(class_id);
     if (!getOffice.length){
@@ -320,7 +344,9 @@ Student.joinOffice = async (class_id, user_id, result) => {
                     isinQueue: true,
                     OFFICE_HOUR_ID : Office_token,
                     CLASS_NUMBER : Class_Number,
+                    CLASS_ID : class_id,
                     QUEUE_INDEX : data,
+                    CLASS_NAME : item_classNumber[0].CLASS_NAME,
                     TA_NAME : TA_name,
                     TA_ID : getOffice[0].USER_ID
                 }
@@ -353,8 +379,10 @@ Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
                     isinQueue: true,
                     OFFICE_HOUR_ID : Office_token,
                     CLASS_NUMBER : Class_Number,
+                    CLASS_ID : class_id,
                     QUEUE_INDEX : data,
                     TA_NAME : TA_name,
+                    CLASS_NAME : item_classNumber[0].CLASS_NAME,
                     TA_ID : item_TA[0].USER_ID
                 }
                 console.log('still in the queue')
@@ -366,8 +394,10 @@ Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
                     MEETING_LINK : Office_info[0].MEETING_LINK,
                     OFFICE_HOUR_ID : Office_token,
                     CLASS_NUMBER : Class_Number,
+                    CLASS_ID : class_id,
                     QUEUE_INDEX : data,
                     TA_NAME : TA_name,
+                    CLASS_NAME : item_classNumber[0].CLASS_NAME,
                     TA_ID : Office_info[0].USER_ID
                 }
                 console.log('be popped')

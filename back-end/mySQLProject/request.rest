@@ -99,9 +99,10 @@ POST http://localhost:8080/api/user/student/addclass
 Content-Type: application/json
 
 {
-    "user_ID" : "8",
-	"class_NUMBER" : "YES100",
-	"invitation_CODE" : "123"
+    "userId" : "8",
+	"term" : "Winter 2022",
+	"classNumber" : "YES100",
+	"invitationCode" : "123"
 }
 
 ###
@@ -109,7 +110,7 @@ POST http://localhost:8080/api/user/student/classes
 Content-Type: application/json
 
 {
-    "user_ID" : "1"
+    "userId" : "1"
 
 }
 ###
@@ -117,16 +118,25 @@ POST http://localhost:8080/api/user/student/classes/class
 Content-Type: application/json
 
 {
-    "class_ID" : "4"
+    "classId" : "4"
 
 }
 ###
-POST http://localhost:8080/api/user/student/officehour
+POST http://localhost:8080/api/user/student/officehour/display
 Content-Type: application/json
 
 {
-    "class_ID" : "4",
-	"user_ID" : "1"
+    "classId" : "4",
+	"userId" : "1"
+
+}
+###
+POST http://localhost:8080/api/user/student/officehour/join
+Content-Type: application/json
+
+{
+    "classId" : "4",
+	"userId" : "1"
 
 }
 ###
@@ -134,9 +144,9 @@ POST http://localhost:8080/api/user/student/officehour/inqueue
 Content-Type: application/json
 
 {
-    "user_ID" : "1",
-	"officehour_ID" : "00202",
-	"class_ID" : "4"
+    "userId" : "1",
+	"office_hour_Id" : "00202",
+	"classId" : "4"
 
 }
 ###
@@ -144,7 +154,7 @@ POST http://localhost:8080/api/user/student/officehour/quit
 Content-Type: application/json
 
 {
-    "user_ID" : "1",
-	"officehour_ID" : "00202"
+    "userId" : "1",
+	"office_hour_Id" : "00202"
 
 }
