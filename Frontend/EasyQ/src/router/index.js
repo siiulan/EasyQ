@@ -69,6 +69,21 @@ export default new Router({
       component: () => import('../views/Verify.vue')
     },
     {
+      path: '/TAQueue/:courseid',
+      name: 'TAQueue',
+      component: () => import('../views/TAQueue.vue')
+    },
+    {
+      path: '/TAHome',
+      name: 'TAHome',
+      component: () => import('../views/TAHome.vue')
+    },
+    {
+      path: '/EditInfo/:courseid',
+      name: 'EditInfo',
+      component: () => import('../views/EditInfo.vue')
+    },
+    {
       path: '/instructorhome',
       name: 'instructorhome',
       component: () => import('../views/InstructorHome.vue')
