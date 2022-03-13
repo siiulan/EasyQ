@@ -92,6 +92,26 @@ export default new Router({
       path: '/instructor/CourseAddSuccess',
       name: 'instructor_CourseAddSuccess',
       component: () => import('../views/InstructorCourseAddSuccess.vue')
+    },
+    {
+      path: '/StudentAddClassInfo',
+      name: 'StudentAddClassInfo',
+      component: () => import('../views/StudentAddClassInfo.vue')
+    },
+    {
+      path: '/StudentOfficeHour',
+      name: 'StudentOfficeHour',
+      component: () => import('../views/StudentOfficeHour.vue')
+    },
+    {
+      path: '/EventSingle',
+      name: 'EventSingle',
+      component: () => import('../views/EventSingle.vue')
+    },
+    {
+      path: '/Studenthome',
+      name: 'StudentHome',
+      component: () => import('../views/StudentHome.vue')
     }
   ]
 })
