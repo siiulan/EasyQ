@@ -55,6 +55,30 @@ function emailTesting (email, name){
           <p>We want to test if this email has sent to you successfully.</p>
           </div>`,
     }).catch(err => console.log(err));
-  }
+}
 
-module.exports = {sendConfirmationEmail, sendResetEmail, sendSuccessEmail, emailTesting};
+function sendInivitationEmail (email, name, class_name, invitation_token, is_registered){
+  console.log("Check");
+  var registered_message = ``
+  if (is_registered){
+    registered_message = `<h1>TA Invitation from EasyQ</h1>
+    <h2>Hello,</h2>
+    <p>Instructor ${name} invited you to become a TA in the class ${class_name} on EasyQ. To use our office hour queue service, click the link to accept the invitiation and set up your office hour </p>
+    <a href=${url}/api/user/instructor/registeredInvitationConfirmation/${invitation_token}> Click here</a>
+    </div>`;
+  } else {
+    registered_message = `<h1>TA Invitation from EasyQ</h1>
+    <h2>Hello,</h2>
+    <p>Instructor ${name} invited you to become a TA in the class ${class_name} on EasyQ. To use our office hour queue service, click the link to finish your registration </p>
+    <a href=${url}/api/user/instructor/invitationConfirm/${invitation_token}> Click here</a>
+    </div>`;
+  }
+  transport.sendMail({
+    from: user,
+    to: email,
+    subject: "[EasyQ] you have a TA Invitation",
+    html: registered_message,
+  }).catch(err => console.log(err));
+}
+
+module.exports = {sendConfirmationEmail, sendResetEmail, sendSuccessEmail, emailTesting, sendInivitationEmail};
