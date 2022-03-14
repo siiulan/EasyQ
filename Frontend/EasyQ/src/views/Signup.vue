@@ -100,7 +100,6 @@ import axios from 'axios'
             mailvalidation(){
               const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/;
               this.emailvalid = emailRegex.test(this.input.email);
-              console.log(this.mailvalid)
             },
             typecheck(){
                 var decimal =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
