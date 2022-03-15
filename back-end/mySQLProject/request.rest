@@ -90,11 +90,12 @@ Content-Type: application/json
 
 {
     "user_ID" : "7",
-	"class_NUMBER" : "YES100",
-	"invitation_CODE" : "123456"
+	"class_NUMBER" : "YES1011",
+	"invitation_CODE" : "123456",
+	"term" : "Winter 2022"
 }
 
-###class existed, student haven't been enrolled in this class and the code is false
+###class existed, student haven't been enrolled in this class and the code is right
 POST http://localhost:8080/api/user/student/addclass
 Content-Type: application/json
 
@@ -102,7 +103,18 @@ Content-Type: application/json
     "userId" : "8",
 	"term" : "Winter 2022",
 	"classNumber" : "YES100",
-	"invitationCode" : "123"
+	"invitationCode" : "123456"
+}
+
+###class existed, student added class successfully
+POST http://localhost:8080/api/user/student/addclass
+Content-Type: application/json
+
+{
+    "userId" : "10",
+	"term" : "Winter 2022",
+	"classNumber" : "YES100",
+	"invitationCode" : "123456"
 }
 
 ###
@@ -110,7 +122,7 @@ POST http://localhost:8080/api/user/student/classes
 Content-Type: application/json
 
 {
-    "userId" : "1"
+    "userId" : "9"
 
 }
 ###

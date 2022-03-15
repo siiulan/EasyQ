@@ -357,8 +357,8 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
         var QueueSet  = new Queue(`${Office_token}`);
         QueueSet.addUser(user_id);
         var HashSet = new Hash(`${Office_token}hash`);
-        await QueueSet.addUser(id);
-        await HashSet.addQuestion(id, question);
+        await QueueSet.addUser(user_id);
+        await HashSet.addQuestion(user_id, question);
         QueueSet.rankUser(user_id,(err,data) =>{
             if (err)
                 res.status(500).send({
