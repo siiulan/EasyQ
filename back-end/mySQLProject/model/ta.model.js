@@ -2,7 +2,7 @@ const sql = require("../db.js");
 var uuid = require('uuid');
 const { reject } = require("async");
 var ohqueue  = require('./queue.model.js');
-
+var ohqueuehash  = require('./hash.model.js');
 // constructor
 const TA = function(user) {
   this.username = user.username;
@@ -76,6 +76,7 @@ TA.Startofficehour = async (classid,taid,meetinglink,description,result) =>{
 
 TA.Popstudent = async (officehourid,result) =>{
     let officehour = new ohqueue(officehourid);
+    let officehourhash = new ohqueuehash(`${officehourid}hash`);
     // let newstu = officehour.popUser(); /// popuser should return student's userid
     officehour.popUser(1,(err,data) =>{
         if (err)
@@ -94,16 +95,22 @@ TA.Popstudent = async (officehourid,result) =>{
                 let newstuinfo = res;
                 console.log("newstuinfo in tamodel",newstuinfo);
                 let name = newstuinfo[0].FIRST_NME + ' '+ newstuinfo[0].LAST_NME;
-                let response = {
-                    EMAIL_ADDRESS : newstuinfo[0].EMAIL_ADRESS,
-                    NAME : name
-                }
-                // let response = {
-                //     EMAIL_ADDRESS : 0,
-                //     NAME : 0
-                // }
-                result(null,response)
-                return
+                officehourhash.getQuestion(data,(err,dataa) =>{
+                    if (err)
+                        res.status(500).send({
+                            message:
+                                err.message || "some error occured"
+                        })
+                    else{
+                        let response = {
+                            EMAIL_ADDRESS : newstuinfo[0].EMAIL_ADRESS,
+                            NAME : name,
+                            QUESTION : dataa
+                        }
+                        result(null,response)
+                        return
+                    }
+                })
             });
         }
     })
