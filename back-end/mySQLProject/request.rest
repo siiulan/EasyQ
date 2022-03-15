@@ -83,3 +83,47 @@ Content-Type: application/json
 {
     "user_ID" : "0"
 }
+
+###
+POST http://localhost:8080/api/user/instructor/getClassMembers
+Content-Type: application/json
+
+{
+    "class_id" : "3"
+}
+
+###
+POST http://localhost:8080/api/user/instructor/classAddTA
+Content-Type: application/json
+
+{
+    "email_adress" : "siiulan79@gmail.com",
+	"class_id" : "3"
+}
+
+
+###
+POST http://localhost:8080/api/user/instructor/getStudentInvitationCode
+Content-Type: application/json
+
+{
+	"class_id" : "3"
+}
+
+###
+POST http://localhost:8080/api/user/instructor/getStudentInvitationCode
+Content-Type: application/json
+
+{
+	"class_id" : "3"
+}
+
+###
+POST http://localhost:8080/api/user/instructor/unregisteredInvitationConfirmation/9a2149a6-451b-4ab6-831d-9ca605497544
+Content-Type: application/json
+
+{
+	"first_name" : "Ryan",
+	"last_name" : "Gao",
+	"password" : "yesmora"
+}
