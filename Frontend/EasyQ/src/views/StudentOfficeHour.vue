@@ -13,13 +13,17 @@
                             <!-- <input type="text" readonly class="form-control-plaintext" id="staticClassName" value={{className}}> -->
                         <!-- <label for="staticTA" class="col-sm-2 col-form-label">TA</label> -->
                         <div class="col-sm-10">TA Name: {{TAName}}</div>
+                        <!-- <div class="col-sm-10">Qestion: {{userQuestion}}</div> -->
                             <!-- <input type="text" readonly class="form-control-plaintext" id="staticClassNumber" value={{TAName}}> -->
-                        
+                        <div class="col-sm-10">
+                            <label for="exampleFormControlTextarea1" class="form-label">Question:</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
                         <!-- <label for="staticQueue" class="col-sm-2 col-form-label">The position of queueing</label>   -->
                         <div class="col-sm-10">The position of queueing: {{queueIndex}}</div>
                             <!-- <input type="text" readonly class="form-control-plaintext" id="staticQueue" value={{queueIndex}}> -->
                         <div class="col-sm-10">Meeting Link: {{meetingLink}}</div>
-                        <div class="col">
+                        <div class="col-sm-10">
                         <button type="submit" class="btn btn-primary" style="margin-top:10px; margin-right:20px" @click="startQueue">Queue</button>
                         <button type="submit" class="btn btn-primary" style="margin-top:10px" @click="quitQueue">Quit</button>
                     </div>
@@ -61,6 +65,7 @@ export default {
             officehourId: '',
             startQ: false,
             isActive: false,
+            userQuestion: ''
         }
     },
     // created(){
@@ -71,7 +76,8 @@ export default {
         async officehourInfo(){
             var data = { 
                 classId: this.classId,
-                userId: this.userId
+                userId: this.userId,
+                userQuestion: this.userQuestion
             }
             // OFFICE_HOUR_ID : Office_token,
             // CLASS_NUMBER : Class_Number,
