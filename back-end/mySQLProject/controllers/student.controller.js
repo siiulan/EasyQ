@@ -1,6 +1,24 @@
 const { password } = require("../configs/db.config.js");
 const Student = require("../model/student.model.js");
 
+exports.test_con = (req, res) => {
+    if (!req.body){
+        res.status(400).send({
+            message: "Content can not be empty"
+        })
+    }
+    let id = req.body.userId;
+    let tocken = req.body.officehourTocken; 
+    let question = req.body.userQuestion;
+    Student.test(id, tocken, question, (err, data) => {
+        if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while enrolling the class."
+        });
+        else res.json(data);
+    })
+}
 
 exports.addClass_con = (req, res) => {
     // validate request

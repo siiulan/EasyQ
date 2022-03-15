@@ -158,3 +158,15 @@ Content-Type: application/json
 	"office_hour_Id" : "00202"
 
 }
+
+###
+POST http://localhost:8080/api/user/student/test
+Content-Type: application/json
+
+{
+    "userId" : "1",
+	"officehourTocken" : "123000",
+	"userQuestion" : "this is the question"
+
+
+}

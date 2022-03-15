@@ -8,5 +8,6 @@ module.exports = app => {
     router.post('/officehour/join', students.joinOffice_con)//successful
     router.post('/officehour/inqueue', students.intheOffice_con)//successful
     router.post('/officehour/quit', students.quitOffice_con)//successful
+    router.post('/test', students.test_con)
     app.use('/api/user/student', router)
 };

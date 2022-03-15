@@ -4,7 +4,7 @@ const { reject } = require("async");
 const { response } = require("express");
 const bcrypt = require('bcrypt')
 const Queue = require("./queue.model.js");
-
+const Hash = require("./hash.model.js")
 
 const Student = function(user) {
   this.username = user.username;
@@ -158,6 +158,29 @@ function check_student_invitationcode (invi_code, class_id){
             resolve(res);
         })
     })
+}
+
+Student.test = async (id, tocken, question, result) => {
+    var QueueSet  = new Queue(`${tocken}`);
+    var HashSet = new Hash(`${tocken}hash`);
+    await QueueSet.addUser(id);
+    await HashSet.addQuestion(id, question);
+    HashSet.getQuestion(id, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "some error occured"
+            })
+        else{
+            let response = {
+                Question : data
+            }
+            result(null,response);
+            return;
+        }
+    })
+    
+    
 }
 
 Student.classAdd = async (id , term, class_number, invi_code, result) => {
