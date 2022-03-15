@@ -355,7 +355,6 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
         var Class_Number = item_classNumber[0].CLASS_NUMBER;
         let Office_token = getOffice[0].OFFICE_HOUR_ID;
         var QueueSet  = new Queue(`${Office_token}`);
-        QueueSet.addUser(user_id);
         var HashSet = new Hash(`${Office_token}hash`);
         await QueueSet.addUser(user_id);
         await HashSet.addQuestion(user_id, question);
