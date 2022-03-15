@@ -136,7 +136,8 @@ Content-Type: application/json
 
 {
     "classId" : "4",
-	"userId" : "1"
+	"userId" : "1",
+	"userQuestion" : "this is the question"
 
 }
 ###

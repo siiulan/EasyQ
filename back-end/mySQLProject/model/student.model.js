@@ -339,7 +339,7 @@ Student.displayOffice = async (class_id, user_id, result) => {
         return
     }
 }
-Student.joinOffice = async (class_id, user_id, result) => {
+Student.joinOffice = async (class_id, user_id, question, result) => {
     let getOffice = await findOffice(class_id);
     if (!getOffice.length){
         let judge = {
@@ -356,6 +356,9 @@ Student.joinOffice = async (class_id, user_id, result) => {
         let Office_token = getOffice[0].OFFICE_HOUR_ID;
         var QueueSet  = new Queue(`${Office_token}`);
         QueueSet.addUser(user_id);
+        var HashSet = new Hash(`${Office_token}hash`);
+        await QueueSet.addUser(id);
+        await HashSet.addQuestion(id, question);
         QueueSet.rankUser(user_id,(err,data) =>{
             if (err)
                 res.status(500).send({
