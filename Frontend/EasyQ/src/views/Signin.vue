@@ -93,6 +93,15 @@ export default {
         this.$store.dispatch('Set_User_ID',data2.id);
         console.log("ID has been set to storage file:" + this.$store.getters.Get_User_Id);
         window.location.href = "/instructor/main";
+
+        if (data2.role == "Student") {
+          window.location.href = "/StudentHome";
+        } else if (data2.role == "TA") {
+          window.location.href = "/TAHome";
+        } else if (data2.role == "Instructor") {
+          window.location.href = "/instructor/main";
+        }
+
       } else if (data2.isMatched == false) {
         this.isFail = true;
       } else {
