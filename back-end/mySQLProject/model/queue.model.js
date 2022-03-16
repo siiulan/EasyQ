@@ -1,7 +1,6 @@
 const redis = require('redis');
 const { reject } = require("async");
-const devSetting = require("./devMode.config.js");  
-const {}
+const devSetting = require("../configs/devMode.config");  
 RDS_PORT = 6379;                //端口号 
 RDS_HOST = '127.0.0.1';    //服务器IP  要连接的A服务器redis  
 var RDS_PWD = '123456';     //密码
