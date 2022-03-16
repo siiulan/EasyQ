@@ -76,13 +76,6 @@ Content-Type: application/json
     "email" : "siiulan79@gmail.com"
 }
 
-###
-POST http://localhost:8080/api/user/instructor/getClass
-Content-Type: application/json
-
-{
-    "user_ID" : "2"
-}
 
 ### class existed, student haven't been enrolled in this class and the code is right
 POST http://localhost:8080/api/user/student/addclass
@@ -169,7 +162,6 @@ Content-Type: application/json
 {
     "userId" : "1",
 	"office_hour_Id" : "00202"
-
 }
 
 ###
