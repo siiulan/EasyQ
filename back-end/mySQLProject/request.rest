@@ -14,10 +14,10 @@ POST http://localhost:8080/api/user/registration
 Content-Type: application/json
 
 {
-    "username":"123@com",
-	"password":"123",
-	"firstname":"sb",
-	"lastname":"ni"
+    "username":"@com",
+	"password":"test",
+	"firstname":"test",
+	"lastname":"test"
 }
 
 ###
@@ -172,6 +172,4 @@ Content-Type: application/json
     "userId" : "1",
 	"officehourTocken" : "123000",
 	"userQuestion" : "this is the question"
-
-
 }
