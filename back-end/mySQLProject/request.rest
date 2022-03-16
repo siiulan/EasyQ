@@ -250,7 +250,6 @@ Content-Type: application/json
 {
     "userId" : "1",
 	"office_hour_Id" : "00202"
-
 }
 
 ###
@@ -261,6 +260,4 @@ Content-Type: application/json
     "userId" : "1",
 	"officehourTocken" : "123000",
 	"userQuestion" : "this is the question"
-
-
 }
