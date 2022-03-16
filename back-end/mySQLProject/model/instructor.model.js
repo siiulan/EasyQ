@@ -333,6 +333,7 @@ Instructor.editClasses = async (classObject, result) => {
 // adding class object into the database
 Instructor.addClasses = async (classObject, result) => {
     let uid = uuid.v1()
+    console.log("Instructor id: " + classObject.INSTRUCTOR_ID + " adding class")
     const classInfo = {
         CLASS_ID : uid,
 	    CLASS_NUMBER : classObject.CLASS_NUMBER,
