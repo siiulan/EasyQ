@@ -373,6 +373,8 @@ Instructor.getClassMembers = async (class_id, result) => {
 };
 
 Instructor.classAddTA = async (email_adress, class_id, result) => {
+    console.log("email: " + email_adress)
+    console.log("class: " + class_id)
     let res = await lookUpUser(email_adress)
     let instructor_name = await getInstructor(class_id)
     var name = ''
@@ -383,6 +385,8 @@ Instructor.classAddTA = async (email_adress, class_id, result) => {
         name = instructor_name[0].FIRST_NME + " " + instructor_name[0].LAST_NME
         class_name = class_item[0].CLASS_NUMBER + " " + class_item[0].CLASS_NAME
     } else {
+        console.log('class_item: ' + class_item.length)
+        console.log('class_item: ' + class_item.length)
         let response = {
             exist : false,
             success : false
