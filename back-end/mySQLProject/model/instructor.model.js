@@ -45,6 +45,18 @@ function classLookUp(id){
     })
 }
 
+function classLookUpbyClass(class_id){
+    return new Promise((resolve, reject) => {
+        sql.query(`SELECT * FROM class WHERE CLASS_ID = ?`, [class_id], (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            resolve(res)
+        });
+    })
+}
+
 // auxilary function to look up the class info
 function editClass(classObject){
     return new Promise((resolve, reject) => {
@@ -378,7 +390,7 @@ Instructor.classAddTA = async (email_adress, class_id, result) => {
     let res = await lookUpUser(email_adress)
     let instructor_name = await getInstructor(class_id)
     var name = ''
-    let class_item = await classLookUp(class_id)
+    let class_item = await classLookUpbyClass(class_id)
     var class_name = ''
 
     if (class_item.length && instructor_name.length){
@@ -386,7 +398,7 @@ Instructor.classAddTA = async (email_adress, class_id, result) => {
         class_name = class_item[0].CLASS_NUMBER + " " + class_item[0].CLASS_NAME
     } else {
         console.log('class_item: ' + class_item.length)
-        console.log('class_item: ' + class_item.length)
+        console.log('instructor name: ' + instructor_name.length)
         let response = {
             exist : false,
             success : false
