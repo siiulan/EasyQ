@@ -315,10 +315,10 @@ Instructor.getClasses = async (id, result) => {
     console.log(id)
     let classes = await classLookUp(id)
     console.log(classes.length)
-    if(classes.length){
-        row = classes[0]
-        console.log(row)
-    }
+    // if(classes.length){
+    //     row = classes[0]
+    //     console.log(row)
+    // }
     let response = {
         courseList: classes
     }
