@@ -97,7 +97,15 @@ POST http://localhost:8080/api/user/instructor/getClassMembers
 Content-Type: application/json
 
 {
-    "class_id" : "3"
+    "class_id" : "4"
+}
+
+###
+POST http://54.163.38.93/api/user/instructor/getClassMembers
+Content-Type: application/json
+
+{
+    "class_id" : "4"
 }
 
 ###

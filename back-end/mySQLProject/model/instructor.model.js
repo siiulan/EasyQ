@@ -361,7 +361,9 @@ Instructor.removeClass = async (class_id, result) => {
 };
 
 Instructor.getClassMembers = async (class_id, result) => {
+    console.log("getting members of class of id: " + class_id)
     let res = await lookUpClassMember(class_id)
+    console.log("Data: " + res)
     let response = {
         memberList: res
     }
