@@ -76,13 +76,6 @@ Content-Type: application/json
     "email" : "siiulan79@gmail.com"
 }
 
-###
-POST http://localhost:8080/api/user/instructor/getClass
-Content-Type: application/json
-
-{
-    "user_ID" : "0"
-}
 
 ###
 POST http://localhost:8080/api/user/ta/getsingleClass
