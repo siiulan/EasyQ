@@ -77,6 +77,14 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8080/api/user/instructor/getClass
+Content-Type: application/json
+
+{
+    "user_ID" : "613bc315-5b8c-499b-83a0-83664036ca32"
+}
+
+###
 POST http://54.163.38.93/api/user/instructor/getClass
 Content-Type: application/json
 
@@ -99,6 +107,18 @@ Content-Type: application/json
 {
     "email_adress" : "siiulan79@gmail.com",
 	"class_id" : "3"
+}
+
+###
+POST http://localhost:8080/api/user/instructor/addClass
+Content-Type: application/json
+ 
+{
+   "CLASS_NUMBER": "YES600",
+   "CLASS_NAME": "Yes not Yes",
+   "CLASS_INFO": "yesmora no",
+   "CLASS_TERM": "Winter 2022",
+   "INSTRUCTOR_ID": "613bc315-5b8c-499b-83a0-83664036ca32"
 }
 
 
