@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt')
 // const { user } = require("../configs/db.config.js");
 // constructor
 const User = function(user) {
+    // nnn
   this.username = user.username;
   this.firstName = user.firstName
   this.lastName = user.lastName;
