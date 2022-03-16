@@ -59,7 +59,7 @@ function classGetshortinfo(classes_id){
                 console.log("error: ", err);
                 reject(err);
             }
-            resolve(res);
+            resolve(res); 
         })
     })
 }
@@ -263,11 +263,15 @@ Student.classAdd = async (id , term, class_number, invi_code, result) => {
 Student.getClassAll = async (id, result) => {
     // test
     classes_shortinfo = []; 
-    const response = [];
+    response = [];
     let classes_id = await classGetid(id);
+    console.log(classes_id);
     if (classes_id.length){
         for (let i=0; i<classes_id.length; i++){
             classes_shortinfo[i] = await classGetshortinfo(classes_id[i].CLASS_ID);
+            if (classes_shortinfo[i].length){
+                console.log('here');
+            }
         }
         for (let j=0; j<classes_shortinfo.length; j++){
             let item = await findNameInstructor(classes_shortinfo[j][0].INSTRUCTOR_ID);
@@ -280,6 +284,7 @@ Student.getClassAll = async (id, result) => {
             }
             response.push(json_oneclass);
         }
+        console.log(response)
         result(null, response);
         return
     } else {
