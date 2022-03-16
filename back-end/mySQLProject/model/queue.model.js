@@ -8,11 +8,24 @@ var RDS_PWD = '123456';     //密码
 if(devSetting.devMode == 1){
     RDS_PWD = 'Z6VOjC2DKlq6SsYZPONts7Db4RTcfjANWZ2Qe5xW+Msy6+XQp/aaSNMT5KjVNbOlH58B0l7N41XYjg9J';
 }
-RDS_OPTS = {}                 //设置项  
-const client = redis.createClient(RDS_PORT,RDS_HOST,RDS_OPTS);  
+// RDS_OPTS = {}                 //设置项  
+// const client = redis.createClient(RDS_PORT,RDS_HOST,RDS_OPTS);  
+const client = redis.createClient({
+    host : '127.0.0.1',  
+    no_ready_check: true,
+    auth_pass: RDS_PWD,                                                                                                                                                           
+});  
 
 client.auth(RDS_PWD,function(){  
             console.log('通过认证');  
+});  
+
+client.on('connect', () => {   
+    global.console.log("connected");
+});                               
+                            
+client.on('error', err => {       
+    global.console.log(err.message)
 });  
 
 //redis class and functions
