@@ -3,7 +3,8 @@ var uuid = require('uuid');
 const { reject } = require("async");
 const lib = require("./emailSender.model.js");
 const { response } = require("express");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const e = require("express");
 
 
 /*   Brcpyt helper function */
@@ -376,9 +377,11 @@ Instructor.classAddTA = async (email_adress, class_id, result) => {
     let instructor_name = await getInstructor(class_id)
     var name = ''
     let class_item = await classLookUp(class_id)
-    let class_name = class_item[0].CLASS_NUMBER + " " + class_item[0].CLASS_NAME
-    if (instructor_name.length){
+    var class_name = ''
+
+    if (class_item.length && instructor_name.length){
         name = instructor_name[0].FIRST_NME + " " + instructor_name[0].LAST_NME
+        class_name = class_item[0].CLASS_NUMBER + " " + class_item[0].CLASS_NAME
     } else {
         let response = {
             exist : false,
