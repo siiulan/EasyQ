@@ -464,7 +464,7 @@ Instructor.getStudentInvitationCode = async (class_id, result) => {
     let res = await lookUpInvitationTokenByClass(class_id, 'add-student')
     // if invitation code exist:
     if (res.length){
-        let code = res.length[0].INVITATION_TOKEN
+        let code = res[0].INVITATION_TOKEN
         let response = {
             invitation_code : code
         }
