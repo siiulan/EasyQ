@@ -263,7 +263,7 @@ Student.classAdd = async (id , term, class_number, invi_code, result) => {
 Student.getClassAll = async (id, result) => {
     // test
     classes_shortinfo = []; 
-    response = [];
+    const response = [];
     let classes_id = await classGetid(id);
     console.log(classes_id);
     if (classes_id.length){
