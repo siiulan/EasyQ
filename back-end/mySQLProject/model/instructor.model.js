@@ -219,7 +219,7 @@ function getInstructor(class_id){
 function storeToken(token, class_id, uid, use){
     return new Promise((resolve, reject) => {
         sql.query(
-            `INSERT INTO invitation_token(INVITATION_TOKEN, CLASS_ID, USER_ID, IN_USE) VALUES (?, ?, ?, ?);`,
+            `INSERT INTO invitation_token (INVITATION_TOKEN, CLASS_ID, USER_ID, IN_USE) VALUES (?, ?, ?, ?);`,
             [token, class_id, uid, use],
             (err, res) => {
                 if (err) {
@@ -263,7 +263,7 @@ function lookUpInvitationToken(invitation_token, use){
 function lookUpInvitationTokenByClass(class_id, use){
     return new Promise((resolve, reject) => {
         sql.query(
-            `SELECT USER_ID, CLASS_ID FROM invitation_token WHERE CLASS_ID = ? AND IN_USE = ?;`,
+            `SELECT * FROM invitation_token WHERE CLASS_ID = ? AND IN_USE = ?;`,
             [class_id, use],
             (err, res) => {
                 if (err) {
@@ -461,10 +461,12 @@ Instructor.registeredConfirmation = async (invitation_token, result) => {
 };
 
 Instructor.getStudentInvitationCode = async (class_id, result) => {
+    console.log('get class id: '  + class_id)
     let res = await lookUpInvitationTokenByClass(class_id, 'add-student')
     // if invitation code exist:
     if (res.length){
         let code = res[0].INVITATION_TOKEN
+        console.log('code exist:' + code)
         let response = {
             invitation_code : code
         }
@@ -473,6 +475,7 @@ Instructor.getStudentInvitationCode = async (class_id, result) => {
     } else {
         let code = uuid.v4()
         await storeToken(code, class_id, '', 'add-student')
+        console.log('code not exist:' + code)
         let response = {
             invitation_code : code
         }
