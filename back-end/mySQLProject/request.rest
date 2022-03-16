@@ -147,6 +147,14 @@ Content-Type: application/json
 }
 
 ###
+POST http://54.163.38.93/api/user/instructor/getStudentInvitationCode
+Content-Type: application/json
+
+{
+	"class_id" : "4"
+}
+
+###
 POST http://localhost:8080/api/user/instructor/unregisteredInvitationConfirmation/9a2149a6-451b-4ab6-831d-9ca605497544
 Content-Type: application/json
 
