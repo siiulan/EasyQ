@@ -303,6 +303,7 @@ Student.getClassOne = async (class_id, result) => {
     //console.log(TA_info);
     let TA_allname = [];
     if (class_info.length){
+        console.log('not empty')
         let item_Instructor = await findNameInstructor(class_info[0].INSTRUCTOR_ID);
         var Instructor_NAME = item_Instructor[0].FIRST_NME+' '+ item_Instructor[0].LAST_NME;
         if(TA_info.length){
