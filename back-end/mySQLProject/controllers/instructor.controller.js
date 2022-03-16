@@ -81,24 +81,6 @@ exports.getClassMembers = (req, res) => {
         })
     }
     let class_id = req.body.class_id
-    Instructor.removeClass(class_id, (err, data) => {
-        if (err)
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while creating the user."
-            });
-        else res.json(data)
-    });
-}
-
-exports.getClassMembers = (req, res) => {
-    // validate request
-    if (!req.body){
-        res.status(400).send({
-            message: "Cotent can not be empty"
-        })
-    }
-    let class_id = req.body.class_id
     Instructor.getClassMembers(class_id, (err, data) => {
         if (err)
             res.status(500).send({
