@@ -150,7 +150,19 @@ function check_student_enrolled (id, class_id){
 //check the invitation code is right or not
 function check_student_invitationcode (invi_code, class_id){
     return new Promise((resolve, reject) => {
-        sql.query(`SELECT * FROM invitation_code WHERE INVITATION_CODE = ? AND CLASS_ID = ?`, [invi_code, class_id], (err, res) =>{
+        sql.query(`SELECT * FROM invitation_token WHERE INVITATION_TOKEN = ? AND CLASS_ID = ? AND IN_USE = ?`, [invi_code, class_id, 'add-student'], (err, res) =>{
+            if (err){
+                console.log("error: ", err);
+                reject(err);
+            }
+            resolve(res);
+        })
+    })
+}
+
+function find_TAname_byOffice (officehour_id){
+    return new Promise((resolve, reject) => {
+        sql.query(`SELECT * FROM office_hour LEFT JOIN user_info ON office_hour.USER_ID = user_info.USER_ID WHERE office_hour.OFFICE_HOUR_ID = ? and office_hour.ACTIVE = true`, [officehour_id], (err, res) =>{
             if (err){
                 console.log("error: ", err);
                 reject(err);
@@ -384,6 +396,13 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
 }
 Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
     let Office_info = await findOffice_by_tocken(officehour_id);
+    if(!Office_info.length){
+        let judge = {
+            SomethingWrong : true
+        }
+        result(null, judge)
+        return
+    }
     let item_TA = await findNameTA(Office_info[0].USER_ID);
     let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
     console.log(TA_name);
