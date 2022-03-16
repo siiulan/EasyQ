@@ -89,7 +89,10 @@ export default {
         this.isFail = false;
         setCookie("id", data2.id, 30);
         setCookie("loggedin", "true", 30);
-        window.location.href = "/instructorhome";
+        console.log("check if id is fetched:" + data2.id)
+        this.$store.dispatch('Set_User_ID',data2.id);
+        console.log("ID has been set to storage file:" + this.$store.getters.Get_User_Id);
+        window.location.href = "/instructor/main";
       } else if (data2.isMatched == false) {
         this.isFail = true;
       } else {
