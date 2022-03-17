@@ -298,29 +298,37 @@ Student.getClassAll = async (id, result) => {
 Student.getClassOne = async (class_id, result) => {
     console.log(class_id);
     let class_info = await classGetwholeinfo(class_id);
-    let TA_info = await getTAinfo(class_id);
     let TA_allname = [];
     if (class_info.length){
         console.log('not empty')
         let item_Instructor = await findNameInstructor(class_info[0].INSTRUCTOR_ID);
-        var Instructor_NAME = item_Instructor[0].FIRST_NME+' '+ item_Instructor[0].LAST_NME;
-        if(TA_info.length){
-            for(let i=0; i<TA_info.length; i++){
-                let item_TA = await findNameTA(TA_info[i].USER_ID);
-                TA_allname[i] = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
+        if (item_Instructor.length) {
+            var Instructor_NAME = item_Instructor[0].FIRST_NME+' '+ item_Instructor[0].LAST_NME;
+            let TA_info = await getTAinfo(class_id);
+            if(TA_info.length){
+                for(let i=0; i<TA_info.length; i++){
+                    let item_TA = await findNameTA(TA_info[i].USER_ID);
+                    TA_allname[i] = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
+                }
             }
+            let response = {
+                CLASS_ID : class_info[0].CLASS_ID,
+                CLASS_NUMBER : class_info[0].CLASS_NUMBER,
+                CLASS_NAME : class_info[0].CLASS_NAME,
+                CLASS_INFO : class_info[0].CLASS_INFO,
+                CLASS_TERM : class_info[0].CLASS_TERM,
+                INSTRUCTOR_NAME : Instructor_NAME,
+                TA_NAME : TA_allname
+            }
+            result(null, response);
+            return
+        } else {
+            let judge = {
+                SomethingWrong : true
+            }
+            result(null, judge);
+            return;
         }
-        let response = {
-            CLASS_ID : class_info[0].CLASS_ID,
-            CLASS_NUMBER : class_info[0].CLASS_NUMBER,
-            CLASS_NAME : class_info[0].CLASS_NAME,
-            CLASS_INFO : class_info[0].CLASS_INFO,
-            CLASS_TERM : class_info[0].CLASS_TERM,
-            INSTRUCTOR_NAME : Instructor_NAME,
-            TA_NAME : TA_allname
-        }
-        result(null, response);
-        return
     } else {
         let judge = {
             isEmpty : true

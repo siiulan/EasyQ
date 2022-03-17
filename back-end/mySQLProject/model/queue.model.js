@@ -52,6 +52,7 @@ class OfficehourQueue{
  
     rankUser = async (username,result) =>{
         client.lpos(this.key, username, function(err, data){
+            console.log('rank',data+1)
             if(!err){
                 if (data!=null){
                     let response = data+1
