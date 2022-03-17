@@ -65,6 +65,7 @@ exports.getClassOne_con = (req, res) => {
         })
     }
     let class_id = req.body.classId;
+    console.log('controller', class_id);
     Student.getClassOne(class_id, (err, data) => {
         if (err)
             res.status(500).send({
