@@ -24,28 +24,41 @@
 import axios from 'axios';
 
   export default {
+      mounted: function () {
+        this.getClassInfo();
+    },
       data() {
           return{
               className: '',
               classNumber: '',
-              classId: '',
+              classId: this.$route.params.classId,
               TAName: '',
               instructorName: ''
           }
       },
-      
-      async getClassInfo() {
+      methods:{
+        async getClassInfo() {
         var data = {
-          classId : this.$route.params.classId,
+          classId : this.classId,
         }
-        const response = await axios.post('http://54.163.38.93/api/user/student//classes/class',{data},{headers: {'Content-type' : 'application/json',}});
-        this.className = response.CLASS_NAME;
-        this.classId = response.CLASS_ID;
-        this.classNumber = response.CLASS_NUMBER;
-        this.TAName = response.TA_NAME;
-        this.instructorName = response.INSTRUCTOR_NAME;
-        this.classId = response.CLASS_ID
+        console.log(this.classId)
+        const response = await axios.post('http://54.163.38.93/api/user/student/classes/class',data,{headers: {'Content-type' : 'application/json',}});
+        
+        console.log(response.data);
+        this.className = response.data.CLASS_NAME;
+        // this.classId = response.data.CLASS_ID;
+        this.classNumber = response.data.CLASS_NUMBER;
+        for(let i = 0;i < response.data.TA_NAME.length;i++)
+        {
+            this.TAName += response.data.TA_NAME[i]+ " ";
+        }
+        // this.TAName = response.data.TA_NAME;
+        this.instructorName = response.data.INSTRUCTOR_NAME;
+        this.classId = response.data.CLASS_ID
       }
+      }
+      
+      
     // CLASS_ID 
     // CLASS_NUMBER 
     // CLASS_NAME 

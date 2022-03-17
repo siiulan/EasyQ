@@ -1,10 +1,10 @@
 <template>
     <div class="add class info">
-        <!-- <form @submit.prevent="onAddClass"> -->
-            <form >
+        <form @submit.prevent="add">
+            <!-- <form > -->
             <div class="form-group" style="margin-left: 70px; margin-top:40px ;margin-right:70px">
                 <label for="exampleFormControlSelect1">Term</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" v-model="term">
+                <input type="text" class="form-control" id="exampleFormControlInput1" v-model="input.term">
                 <!-- <select class="form-control" id="exampleFormControlSelect1" v-model="term">
                 <option>21 Winter</option>
                 <option>21 Spring</option>
@@ -17,14 +17,14 @@
             <div class="row">
                 <div class="col" style="margin-left: 70px; margin-top:30px">
                     <label for="exampleFormControlInput1">Class Number</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" v-model="classNumber">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" v-model="input.classNumber">
                     <label for="exampleFormControlInput1" style="margin-top:30px">Invitation code</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" v-model="invitationCode">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" v-model="input.invitationCode">
                     </div>
 
                 <div class="col" style="margin-right:70px; margin-top:30px">
                     <label for="exampleFormControlSelect1">Class Name</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" v-model="className">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" v-model="input.className">
                 </div>     
             </div>
          
@@ -59,7 +59,7 @@
                 <label for="exampleFormControlTextarea1">Class Description</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div> -->
-            <button type="submit" class="btn btn-primary" style="margin-left:70px; margin-top:30px">Submit</button>
+            <button type="submit" class="btn btn-primary" style="margin-left:70px; margin-top:30px" @click="add">Submit</button>
     </form>
         <div class="alert alert-success" v-if="isSuccess" style="margin-top:20px">Successfully added!</div>
     </div>
@@ -68,9 +68,9 @@
 
 import axios from 'axios'
 export default {
-    mounted: function(){
-        this.getInfo();
-    },
+    // mounted: function(){
+    //     this.getInfo();
+    // },
     data() {
         return{
             input:{
@@ -87,7 +87,7 @@ export default {
     },
     
     methods:{
-
+        
         // async getInfo(){
         //     var data = {
         //         courseId : this.courseId,
@@ -107,7 +107,9 @@ export default {
             // }
 
             try{
+                console.log(this.userId); //for test
                 const response = await axios.post('http://54.163.38.93/api/user/student/addclass',{
+                userId: this.userId,
                 term: this.input.term,
                 classNumber: this.input.classNumber,
                 className: this.input.className,
@@ -119,8 +121,8 @@ export default {
                         'Content-type':'application/json',
                     }
                 });
-
-                if(response.isclassexisted == false)
+                console.log(response.data)
+                if(response.data.isclassexisted == false)
                 {
                     console.log('Class not exists!');
                     alert('Class not exists!');
@@ -128,14 +130,14 @@ export default {
                 }
                 else
                 {
-                    if(response.isEnrolled == true)
+                    if(response.data.isEnrolled == true)
                     {
                         console.log('You has been enrolled in this class');
                         alert('You has been enrolled in this class');
                         this.isSuccess = false;
                     }
                     else{
-                        if(response.isCodeRight == false)
+                        if(response.data.isCodeRight == false)
                         {
                             console.log('Wrong code');
                             alert('Wrong code!');

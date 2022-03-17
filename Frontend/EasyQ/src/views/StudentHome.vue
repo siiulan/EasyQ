@@ -10,6 +10,9 @@ import StudentEvent from '../components/StudentEvent.vue';
 
 export default {
     name: 'studenthome',
+    // mounted: function() {
+    //   window.clearInterval()
+    // },
     components: {
       StudentEvent
     },

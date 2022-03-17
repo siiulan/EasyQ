@@ -12,7 +12,7 @@
         </div>
       </div>
     </section>
-    <Events-list />
+    <!-- <Events-list /> -->
     <div class="footer">EasyQ @2022 ｜   Help   ｜  Agreement   ｜   About us </div>
     <!-- <div class = "page-bottom">
       <a>
@@ -24,12 +24,12 @@
   </div>
 </template>
 <script>
-import EventsList from '../components/EventsList.vue';
+// import EventsList from '../components/EventsList.vue';
   export default {
     name: 'home',
-    components: {
-      EventsList
-    },
+    // components: {
+    //   EventsList
+    // },
   };
 </script>
 <style lang="scss" scoped>

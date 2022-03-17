@@ -16,16 +16,19 @@
     <div class="ms-5 mb-3 h-25 h3">Course List</div>
     <li v-for="item in items" :key="item.CLASS_NAME">
         <!-- <router-link :to="'/TAQueue/' + item.CLASS_NUMBER" class="ms-5 mb-3 h-25 w-75 border shadow-sm d-flex flex-column"> -->
-          <div class="ms-2 mt-2 fs-5">{{ item.CLASS_NAME }}</div>
+          <div class="ms-2 mt-2 fs-5">Class Name:{{ item. CLASS_NAME}}</div>
           <div class="ms-2 mb-3 d-flex flex-row fs-6 w-100">
               <div class="col-xl-3">Instructor: {{item.INSTRUCTOR_NAME}}</div>
               <!-- <div class="col-xl-4">Schedule: {{item.schedule}}</div> -->               
           </div>
           <button class="button" style="margin-right : 40px">
-            <router-link to = "'/StudentOfficeHour/' + item.CLASS_ID">Join</router-link>
+            <!-- <router-link : to = ""'/StudentOfficeHour/' + item.CLASS_ID>Join</router-link> -->
+            <router-link :to="'/StudentOfficeHour/' + item.CLASS_ID">Join</router-link>
+
           </button>
           <button class="button" style="margin-right : 80px">
-            <router-link to = "'/EventSingle/' + item.CLASS_ID">Info</router-link>
+            <router-link :to="'/EventSingle/' + item.CLASS_ID">Info</router-link>
+            <!-- <router-link : to = "'/EventSingle/' + item.CLASS_ID ">Info</router-link> -->
           </button>
         <!-- </router-link> -->
     </li>
@@ -33,7 +36,7 @@
         <div class="card-body" >
           <h5 class="card-title">Need to add class?</h5>
           <a href="#" class="btn btn-primary" style="font-weight:bold; background-color: #a3b6f1; border: none;">
-            <router-link to = "/StudentAddClassInfo">Add</router-link>
+            <router-link  to = "/StudentAddClassInfo">Add</router-link>
           </a>
       </div>
     </div>
@@ -53,21 +56,31 @@ import axios from 'axios'
         // classNumber: '',
         // className: '',
         // instructorName: '',
-        // classId: ''
+        // classId: '',
         items: []
       };
     },
     methods:{
+
+      // async getSingleClassInfo(){
+      //     var data =
+      // }
+      // ,
       async getInfo() {
         var data = {
           userId: this.userId,
+          // classId: this.classId
         };
         const response = await axios.post('http://54.163.38.93/api/user/student/classes', data, {headers:{'Content-type': 'application/json',}});
-        // this.classNumber = response.CLASS_NUMBER;
-        // this.className = response.CLASS_NAME;
-        // this.instructorName = response.INSTRUCTOR_NAME;
-        // this.classId = response.CLASS_ID;
-        this.items = response.data.course_list;
+        this.items = response.data;
+        // this.classNumber = response.data.items.CLASS_NUMBER;
+        // this.className = response.data.items.CLASS_NAME;
+        // this.instructorName = response.data.items.INSTRUCTOR_NAME;
+        // this.classId = response.data.items.CLASS_ID;
+        console.log(response.data);
+        
+
+        
       }
     }
   };

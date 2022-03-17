@@ -19,8 +19,8 @@ export default new Router({
       component: () => import('../views/About.vue')
     },
     {
-      path: '/event/:id',
-      name: 'eventSingle',
+      path: '/EventSingle/:classId',
+      name: 'EventSingle',
       component: () => import('../views/EventSingle.vue'),
     },
     {
@@ -139,15 +139,15 @@ export default new Router({
       component: () => import('../views/StudentAddClassInfo.vue')
     },
     {
-      path: '/StudentOfficeHour',
+      path: '/StudentOfficeHour/:classId',
       name: 'StudentOfficeHour',
       component: () => import('../views/StudentOfficeHour.vue')
     },
-    {
-      path: '/EventSingle',
-      name: 'EventSingle',
-      component: () => import('../views/EventSingle.vue')
-    },
+    // {
+    //   path: '/EventSingle',
+    //   name: 'EventSingle',
+    //   component: () => import('../views/EventSingle.vue')
+    // },
     {
       path: '/Studenthome',
       name: 'StudentHome',

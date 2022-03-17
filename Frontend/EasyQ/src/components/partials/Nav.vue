@@ -20,7 +20,7 @@
     </div>
     <div id="navbar" class="navbar-menu" v-bind:class="{'is-active': isOpen}">
       <div class="navbar-start">
-        <router-link to="/" class="navbar-item">Home</router-link>
+        <router-link to="/" class="navbar-item" @click="submitlogin">Home</router-link>
         <router-link to="/about" class="navbar-item">About</router-link>
       </div>
       <div class="navbar-end">
@@ -46,6 +46,7 @@
   </nav>
 </template>
 <script>
+// import axios from 'axios'
   export default {
     name: 'Nav',
     data: function() {
@@ -53,9 +54,15 @@
         isOpen: false,
         loggedin: getCookie("loggedin"),
         username: getCookie("username"),
+        isFail: false,
+        errormsg: "Login Failed",
        }
     },
     methods: {
+      
+
+
+
       signout () {
         setCookie("username", "", 30);
         setCookie("id", "", 30);

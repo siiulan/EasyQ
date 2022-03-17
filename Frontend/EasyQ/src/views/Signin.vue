@@ -91,10 +91,10 @@ export default {
         setCookie("loggedin", "true", 30);
         console.log("check if id is fetched:" + data2.id)
         this.$store.dispatch('Set_User_ID',data2.id);
-        console.log("ID has been set to storage file:" + this.$store.getters.Get_User_Id);
-        window.location.href = "/instructor/main";
+        //console.log("ID has been set to storage file:" + this.$store.getters.Get_User_Id);
+        //window.location.href = "/instructor/main";
 
-        if (data2.role == "Student") {
+        if (data2.role == "student") {
           window.location.href = "/StudentHome";
         } else if (data2.role == "TA") {
           window.location.href = "/TAHome";
