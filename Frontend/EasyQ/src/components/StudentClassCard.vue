@@ -33,7 +33,7 @@
         <div class="card-body" >
           <h5 class="card-title">Need to add class?</h5>
           <a href="#" class="btn btn-primary" style="font-weight:bold; background-color: #a3b6f1; border: none;">
-            <router-link to = "'/StudentAddClassInfo/' + item.CLASS_ID">Add</router-link>
+            <router-link to = "/StudentAddClassInfo">Add</router-link>
           </a>
       </div>
     </div>

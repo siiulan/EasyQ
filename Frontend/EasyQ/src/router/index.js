@@ -101,27 +101,52 @@ export default new Router({
     {
       path: '/instructor/main',
       name: 'instructormain',
-      component: () => import('../views/InstructorHome.vue')
+      component: () => import('../views/Instructor/InstructorHome.vue')
     },
     {
       path: '/instructor/addClass',
       name: 'instructor_addClass',
-      component: () => import('../views/InstructoraddClass.vue')
+      component: () => import('../views/Instructor/InstructoraddClass.vue')
     },
     {
       path: '/instructor/CourseDetail/:CLASSNAME',
       name: 'instructor_CourseDetail_classname',
-      component: () => import('../views/InstructorCourseDetail.vue')
+      component: () => import('../views/Instructor/InstructorCourseDetail.vue')
+    },
+    {
+      path: '/instructor/CourseDetail/addStudent/:CLASSID',
+      name: 'instructor_CourseDetail_classname_addStudent',
+      component: () => import('../views/Instructor/Instructor_addStudent.vue')
+    },
+    {
+      path: '/instructor/CourseDetail/addTA/:CLASSID',
+      name: 'instructor_CourseDetail_classname_addTA',
+      component: () => import('../views/Instructor/Instructor_addTA.vue')
+    },
+    {
+      path: '/instructor/addTASuccess',
+      name: 'instructor_addTA_Success',
+      component: () => import('../views/Instructor/Instructor_addTA_Success.vue')
+    },
+    {
+      path: '/instructor/addTAVerification',
+      name: 'instructor_addTA_verification',
+      component: () => import('../views/Instructor/Instructor_addTA_Verification.vue')
+    },
+    {
+      path: '/instructor/CourseDetail/Classlist/:CLASSID',
+      name: 'instructor_CourseDetail_classname_classlist',
+      component: () => import('../views/Instructor/InstructorClassList.vue')
     },
     {
       path: '/instructor/CourseRemove',
       name: 'instructor_CourseRemove',
-      component: () => import('../views/InstructorRemoveClass.vue')
+      component: () => import('../views/Instructor/InstructorRemoveClass.vue')
     },
     {
       path: '/instructor/CourseAddSuccess',
       name: 'instructor_CourseAddSuccess',
-      component: () => import('../views/InstructorCourseAddSuccess.vue')
+      component: () => import('../views/Instructor/InstructorCourseAddSuccess.vue')
     },
     {
       path: '/StudentAddClassInfo',

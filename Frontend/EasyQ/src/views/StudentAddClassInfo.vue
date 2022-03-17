@@ -1,6 +1,7 @@
 <template>
     <div class="add class info">
-        <form @submit.prevent="onAddClass">
+        <!-- <form @submit.prevent="onAddClass"> -->
+            <form >
             <div class="form-group" style="margin-left: 70px; margin-top:40px ;margin-right:70px">
                 <label for="exampleFormControlSelect1">Term</label>
                 <input type="text" class="form-control" id="exampleFormControlInput1" v-model="term">
