@@ -296,10 +296,9 @@ Student.getClassAll = async (id, result) => {
 }
 
 Student.getClassOne = async (class_id, result) => {
+    console.log(class_id);
     let class_info = await classGetwholeinfo(class_id);
-    console.log('class', class_info)
     let TA_info = await getTAinfo(class_id);
-    console.log('TA', TA_info);
     let TA_allname = [];
     if (class_info.length){
         console.log('not empty')
