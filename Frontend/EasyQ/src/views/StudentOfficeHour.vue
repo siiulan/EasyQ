@@ -41,12 +41,27 @@ export default {
 
     mounted: function() {
         this.officehourInfo();
-        window.setInterval(() => {
+        // window.setInterval(() => {
+        //     this.getLength()
+        //     }, 5000)
+
+        this.timer = (() => {
             this.getLength()
-            }, 5000)
-        // window.clearInterval();
-            
+        }, 1000)
+                 
     },
+    beforeDestroy(){
+        clearInterval(this.timer);
+        this.timer = null;
+    },
+    destroyed() {
+        clearInterval(this.timer);
+        this.timer = null;
+    },
+
+    // function quit(params) {
+        
+    // }
 
     data(){
         return{
@@ -64,7 +79,8 @@ export default {
             startQ: '',
             isActive: false,
             userQuestion: '',
-            isQueue: true
+            isQueue: true,
+            timer: null
         }
     },
     // created(){
@@ -133,7 +149,8 @@ export default {
         async quitQueue() {
             var data = { 
                 classId: this.classId,
-                userId: this.userId
+                userId: this.userId,
+                officehourId: this.officehourId
             }
             // isQuit: true => quit successfully
             // isQuit: false =>something error
