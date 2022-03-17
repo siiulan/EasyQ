@@ -138,7 +138,7 @@ exports.quitOffice_con = (req, res) => {
         })
     }
     let user_id = req.body.userId;
-    let office_hour_id = req.body.office_hour_Id;
+    let office_hour_id = req.body.officehourId;
     Student.quitOffice(user_id, office_hour_id, (err, data) =>{
         if (err)
             res.status(500).send({
