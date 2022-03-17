@@ -118,7 +118,7 @@ exports.intheOffice_con = (req, res) => {
         })
     }
     let user_id = req.body.userId;
-    let officehour_id = req.body.office_hour_Id;
+    let officehour_id = req.body.officehourId;
     console.log('controller officehour', officehour_id)
     let class_id = req.body.classId;
     Student.intheOffice(user_id, officehour_id, class_id, (err, data) => {
