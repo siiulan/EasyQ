@@ -101,7 +101,7 @@ exports.joinOffice_con = (req, res) => {
     let class_id = req.body.classId;
     let user_id = req.body.userId;
     let question = req.body.userQuestion;
-    console.log('controller', question)
+    console.log('controller', req.body.userQuestion)
     Student.joinOffice(class_id, user_id, question, (err, data) => {
         if (err)
             res.status(500).send({
