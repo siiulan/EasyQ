@@ -45,7 +45,7 @@ export default {
         //     this.getLength()
         //     }, 5000)
 
-        this.timer = (() => {
+        this.timer = setInterval (() => {
             this.getLength()
         }, 1000)
                  
