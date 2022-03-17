@@ -443,6 +443,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
     }
 }
 Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
+    console.log('officehour id', officehour_id);
     let Office_info = await findOffice_by_tocken(officehour_id);
     console.log('inthe queue', Office_info)
     if(!Office_info.length){
