@@ -66,6 +66,7 @@ class OfficehourQueue{
                 
             }
             else{
+                console.log(err);
                 console.log("error in queuelength!")
             }
         })
