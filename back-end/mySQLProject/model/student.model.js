@@ -469,7 +469,6 @@ Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
                                 err.message || "some error occured"
                         })
                     else{
-                        console.log(data)
                         if(data!=null){
                             let response = {
                                 isinQueue: true,
