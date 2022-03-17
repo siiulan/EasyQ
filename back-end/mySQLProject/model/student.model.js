@@ -421,7 +421,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                             TA_NAME : TA_name,
                             TA_ID : getOffice[0].USER_ID
                         }
-                        console.log('in the queue now',reponse)
+                        console.log('in the queue now',response)
                         result(null, response)
                         return;
                     }
