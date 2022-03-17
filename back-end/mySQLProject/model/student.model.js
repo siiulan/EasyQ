@@ -395,7 +395,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
         let item_TA = await findNameTA(getOffice[0].USER_ID);
         if (item_TA.length){
             let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
-            console.log(TA_name);
+            //console.log(TA_name);
             let item_classNumber = await classGetwholeinfo(class_id);
             if (item_classNumber.length){
                 var Class_Number = item_classNumber[0].CLASS_NUMBER;
@@ -410,7 +410,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                                 err.message || "some error occured"
                         })
                     else{
-                        console.log('join else part')
+                        //console.log('join else part')
                         let response = {
                             isinQueue: true,
                             OFFICE_HOUR_ID : Office_token,
@@ -443,9 +443,9 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
     }
 }
 Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
-    console.log('officehour id', officehour_id);
+    //console.log('officehour id', officehour_id);
     let Office_info = await findOffice_by_tocken(officehour_id);
-    console.log('inthe queue', Office_info)
+    console.log('inthe queue')
     if(!Office_info.length){
         let judge = {
             SomethingWrong : true

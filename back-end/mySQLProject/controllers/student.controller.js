@@ -101,7 +101,7 @@ exports.joinOffice_con = (req, res) => {
     let class_id = req.body.classId;
     let user_id = req.body.userId;
     let question = req.body.userQuestion;
-    console.log('controller', req.body)
+    //console.log('controller', req.body)
     Student.joinOffice(class_id, user_id, question, (err, data) => {
         if (err)
             res.status(500).send({
@@ -119,7 +119,7 @@ exports.intheOffice_con = (req, res) => {
     }
     let user_id = req.body.userId;
     let officehour_id = req.body.officehourId;
-    console.log('controller officehour', officehour_id)
+    //console.log('controller officehour', officehour_id)
     let class_id = req.body.classId;
     Student.intheOffice(user_id, officehour_id, class_id, (err, data) => {
         if (err)
