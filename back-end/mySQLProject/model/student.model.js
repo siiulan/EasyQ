@@ -522,14 +522,32 @@ Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
 }
 
 Student.quitOffice = async (user_id, office_hour_id, result) => {
+    console.log(office_hour_id)
+    console.log(user_id)
     let Office_token = office_hour_id;
     var QueueSet  = new Queue(`${Office_token}`);
-    await QueueSet.removeUser(user_id);
-    let judge = {
-        isQuit : true
-    }
-    result(null, judge);
-    return;
+    QueueSet.removeUser(user_id,(err,data) =>{
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "some error occured"
+            })
+        else{
+            if(data==1){
+                let judge = {
+                    isQuit : true
+                }
+                result(null, judge);
+                return;
+            } else if (data ==0){
+                let judge = {
+                    isQuit : false
+                }
+                result(null, judge);
+                return;
+            }
+        }
+    })
 }
 
 module.exports = Student;
