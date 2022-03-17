@@ -97,7 +97,7 @@ export default {
       const response = await axios.post('http://54.163.38.93/api/user/ta/popstudent', data,{headers: {'Content-type': 'application/json',}});
       this.sname = response.data.NAME;
       this.semail = response.data.EMAIL_ADDRESS;
-      this.squestion = response.data.Question;
+      this.squestion = response.data.QUESTION;
       this.getlength();
     },
   },
