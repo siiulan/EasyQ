@@ -79,6 +79,21 @@ export default new Router({
       component: () => import('../views/TAHome.vue')
     },
     {
+      path: '/TAConfirm/success',
+      name: 'TAConfirmsuccess',
+      component: () => import('../views/TAConfirmsuccess.vue')
+    },
+    {
+      path: '/TAConfirm/fail',
+      name: 'TAConfirmfail',
+      component: () => import('../views/TAConfirmfail.vue')
+    },
+    {
+      path: '/api/user/instructor/invitationConfirm/:invitation_token',
+      name: 'invitationConfirmSuccess',
+      component: () => import('../views/invitationConfirmSuccess.vue')
+    },
+    {
       path: '/EditInfo/:courseid',
       name: 'EditInfo',
       component: () => import('../views/EditInfo.vue')
