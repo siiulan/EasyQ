@@ -412,6 +412,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                                 err.message || "some error occured"
                         })
                     else{
+                        console.log('join else part')
                         let response = {
                             isinQueue: true,
                             OFFICE_HOUR_ID : Office_token,
@@ -422,7 +423,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                             TA_NAME : TA_name,
                             TA_ID : getOffice[0].USER_ID
                         }
-                        console.log('in the queue now')
+                        console.log('in the queue now',reponse)
                         result(null, response)
                         return;
                     }
