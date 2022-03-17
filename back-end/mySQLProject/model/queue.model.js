@@ -33,7 +33,7 @@ class OfficehourQueue{
         this.key = key;
     }
   
-    addUser = function (username){
+    addUser = async (username,result) =>{
         client.rpush([this.key, username], function(err, data){
             if(!err){
                 console.log(`${username} has been added`)
@@ -41,7 +41,7 @@ class OfficehourQueue{
         });
     }
 
-    removeUser = function (username) {
+    removeUser = async (username,result) =>{
         //console.log('here')
         client.lrem(this.key, 1, username, function(err, res){
             if(!err){
