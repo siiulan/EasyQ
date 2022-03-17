@@ -1,15 +1,6 @@
 const { password } = require("../configs/db.config.js");
 const TA = require("../model/ta.model.js");
 
-// exports.test = (req,res)=>{
-//     if(!req.body){
-//         res.status(400).send(
-//             {message:"Content cannot be empty！"}
-//         )
-//     }else res.json(00008);
-// }
-
-
 exports.startofficehour = (req,res)=>{
     if(!req.body){
         res.status(400).send(
@@ -107,14 +98,12 @@ exports.getClass = (req,res)=>{
 }
 
 exports.getsingleClassinfo = (req,res)=>{
-    console.log("in controller");
     if(!req.body){
         res.status(400).send(
             {message:"Content cannot be empty！"}
         )
     }
     let id = req.body.course_id
-    console.log("classid",id)
     TA.getClassinfo(id,(err,data) =>{
         if (err)
             res.status(500).send({

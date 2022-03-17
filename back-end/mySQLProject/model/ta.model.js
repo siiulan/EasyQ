@@ -14,6 +14,19 @@ const TA = function(user) {
 };
 // input student's user_id, and return student's user_info table
 
+function matchTAandofficehour(taid,ohid){
+    return new Promise ((resolve,reject) =>{
+        sql.query(`SELECT USER_ID FROM office_hour WHERE OFFICE_HOUR_ID = ?`, [ohid], (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                reject(err);
+            }
+            if (res == taid) resolve('true')
+            else resolve('false')
+        });
+    })    
+}
+
 function getstudentinfobyid(stuid){
     return new Promise ((resolve,reject) =>{
         sql.query(`SELECT * FROM user_info WHERE USER_ID = ?`, [stuid], (err, res) => {
@@ -22,7 +35,7 @@ function getstudentinfobyid(stuid){
                 reject(err);
             }
             resolve(res)
-            console.log("in function",res)
+            // console.log("in function",res)
         });
     })
 }
@@ -45,7 +58,8 @@ TA.Startofficehour = async (classid,taid,meetinglink,description,result) =>{
     let token = uuid.v4();
     // create a queue in redis by token
     officehour = new ohqueue(token);
-    console.log(officehour.inlineUser())
+    // console.log(officehour.inlineUser())
+
     // put officehour info into mysql:
     // classid,taid,meeting_link,description,active
     const ohInfo = {
@@ -85,32 +99,41 @@ TA.Popstudent = async (officehourid,result) =>{
                     err.message || "some error occured"
             })
         else{
-            console.log("input of function:",data)
+            // console.log("input of function:",data)
             sql.query(`SELECT * FROM user_info WHERE USER_ID = ?`, [data], (err, res) => {
                 if (err) {
                     console.log("error: ", err);
                     reject(err);
                 }
-                console.log("in function",res)
+                // console.log("in function",res)
                 let newstuinfo = res;
-                console.log("newstuinfo in tamodel",newstuinfo);
-                let name = newstuinfo[0].FIRST_NME + ' '+ newstuinfo[0].LAST_NME;
-                officehourhash.getQuestion(data,(err,dataa) =>{
-                    if (err)
-                        res.status(500).send({
-                            message:
-                                err.message || "some error occured"
-                        })
-                    else{
-                        let response = {
-                            EMAIL_ADDRESS : newstuinfo[0].EMAIL_ADRESS,
-                            NAME : name,
-                            QUESTION : dataa
+                // console.log("newstuinfo in tamodel",newstuinfo);
+                if (newstuinfo.length){
+                    let name = newstuinfo[0].FIRST_NME + ' '+ newstuinfo[0].LAST_NME;
+                    officehourhash.getQuestion(data,(err,dataa) =>{
+                        if (err)
+                            res.status(500).send({
+                                message:
+                                    err.message || "some error occured"
+                            })
+                        else{
+                            let response = {
+                                EMAIL_ADDRESS : newstuinfo[0].EMAIL_ADRESS,
+                                NAME : name,
+                                QUESTION : dataa
+                            }
+                            result(null,response)
+                            return
                         }
-                        result(null,response)
-                        return
+                    })
+                }
+                else{
+                    let response ={
+                        ErrorOcurred: true
                     }
-                })
+                    result(null,response)
+                    return
+                }
             });
         }
     })
@@ -137,7 +160,9 @@ TA.Getqueuelength = async (officehourid,result) =>{
 
 TA.Endofficehour = async (officehourid,result) =>{
     let officehour = new ohqueue(officehourid);
+    let officehourhash = new ohqueuehash(`${officehourid}hash`);
     officehour.deleteSet(); 
+    officehourhash.deleteHash();
     sql.query(
         'UPDATE office_hour SET ACTIVE = ? WHERE OFFICE_HOUR_ID = ?', [false , officehourid],
         (err, res) => {
@@ -175,7 +200,7 @@ function getclassinfobyid(classid){
                 reject(err);
             }
             resolve(res)
-            console.log("function",res)
+            // console.log("function",res)
         });
     })
 }
@@ -184,21 +209,28 @@ TA.getClassesinfo = async (id,result) =>{
     const classesinfo=[]
     const response=[];
     let classes = await classLookup(id)
-    for (let i=0;i<classes.length;i++){
-        classesinfo[i] = await getclassinfobyid(classes[i].CLASS_ID)  
-    }
-    for (let j=0;j<classes.length;j++){
-        console.log("classid-j0",classesinfo[j][0].CLASS_ID)
-        let instructname = getnamebyid(classesinfo[j][0].INSTRUCTOR_ID)
-        let classnamenum = classesinfo[j][0].CLASS_NUMBER + ' ' + classesinfo[j][0].CLASS_NAME;
-        let jsonclass = {
-            CLASS_ID : classesinfo[j][0].CLASS_ID,
-            CLASS_NAME : classnamenum,
-            CLASS_INFO : classesinfo[j][0].CLASS_INFO,
-            CLASS_TERM : classesinfo[j][0].CLASS_TERM,
-            INSTRUCTOR_NAME : instructname
+    if (classes.length){
+        for (let i=0;i<classes.length;i++){
+            classesinfo[i] = await getclassinfobyid(classes[i].CLASS_ID)  
         }
-        response.push(jsonclass)
+        for (let j=0;j<classes.length;j++){
+            // console.log("classid-j0",classesinfo[j][0].CLASS_ID)
+            let instructname = getnamebyid(classesinfo[j][0].INSTRUCTOR_ID)
+            let classnamenum = classesinfo[j][0].CLASS_NUMBER + ' ' + classesinfo[j][0].CLASS_NAME;
+            let jsonclass = {
+                CLASS_ID : classesinfo[j][0].CLASS_ID,
+                CLASS_NAME : classnamenum,
+                CLASS_INFO : classesinfo[j][0].CLASS_INFO,
+                CLASS_TERM : classesinfo[j][0].CLASS_TERM,
+                INSTRUCTOR_NAME : instructname
+            }
+            response.push(jsonclass)
+        }
+    }
+    else{
+        let response ={
+            ErrorOcurred: true
+        }
     }
     result(null,response)
     return
@@ -206,16 +238,25 @@ TA.getClassesinfo = async (id,result) =>{
 
 TA.getClassinfo = async (classid,result) =>{
     let classinfo = await getclassinfobyid(classid)
-    let instructname = getnamebyid(classinfo[0].INSTRUCTOR_ID)
-    let classnamenum = classinfo[0].CLASS_NUMBER + ' ' + classinfo[0].CLASS_NAME;
-    let jsonclass = {
-        CLASS_ID : classinfo[0].CLASS_ID,
-        CLASS_NAME : classnamenum,
-        CLASS_INFO : classinfo[0].CLASS_INFO,
-        CLASS_TERM : classinfo[0].CLASS_TERM,
-        INSTRUCTOR_NAME : instructname
+    if (classinfo.length){
+        let instructname = getnamebyid(classinfo[0].INSTRUCTOR_ID)
+        let classnamenum = classinfo[0].CLASS_NUMBER + ' ' + classinfo[0].CLASS_NAME;
+        let jsonclass = {
+            CLASS_ID : classinfo[0].CLASS_ID,
+            CLASS_NAME : classnamenum,
+            CLASS_INFO : classinfo[0].CLASS_INFO,
+            CLASS_TERM : classinfo[0].CLASS_TERM,
+            INSTRUCTOR_NAME : instructname
+        }
+        result(null,jsonclass)
+        return
     }
-    console.log("return value in model",jsonclass)
+    else{
+        let jsonclass = {
+            ErrorOcurred: true
+        }
+    }
+    // console.log("return value in model",jsonclass)
     result(null,jsonclass)
     return
 };
@@ -250,14 +291,6 @@ TA.editClassinfo = async (id,name,number,info,term,instructor,result)=>{
           if (err) throw err;
         }
     );
-    // let instructor_id = getidbyname (instructor);
-    // sql.query(
-    //     'UPDATE class SET CLASS_INSTRUCTOR = ? WHERE CLASS_ID = ?',
-    //     [instructor_id, id],
-    //     (err, result) => {
-    //       if (err) throw err;
-    //     }
-    // );
 
     let response = {
         SuccessfullyEdited:true

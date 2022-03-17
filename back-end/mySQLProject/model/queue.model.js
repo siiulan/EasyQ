@@ -1,30 +1,32 @@
-const res = require('express/lib/response');
+const redis = require('redis');
+const { reject } = require("async");
+const devSetting = require("../configs/devMode.config");  
 
-const redis = require('redis'),  
-RDS_PORT = 6379,                //端口号  
-RDS_HOST = '127.0.0.1',    //服务器IP  要连接的A服务器redis  
-RDS_PWD = '123456',     //密码  
-RDS_OPTS = {}                 //设置项  
-const client = redis.createClient(RDS_PORT,RDS_HOST,RDS_OPTS);  
-// const client = new redis(RDS_PORT,RDS_HOST,RDS_OPTS);  
-console.log("required redis");
-
-client.on('connect', () => {
-    console.log('connected');
-});
-client.auth(RDS_PWD,function(){  
-    console.log('通过认证');  
+RDS_PORT = 6379;                //端口号 
+RDS_HOST = '127.0.0.1';    //服务器IP  要连接的A服务器redis  
+var RDS_PWD = '123456';     //密码
+if(devSetting.devMode == 1){
+    RDS_PWD = 'Z6VOjC2DKlq6SsYZPONts7Db4RTcfjANWZ2Qe5xW+Msy6+XQp/aaSNMT5KjVNbOlH58B0l7N41XYjg9J';
+}
+// RDS_OPTS = {}                 //设置项  
+// const client = redis.createClient(RDS_PORT,RDS_HOST,RDS_OPTS);  
+const client = redis.createClient({
+    host : '127.0.0.1',  
+    no_ready_check: true,
+    auth_pass: RDS_PWD,                                                                                                                                                           
 });  
-client.on('end', () => {
-    console.log('disconnected');
-});
-client.on('reconnecting', () => {
-    console.log('reconnecting');
-});
-client.on('error', (err) => {
-    console.log('error', { err });
-});
 
+client.auth(RDS_PWD,function(){  
+            console.log('通过认证');  
+});  
+
+client.on('connect', () => {   
+    global.console.log("connected");
+});                               
+                            
+client.on('error', err => {       
+    global.console.log(err.message)
+});
 //redis class and functions
 class OfficehourQueue{
     constructor(key){
@@ -34,7 +36,7 @@ class OfficehourQueue{
     addUser = function (username){
         client.rpush([this.key, username], function(err, data){
             if(!err){
-                console.log(`${username} has been added`)
+                console.log(`redis:${username} has been added`)
             }
         });
     }
@@ -42,20 +44,20 @@ class OfficehourQueue{
     removeUser = function (username) {
         client.lrem(this.key, username, function(err, res){
             if(!err){
-                console.log(`${username} has been removed`);
+                console.log(`redis:${username} has been removed`);
             }
         })
     }
     inlineUser = async (officehourid,result) =>{
         client.llen(this.key, function(err, res){
             if(!err){
-                console.log(`there are ${res} people in line from redis`);
+                console.log(`redis:there are ${res} people in line from redis`);
                 let response = res
                 result(null,response)
                 return
             }
             else{
-                console.log("error in queuelength!")
+                console.log("redis:error in queuelength!")
             }
         })
     }    
@@ -64,7 +66,7 @@ class OfficehourQueue{
         client.lpos(this.key, username, function(err, data){
             //console.log(data);
             if(!err){
-                console.log(`${username}'s rank is`, data+1);
+                console.log(`redis:${username}'s rank is`, data+1);
         
             }
         })   
@@ -73,13 +75,13 @@ class OfficehourQueue{
     popUser = async (officehourid,result) =>{
         client.lpop(this.key, function(err, res){
             if(!err){
-                console.log(`${res} has been popped`);
+                console.log(`redis:${res} has been popped`);
                 let response = res
                 result(null,response)
                 return
             }
             else{
-                console.log("error in popuser!")
+                console.log("redis:error in popuser!")
             }
         })
     }
@@ -87,7 +89,7 @@ class OfficehourQueue{
     deleteSet = function(){
         client.del(this.key, function(err, res){
             if (!err){
-                console.log(`the ${this.key} has been deleted`);
+                console.log(`redis:the ${this.key} has been deleted`);
             }
         })
     }
