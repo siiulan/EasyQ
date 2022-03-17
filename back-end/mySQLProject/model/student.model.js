@@ -403,6 +403,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                 var HashSet = new Hash(`${Office_token}hash`);
                 await QueueSet.addUser(user_id);
                 await HashSet.addQuestion(user_id, question);
+                console.log('ADD TO REDIS')
                 QueueSet.rankUser(user_id,(err,data) =>{
                     if (err)
                         res.status(500).send({
