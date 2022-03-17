@@ -261,7 +261,6 @@ Student.classAdd = async (id , term, class_number, invi_code, result) => {
 }
     
 Student.getClassAll = async (id, result) => {
-    // test
     classes_shortinfo = []; 
     const response = [];
     let classes_id = await classGetid(id);
@@ -298,9 +297,9 @@ Student.getClassAll = async (id, result) => {
 
 Student.getClassOne = async (class_id, result) => {
     let class_info = await classGetwholeinfo(class_id);
-    //console.log(class_info)
+    console.log('class', class_info)
     let TA_info = await getTAinfo(class_id);
-    //console.log(TA_info);
+    console.log('TA', TA_info);
     let TA_allname = [];
     if (class_info.length){
         console.log('not empty')
