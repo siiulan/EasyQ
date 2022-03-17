@@ -43,15 +43,24 @@ class OfficehourQueue{
 
     removeUser = async (username,result) =>{
         //console.log('here')
-        client.lrem(this.key, 1, username, function(err, res){
+        client.lrem([this.key, 1, username], function(err, data){
             if(!err){
-                console.log(`${username} has been removed`);
+                if (data==1){
+                    console.log(`${username} has been removed`);
+                } else {
+                    console.log('did not removed')
+                }
+                let response = data;
+                    result(null, response)
+                    return
+            } else {
+                console.log('something wrong with quit part')
             }
         })
     }
  
     rankUser = async (username,result) =>{
-        client.lpos(this.key, username, function(err, data){
+        client.lpos([this.key, username], function(err, data){
             console.log('rank',data+1)
             if(!err){
                 if (data!=null){
