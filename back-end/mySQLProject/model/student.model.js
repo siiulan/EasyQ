@@ -384,6 +384,7 @@ Student.displayOffice = async (class_id, user_id, result) => {
 }
 
 Student.joinOffice = async (class_id, user_id, question, result) => {
+    console.log('here is join part', question);
     let getOffice = await findOffice(class_id);
     if (!getOffice.length){
         let judge = {
