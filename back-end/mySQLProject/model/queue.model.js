@@ -26,43 +26,44 @@ client.on('connect', () => {
                             
 client.on('error', err => {       
     global.console.log(err.message)
-
 });
-
-
 //redis class and functions
 class OfficehourQueue{
     constructor(key){
         this.key = key;
     }
   
-
-    addUser = function (username){
+    addUser = async (username,result) =>{
         client.rpush([this.key, username], function(err, data){
             if(!err){
-                console.log(`redis:${username} has been added`)
+                console.log(`${username} has been added`)
             }
         });
     }
 
-    removeUser = function (username) {
-        client.lrem(this.key, username, function(err, res){
+    removeUser = async (username,result) =>{
+        //console.log('here')
+        client.lrem([this.key, 1, username], function(err, data){
             if(!err){
-                console.log(`redis:${username} has been removed`);
+                if (data==1){
+                    console.log(`${username} has been removed`);
+                } else {
+                    console.log('did not removed')
+                }
+                let response = data;
+                    result(null, response)
+                    return
+            } else {
+                console.log('something wrong with quit part')
             }
         })
     }
-    inlineUser = async (officehourid,result) =>{
-        client.llen(this.key, function(err, res){
+ 
+    rankUser = async (username,result) =>{
+        client.lpos([this.key, username], function(err, data){
+            console.log('rank',data+1)
             if(!err){
-// <<<<<<< backEnd
-//                 console.log(`redis:there are ${res} people in line from redis`);
-//                 let response = res
-//                 result(null,response)
-//                 return
-// =======
                 if (data!=null){
-                    console.log(data+1)
                     let response = data+1
                 result(null,response)
                 return
@@ -70,24 +71,28 @@ class OfficehourQueue{
                     let response = data
                     result(null,response)
                     return
-                }         
-// >>>>>>> main
+                }
+                
+            }
+            else{
+                console.log(err);
+                console.log("error in queuelength!")
+            }
+        })
+    }    
+    inlineUser = async (officehourid,result) =>{
+        client.llen(this.key, function(err, res){
+            if(!err){
+                console.log(`redis:there are ${res} people in line from redis`);
+                let response = res
+                result(null,response)
+                return
             }
             else{
                 console.log("redis:error in queuelength!")
             }
         })
     }    
-
-    rankUser = function (username) {
-        client.lpos(this.key, username, function(err, data){
-            //console.log(data);
-            if(!err){
-                console.log(`redis:${username}'s rank is`, data+1);
-        
-            }
-        })   
-    }
     
     popUser = async (officehourid,result) =>{
         client.lpop(this.key, function(err, res){
@@ -102,7 +107,6 @@ class OfficehourQueue{
             }
         })
     }
-
 
     deleteSet = function(){
         client.del(this.key, function(err, res){
