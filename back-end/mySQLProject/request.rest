@@ -14,10 +14,10 @@ POST http://localhost:8080/api/user/registration
 Content-Type: application/json
 
 {
-    "username":"123@com",
-	"password":"123",
-	"firstname":"sb",
-	"lastname":"ni"
+    "username":"@com",
+	"password":"test",
+	"firstname":"test",
+	"lastname":"test"
 }
 
 ###
@@ -77,6 +77,7 @@ Content-Type: application/json
 }
 
 
+//<<<<<<< TA
 ###
 POST http://localhost:8080/api/user/ta/getsingleClass
 Content-Type: application/json
@@ -146,3 +147,101 @@ Content-Type: application/json
 	"office_hour_id" : "666"
 }
 
+//=======
+### class existed, student haven't been enrolled in this class and the code is right
+POST http://localhost:8080/api/user/student/addclass
+Content-Type: application/json
+
+{
+    "user_ID" : "7",
+	"class_NUMBER" : "YES1011",
+	"invitation_CODE" : "123456",
+	"term" : "Winter 2022"
+}
+
+###class existed, student haven't been enrolled in this class and the code is right
+POST http://localhost:8080/api/user/student/addclass
+Content-Type: application/json
+
+{
+    "userId" : "8",
+	"term" : "Winter 2022",
+	"classNumber" : "YES100",
+	"invitationCode" : "123456"
+}
+
+###class existed, student added class successfully
+POST http://localhost:8080/api/user/student/addclass
+Content-Type: application/json
+
+{
+    "userId" : "10",
+	"term" : "Winter 2022",
+	"classNumber" : "YES100",
+	"invitationCode" : "123456"
+}
+
+###
+POST http://localhost:8080/api/user/student/classes
+Content-Type: application/json
+
+{
+    "userId" : "9"
+
+}
+###
+POST http://localhost:8080/api/user/student/classes/class
+Content-Type: application/json
+
+{
+    "classId" : "4"
+
+}
+###
+POST http://localhost:8080/api/user/student/officehour/display
+Content-Type: application/json
+
+{
+    "classId" : "4",
+	"userId" : "1"
+
+}
+###
+POST http://localhost:8080/api/user/student/officehour/join
+Content-Type: application/json
+
+{
+    "classId" : "4",
+	"userId" : "1",
+	"userQuestion" : "this is the question"
+
+}
+###
+POST http://localhost:8080/api/user/student/officehour/inqueue
+Content-Type: application/json
+
+{
+    "userId" : "1",
+	"office_hour_Id" : "00202",
+	"classId" : "4"
+
+}
+###
+POST http://localhost:8080/api/user/student/officehour/quit
+Content-Type: application/json
+
+{
+    "userId" : "1",
+	"office_hour_Id" : "00202"
+}
+
+###
+POST http://localhost:8080/api/user/student/test
+Content-Type: application/json
+
+{
+    "userId" : "1",
+	"officehourTocken" : "123000",
+	"userQuestion" : "this is the question"
+}
+//>>>>>>> backEnd
