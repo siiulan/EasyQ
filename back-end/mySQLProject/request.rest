@@ -100,11 +100,8 @@ Content-Type: application/json
 
 {
     "course_id" : "4",
-	"coursename" : "name",
-	"coursenumber" : "number",
 	"schedule" : "schedule",
-	"term" : "Spring 2022",
-	"instructor": "5"
+	"TA_user_id" : "4a2e4581-a9e9-4462-9266-576213a89d2a"
 }
 ###
 POST http://localhost:8080/api/user/ta/startofficehour
@@ -143,6 +140,6 @@ Content-Type: application/json
 
 {
     "user_id" : "4",
-	"office_hour_id" : "666"
+	"office_hour_id" : "aaa71948-712a-4d14-b0a2-c77d034f37e6"
 }
 

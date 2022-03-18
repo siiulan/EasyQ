@@ -122,12 +122,9 @@ exports.editClass = (req,res)=>{
         )
     }
     let id = req.body.course_id
-    let name = req.body.coursename
-    let number = req.body.coursenumber
-    let info = req.body.schedule
-    let term = req.body.term
-    let instructor = req.body.instructor
-    TA.editClassinfo(id,name,number,info,term,instructor,(err,data) =>{
+    let taid = req.body.TA_user_id
+    let schedule = req.body.schedule
+    TA.editClassinfo(id,taid,schedule,(err,data) =>{
         if (err)
             res.status(500).send({
                 message:
