@@ -262,31 +262,10 @@ TA.getClassinfo = async (classid,result) =>{
 };
 
 
-TA.editClassinfo = async (id,name,number,info,term,instructor,result)=>{
-    sql.query(
-        'UPDATE class SET CLASS_NAME = ? WHERE CLASS_ID = ?',
-        [name, id],
-        (err, result) => {
-          if (err) throw err;
-        }
-    );
-    sql.query(
-        'UPDATE class SET CLASS_NUMBER = ? WHERE CLASS_ID = ?',
-        [number, id],
-        (err, result) => {
-          if (err) throw err;
-        }
-    );
+TA.editClassinfo = async (id,taid,schedule,result)=>{
     sql.query(
         'UPDATE class SET CLASS_INFO = ? WHERE CLASS_ID = ?',
-        [info, id],
-        (err, result) => {
-          if (err) throw err;
-        }
-    );
-    sql.query(
-        'UPDATE class SET CLASS_TERM = ? WHERE CLASS_ID = ?',
-        [term, id],
+        [schedule, id],
         (err, result) => {
           if (err) throw err;
         }
