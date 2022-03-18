@@ -55,10 +55,23 @@ class OfficehourQueue{
     inlineUser = async (officehourid,result) =>{
         client.llen(this.key, function(err, res){
             if(!err){
-                console.log(`redis:there are ${res} people in line from redis`);
-                let response = res
+// <<<<<<< backEnd
+//                 console.log(`redis:there are ${res} people in line from redis`);
+//                 let response = res
+//                 result(null,response)
+//                 return
+// =======
+                if (data!=null){
+                    console.log(data+1)
+                    let response = data+1
                 result(null,response)
                 return
+                } else {
+                    let response = data
+                    result(null,response)
+                    return
+                }         
+// >>>>>>> main
             }
             else{
                 console.log("redis:error in queuelength!")

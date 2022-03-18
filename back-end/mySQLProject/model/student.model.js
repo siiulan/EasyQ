@@ -395,7 +395,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
         let item_TA = await findNameTA(getOffice[0].USER_ID);
         if (item_TA.length){
             let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
-            console.log(TA_name);
+            //console.log(TA_name);
             let item_classNumber = await classGetwholeinfo(class_id);
             if (item_classNumber.length){
                 var Class_Number = item_classNumber[0].CLASS_NUMBER;
@@ -403,6 +403,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                 var HashSet = new Hash(`${Office_token}hash`);
                 await QueueSet.addUser(user_id);
                 await HashSet.addQuestion(user_id, question);
+                console.log('ADD TO REDIS')
                 QueueSet.rankUser(user_id,(err,data) =>{
                     if (err)
                         res.status(500).send({
@@ -410,7 +411,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                                 err.message || "some error occured"
                         })
                     else{
-                        console.log('join else part')
+                        //console.log('join else part')
                         let response = {
                             isinQueue: true,
                             OFFICE_HOUR_ID : Office_token,
@@ -443,63 +444,71 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
     }
 }
 Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
+    //console.log('officehour id', officehour_id);
     let Office_info = await findOffice_by_tocken(officehour_id);
+    console.log('inthe queue')
     if(!Office_info.length){
         let judge = {
             SomethingWrong : true
         }
         result(null, judge)
         return
-    }
-    let item_TA = await findNameTA(Office_info[0].USER_ID);
-    if (item_TA.length){
-        let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
-        console.log(TA_name);
-        let item_classNumber = await classGetwholeinfo(class_id);
-        if (item_classNumber.length){
-            var Class_Number = item_classNumber[0].CLASS_NUMBER;
-            let Office_token = officehour_id;
-            var QueueSet  = new Queue(`${Office_token}`);
-            QueueSet.rankUser(user_id,(err,data) =>{
-                if (err)
-                    res.status(500).send({
-                        message:
-                            err.message || "some error occured"
-                    })
-                else{
-                    console.log(data)
-                    if(data!=null){
-                        let response = {
-                            isinQueue: true,
-                            OFFICE_HOUR_ID : Office_token,
-                            CLASS_NUMBER : Class_Number,
-                            CLASS_ID : class_id,
-                            QUEUE_INDEX : data,
-                            TA_NAME : TA_name,
-                            CLASS_NAME : item_classNumber[0].CLASS_NAME,
-                            TA_ID : item_TA[0].USER_ID
+    } else {
+        let item_TA = await findNameTA(Office_info[0].USER_ID);
+        if (item_TA.length){
+            let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
+            console.log(TA_name);
+            let item_classNumber = await classGetwholeinfo(class_id);
+            if (item_classNumber.length){
+                var Class_Number = item_classNumber[0].CLASS_NUMBER;
+                let Office_token = officehour_id;
+                var QueueSet  = new Queue(`${Office_token}`);
+                QueueSet.rankUser(user_id,(err,data) =>{
+                    if (err)
+                        res.status(500).send({
+                            message:
+                                err.message || "some error occured"
+                        })
+                    else{
+                        if(data!=null){
+                            let response = {
+                                isinQueue: true,
+                                OFFICE_HOUR_ID : Office_token,
+                                CLASS_NUMBER : Class_Number,
+                                CLASS_ID : class_id,
+                                QUEUE_INDEX : data,
+                                TA_NAME : TA_name,
+                                CLASS_NAME : item_classNumber[0].CLASS_NAME,
+                                TA_ID : item_TA[0].USER_ID
+                            }
+                            console.log('still in the queue')
+                            result(null, response)
+                            return;
+                        } else if(data==null) {
+                            let response = {
+                                isinQueue: false,
+                                MEETING_LINK : Office_info[0].MEETING_LINK,
+                                OFFICE_HOUR_ID : Office_token,
+                                CLASS_NUMBER : Class_Number,
+                                CLASS_ID : class_id,
+                                QUEUE_INDEX : data,
+                                TA_NAME : TA_name,
+                                CLASS_NAME : item_classNumber[0].CLASS_NAME,
+                                TA_ID : Office_info[0].USER_ID
+                            }
+                            console.log('be popped')
+                            result(null, response)
+                            return;
                         }
-                        console.log('still in the queue')
-                        result(null, response)
-                        return;
-                    } else if(data==null) {
-                        let response = {
-                            isinQueue: false,
-                            MEETING_LINK : Office_info[0].MEETING_LINK,
-                            OFFICE_HOUR_ID : Office_token,
-                            CLASS_NUMBER : Class_Number,
-                            CLASS_ID : class_id,
-                            QUEUE_INDEX : data,
-                            TA_NAME : TA_name,
-                            CLASS_NAME : item_classNumber[0].CLASS_NAME,
-                            TA_ID : Office_info[0].USER_ID
-                        }
-                        console.log('be popped')
-                        result(null, response)
-                        return;
                     }
+                })
+            } else {
+                let judge = {
+                    SomethingWrong : true
                 }
-            })
+                result(null, judge)
+                return
+            }
         } else {
             let judge = {
                 SomethingWrong : true
@@ -507,13 +516,9 @@ Student.intheOffice = async (user_id, officehour_id, class_id,  result) => {
             result(null, judge)
             return
         }
-    } else {
-        let judge = {
-            SomethingWrong : true
-        }
-        result(null, judge)
-        return
-    } 
+
+    }
+     
 }
 
 Student.quitOffice = async (user_id, office_hour_id, result) => {
