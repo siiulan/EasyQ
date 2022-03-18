@@ -1,6 +1,7 @@
 const redis = require('redis');
 const { reject } = require("async");
 const devSetting = require("../configs/devMode.config");  
+
 RDS_PORT = 6379;                //端口号 
 RDS_HOST = '127.0.0.1';    //服务器IP  要连接的A服务器redis  
 var RDS_PWD = '123456';     //密码
@@ -25,7 +26,9 @@ client.on('connect', () => {
                             
 client.on('error', err => {       
     global.console.log(err.message)
-});  
+
+});
+
 
 //redis class and functions
 class OfficehourQueue{
@@ -33,55 +36,68 @@ class OfficehourQueue{
         this.key = key;
     }
   
-    addUser = async (username,result) =>{
+
+    addUser = function (username){
         client.rpush([this.key, username], function(err, data){
             if(!err){
-                console.log(`${username} has been added`)
+                console.log(`redis:${username} has been added`)
             }
         });
     }
 
-    removeUser = async (username,result) =>{
-        //console.log('here')
-        client.lrem([this.key, 1, username], function(err, data){
+    removeUser = function (username) {
+        client.lrem(this.key, username, function(err, res){
             if(!err){
-                if (data==1){
-                    console.log(`${username} has been removed`);
-                } else {
-                    console.log('did not removed')
-                }
-                let response = data;
-                    result(null, response)
-                    return
-            } else {
-                console.log('something wrong with quit part')
+                console.log(`redis:${username} has been removed`);
             }
         })
     }
- 
-    rankUser = async (username,result) =>{
-        client.lpos([this.key, username], function(err, data){
-            console.log('rank',data+1)
+    inlineUser = async (officehourid,result) =>{
+        client.llen(this.key, function(err, res){
             if(!err){
-                if (data!=null){
-                    let response = data+1
+                console.log(`redis:there are ${res} people in line from redis`);
+                let response = res
                 result(null,response)
                 return
-                } else {
-                    let response = data
-                    result(null,response)
-                    return
-                }
-                
             }
             else{
-                console.log(err);
-                console.log("error in queuelength!")
+                console.log("redis:error in queuelength!")
+            }
+        })
+    }    
+
+    rankUser = function (username) {
+        client.lpos(this.key, username, function(err, data){
+            //console.log(data);
+            if(!err){
+                console.log(`redis:${username}'s rank is`, data+1);
+        
+            }
+        })   
+    }
+    
+    popUser = async (officehourid,result) =>{
+        client.lpop(this.key, function(err, res){
+            if(!err){
+                console.log(`redis:${res} has been popped`);
+                let response = res
+                result(null,response)
+                return
+            }
+            else{
+                console.log("redis:error in popuser!")
             }
         })
     }
 
 
+    deleteSet = function(){
+        client.del(this.key, function(err, res){
+            if (!err){
+                console.log(`redis:the ${this.key} has been deleted`);
+            }
+        })
+    }
 };
 
 
