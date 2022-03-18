@@ -25,7 +25,10 @@ export default {
   mounted: function () {
     this.setStartButton();
     window.setInterval(() => {
-      this.getlength()
+      if (this.started==true){
+        this.getlength()
+      }
+
     }, 5000)
   },
   data() {
