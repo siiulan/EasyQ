@@ -1,6 +1,7 @@
 const redis = require('redis');
 const { reject } = require("async");
 const devSetting = require("../configs/devMode.config");  
+
 RDS_PORT = 6379;                //端口号 
 RDS_HOST = '127.0.0.1';    //服务器IP  要连接的A服务器redis  
 var RDS_PWD = '123456';     //密码
@@ -25,8 +26,7 @@ client.on('connect', () => {
                             
 client.on('error', err => {       
     global.console.log(err.message)
-});  
-
+});
 //redis class and functions
 class OfficehourQueue{
     constructor(key){
@@ -79,9 +79,42 @@ class OfficehourQueue{
                 console.log("error in queuelength!")
             }
         })
+    }    
+    inlineUser = async (officehourid,result) =>{
+        client.llen(this.key, function(err, res){
+            if(!err){
+                console.log(`redis:there are ${res} people in line from redis`);
+                let response = res
+                result(null,response)
+                return
+            }
+            else{
+                console.log("redis:error in queuelength!")
+            }
+        })
+    }    
+    
+    popUser = async (officehourid,result) =>{
+        client.lpop(this.key, function(err, res){
+            if(!err){
+                console.log(`redis:${res} has been popped`);
+                let response = res
+                result(null,response)
+                return
+            }
+            else{
+                console.log("redis:error in popuser!")
+            }
+        })
     }
 
-
+    deleteSet = function(){
+        client.del(this.key, function(err, res){
+            if (!err){
+                console.log(`redis:the ${this.key} has been deleted`);
+            }
+        })
+    }
 };
 
 
