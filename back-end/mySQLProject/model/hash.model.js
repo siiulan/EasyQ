@@ -55,6 +55,15 @@ class OfficehourHash{
         })
     }
 
+    deleteHash = function(){
+        client.del(this.key, function(err, res){
+            if (!err){
+                console.log(`redis:the hash ${this.key} has been deleted`);
+            }
+        })
+    }
+
+
 }
 
 module.exports = OfficehourHash;
