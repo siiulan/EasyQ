@@ -107,7 +107,7 @@ TA.Popstudent = async (officehourid,result) =>{
                 }
                 // console.log("in function",res)
                 let newstuinfo = res;
-                // console.log("newstuinfo in tamodel",newstuinfo);
+                console.log("newstuinfo in tamodel",newstuinfo);
                 if (newstuinfo.length){
                     let name = newstuinfo[0].FIRST_NME + ' '+ newstuinfo[0].LAST_NME;
                     officehourhash.getQuestion(data,(err,dataa) =>{
