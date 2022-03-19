@@ -21,8 +21,8 @@ function matchTAandofficehour(taid,ohid){
                 console.log("error: ", err);
                 reject(err);
             }
-            if (res == taid) resolve('true')
-            else resolve('false')
+            if (res == taid) resolve(1)
+            else resolve(0)
         });
     })    
 }
@@ -47,7 +47,7 @@ function getnamebyid(stuid){
                 console.log("error: ", err);
                 reject(err);
             }
-            let name = res.FIRST_NME + ' ' + res.LAST_NME
+            let name = res[0].FIRST_NME + ' ' + res[0].LAST_NME
             resolve(name)
         });
     })
@@ -88,7 +88,14 @@ TA.Startofficehour = async (classid,taid,meetinglink,description,result) =>{
     return
 };
 
-TA.Popstudent = async (officehourid,result) =>{
+TA.Popstudent = async (taid,officehourid,result) =>{
+    if(!matchTAandofficehour(taid,officehourid)){
+        let response ={
+            TAandOHidmatch: false
+       }
+        result(null,response)
+        return
+    }
     let officehour = new ohqueue(officehourid);
     let officehourhash = new ohqueuehash(`${officehourid}hash`);
     // let newstu = officehour.popUser(); /// popuser should return student's userid
@@ -105,9 +112,9 @@ TA.Popstudent = async (officehourid,result) =>{
                     console.log("error: ", err);
                     reject(err);
                 }
-                // console.log("in function",res)
+                console.log("in function",res)
                 let newstuinfo = res;
-                console.log("newstuinfo in tamodel",newstuinfo);
+                // console.log("newstuinfo in tamodel",newstuinfo);
                 if (newstuinfo.length){
                     let name = newstuinfo[0].FIRST_NME + ' '+ newstuinfo[0].LAST_NME;
                     officehourhash.getQuestion(data,(err,dataa) =>{
@@ -139,7 +146,14 @@ TA.Popstudent = async (officehourid,result) =>{
     })
 }
 
-TA.Getqueuelength = async (officehourid,result) =>{
+TA.Getqueuelength = async (taid,officehourid,result) =>{
+    if(!matchTAandofficehour(taid,officehourid)){
+        let response ={
+            TAandOHidmatch: false
+       }
+        result(null,response)
+        return
+    }
     let officehour = new ohqueue(officehourid);
     officehour.inlineUser(1,(err,data) =>{
         if (err)
@@ -158,7 +172,14 @@ TA.Getqueuelength = async (officehourid,result) =>{
     })
 }
 
-TA.Endofficehour = async (officehourid,result) =>{
+TA.Endofficehour = async (taid,officehourid,result) =>{
+    if(!matchTAandofficehour(taid,officehourid)){
+        let response ={
+            TAandOHidmatch: false
+       }
+        result(null,response)
+        return
+    }
     let officehour = new ohqueue(officehourid);
     let officehourhash = new ohqueuehash(`${officehourid}hash`);
     officehour.deleteSet(); 
@@ -215,7 +236,7 @@ TA.getClassesinfo = async (id,result) =>{
         }
         for (let j=0;j<classes.length;j++){
             // console.log("classid-j0",classesinfo[j][0].CLASS_ID)
-            let instructname = getnamebyid(classesinfo[j][0].INSTRUCTOR_ID)
+            let instructname = await getnamebyid(classesinfo[j][0].INSTRUCTOR_ID)
             let classnamenum = classesinfo[j][0].CLASS_NUMBER + ' ' + classesinfo[j][0].CLASS_NAME;
             let jsonclass = {
                 CLASS_ID : classesinfo[j][0].CLASS_ID,
@@ -239,7 +260,7 @@ TA.getClassesinfo = async (id,result) =>{
 TA.getClassinfo = async (classid,result) =>{
     let classinfo = await getclassinfobyid(classid)
     if (classinfo.length){
-        let instructname = getnamebyid(classinfo[0].INSTRUCTOR_ID)
+        let instructname = await getnamebyid(classinfo[0].INSTRUCTOR_ID)
         let classnamenum = classinfo[0].CLASS_NUMBER + ' ' + classinfo[0].CLASS_NAME;
         let jsonclass = {
             CLASS_ID : classinfo[0].CLASS_ID,
@@ -270,7 +291,6 @@ TA.editClassinfo = async (id,taid,schedule,result)=>{
           if (err) throw err;
         }
     );
-
     let response = {
         SuccessfullyEdited:true
     }
