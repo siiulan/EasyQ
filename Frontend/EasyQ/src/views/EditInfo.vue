@@ -52,7 +52,7 @@ export default {
       };
       const response = await axios.post('http://54.163.38.93/api/user/ta/getsingleClass', data,{headers: {'Content-type': 'application/json',}});
       this.name = response.data.CLASS_NAME;
-      this.instructor = response.data.INSTRUCTOR_ID;
+      this.instructor = response.data.INSTRUCTOR_NAME;
       this.term = response.data.CLASS_TERM;
       this.schedule = response.data.CLASS_INFO;
     },

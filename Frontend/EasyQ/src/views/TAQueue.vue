@@ -24,12 +24,15 @@ import axios from 'axios'
 export default {
   mounted: function () {
     this.setStartButton();
-    window.setInterval(() => {
+    this.timer = window.setInterval(() => {
       if (this.started==true){
         this.getlength()
       }
 
     }, 5000)
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
   data() {
     return {
@@ -47,6 +50,7 @@ export default {
       vlink: "",
       ohid: "",
       ended: "",
+      timer: null,
     };
   },
   methods: {
