@@ -4,8 +4,8 @@ Content-Type: application/json
 {
     "username" : "siiulan79@gmail.com",
 	"password" : "123456",
-	"firstname" : "TA1",
-	"lastname" : "ta1"
+	"firstname" : "Test",
+	"lastname" : "Test"
 }
 
 ###
@@ -30,7 +30,7 @@ Content-Type: application/json
 	"password": "admin"
 }
 
-##
+###
 
 POST http://localhost:8080/api/user/login
 Content-Type: application/json
@@ -76,78 +76,95 @@ Content-Type: application/json
     "email" : "siiulan79@gmail.com"
 }
 
-
-//<<<<<<< TA
 ###
-POST http://localhost:8080/api/user/ta/getsingleClass
+POST http://localhost:8080/api/user/instructor/getClass
 Content-Type: application/json
 
 {
-    "course_id" : "1"
+    "user_ID" : "613bc315-5b8c-499b-83a0-83664036ca32"
+}
+
+###
+POST http://54.163.38.93/api/user/instructor/getClass
+Content-Type: application/json
+
+{
+    "user_ID" : "613bc315-5b8c-499b-83a0-83664036ca32"
+}
+
+###
+POST http://localhost:8080/api/user/instructor/getClassMembers
+Content-Type: application/json
+
+{
+    "class_id" : "4"
+}
+
+###
+POST http://54.163.38.93/api/user/instructor/getClassMembers
+Content-Type: application/json
+
+{
+    "class_id" : "4"
+}
+
+###
+POST http://localhost:8080/api/user/instructor/classAddTA
+Content-Type: application/json
+
+{
+    "email_adress" : "siiulan79@gmail.com",
+	"class_id" : "4"
+}
+
+###
+POST http://localhost:8080/api/user/instructor/addClass
+Content-Type: application/json
+ 
+{
+   "CLASS_NUMBER": "YES600",
+   "CLASS_NAME": "Yes not Yes",
+   "CLASS_INFO": "yesmora no",
+   "CLASS_TERM": "Winter 2022",
+   "INSTRUCTOR_ID": "613bc315-5b8c-499b-83a0-83664036ca32"
 }
 
 
 ###
-POST http://localhost:8080/api/user/ta/getClass
+POST http://localhost:8080/api/user/instructor/getStudentInvitationCode
 Content-Type: application/json
 
 {
-    "TA_user_id" : "4"
+	"class_id" : "3"
 }
 
 ###
-POST http://localhost:8080/api/user/ta/editClass
+POST http://localhost:8080/api/user/instructor/getStudentInvitationCode
 Content-Type: application/json
 
 {
-    "course_id" : "4",
-	"coursename" : "name",
-	"coursenumber" : "number",
-	"schedule" : "schedule",
-	"term" : "Spring 2022",
-	"instructor": "5"
-}
-###
-POST http://localhost:8080/api/user/ta/startofficehour
-Content-Type: application/json
-
-{
-    "user_id" : "4",
-	"class_id" : "3",
-	"meeting_link" : "meetinglink",
-	"description" : "this is a office hour for class3 TA4"
+	"class_id" : "3"
 }
 
 ###
-POST http://localhost:8080/api/user/ta/endofficehour
+POST http://54.163.38.93/api/user/instructor/getStudentInvitationCode
 Content-Type: application/json
 
 {
-    "user_id" : "4",
-	"office_hour_id" : "4a199883-1be5-40f7-894e-f6802aba23a3"
+	"class_id" : "4"
 }
-
 
 ###
-POST http://localhost:8080/api/user/ta/getqueuelength
+POST http://localhost:8080/api/user/instructor/unregisteredInvitationConfirmation/9a2149a6-451b-4ab6-831d-9ca605497544
 Content-Type: application/json
 
 {
-    "user_id" : "4",
-	"office_hour_id" : "aaa71948-712a-4d14-b0a2-c77d034f37e6"
+	"first_name" : "Ryan",
+	"last_name" : "Gao",
+	"password" : "yesmora"
+    "user_ID" : "2"
 }
 
-
-###
-POST http://localhost:8080/api/user/ta/popstudent
-Content-Type: application/json
-
-{
-    "user_id" : "4",
-	"office_hour_id" : "666"
-}
-
-//=======
 ### class existed, student haven't been enrolled in this class and the code is right
 POST http://localhost:8080/api/user/student/addclass
 Content-Type: application/json
@@ -244,4 +261,3 @@ Content-Type: application/json
 	"officehourTocken" : "123000",
 	"userQuestion" : "this is the question"
 }
-//>>>>>>> backEnd
