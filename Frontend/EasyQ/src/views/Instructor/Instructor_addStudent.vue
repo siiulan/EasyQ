@@ -22,7 +22,7 @@ export default {
         async AddStudent(){
             console.log("this.courseID: " + this.CourseID);
             
-            const res = await axios.post('http://54.163.38.93/api/user/instructor/getStudentInvitationCode',
+            const res = await axios.post('http://100.25.219.17/api/user/instructor/getStudentInvitationCode',
                     {
                         class_id : this.CourseID
                     },{headers: {'Content-type': 'application/json',}});

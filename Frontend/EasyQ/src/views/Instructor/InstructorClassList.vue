@@ -56,7 +56,7 @@ export default {
     methods:{
         async GetStudent(){   
             console.log("COURSE ID:" + this.CourseID);      
-            const res = await axios.post('http://54.163.38.93/api/user/instructor/getClassMembers',
+            const res = await axios.post('http://100.25.219.17/api/user/instructor/getClassMembers',
                     {
                         class_id : this.CourseID
                     },{headers: {'Content-type': 'application/json',}});
