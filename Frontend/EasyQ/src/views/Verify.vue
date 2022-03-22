@@ -44,7 +44,7 @@ export default {
         email: getCookie("username")
       };
       let xhr = new XMLHttpRequest();
-      xhr.open("POST", "http://54.163.38.93/api/user/verify/resend", true);
+      xhr.open("POST", "http://100.25.219.17/api/user/verify/resend", true);
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       xhr.send(JSON.stringify(data2));
     },

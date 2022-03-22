@@ -85,7 +85,7 @@ export default {
             //const SelectCourse = this.Courselist.find((Course) => Course.CLASS_NUMBER === given_CourseNum );
         },
         async RemoveCourse(){
-            const response = await axios.post('http://54.163.38.93/api/user/instructor/removeClass',{
+            const response = await axios.post('http://100.25.219.17/api/user/instructor/removeClass',{
                 class_id : this.Detailed_Course.CLASS_ID
                 },{headers: {'Content-type': 'application/json',}});
             if(response.data.success === true){
@@ -103,7 +103,7 @@ export default {
             }
         },
         async handleEdit(){
-            const response = await axios.post('http://54.163.38.93/api/user/instructor/editClass',{
+            const response = await axios.post('http://100.25.219.17/api/user/instructor/editClass',{
                 CLASS_ID : this.Detailed_Course.CLASS_ID,
                 CLASS_NUMBER:this.Detailed_Course.CLASS_NUMBER ,
                 CLASS_NAME: this.Detailed_Course.CLASS_NAME,

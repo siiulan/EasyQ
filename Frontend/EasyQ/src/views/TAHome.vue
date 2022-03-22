@@ -35,7 +35,7 @@ export default {
       var data = {
         TA_user_id: this.user_id,
       };
-      const response = await axios.post('http://54.163.38.93/api/user/ta/getClass', data,{headers: {'Content-type': 'application/json',}});
+      const response = await axios.post('http://100.25.219.17/api/user/ta/getClass', data,{headers: {'Content-type': 'application/json',}});
       this.items = response.data;
     },
   },
