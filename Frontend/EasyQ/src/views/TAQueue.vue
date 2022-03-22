@@ -73,7 +73,7 @@ export default {
           description: this.vdes,
           meeting_link: this.vlink,
         };
-        const response = await axios.post('http://54.163.38.93/api/user/ta/startofficehour', data,{headers: {'Content-type': 'application/json',}});
+        const response = await axios.post('http://100.25.219.17/api/user/ta/startofficehour', data,{headers: {'Content-type': 'application/json',}});
         this.ohid = response.data.OFFICE_HOUR_ID;
       } else {
         this.started = false;
@@ -83,7 +83,7 @@ export default {
           user_id: this.user_id,
           office_hour_id: this.ohid,
         };
-        const response = await axios.post('http://54.163.38.93/api/user/ta/endofficehour', data,{headers: {'Content-type': 'application/json',}});
+        const response = await axios.post('http://100.25.219.17/api/user/ta/endofficehour', data,{headers: {'Content-type': 'application/json',}});
         this.ended = response.data.SUCCESSFULLY_ENDED;
       }
     },
@@ -92,7 +92,7 @@ export default {
         user_id: this.user_id,
         office_hour_id: this.ohid,
       };
-      const response = await axios.post('http://54.163.38.93/api/user/ta/getqueuelength', data,{headers: {'Content-type': 'application/json',}});
+      const response = await axios.post('http://100.25.219.17/api/user/ta/getqueuelength', data,{headers: {'Content-type': 'application/json',}});
       this.qlength = response.data.QUEUE_LENGTH;
     },
   
@@ -101,7 +101,7 @@ export default {
         user_id: this.user_id,
         office_hour_id: this.ohid,
       };
-      const response = await axios.post('http://54.163.38.93/api/user/ta/popstudent', data,{headers: {'Content-type': 'application/json',}});
+      const response = await axios.post('http://100.25.219.17/api/user/ta/popstudent', data,{headers: {'Content-type': 'application/json',}});
       this.sname = response.data.NAME;
       this.semail = response.data.EMAIL_ADDRESS;
       this.squestion = response.data.QUESTION;

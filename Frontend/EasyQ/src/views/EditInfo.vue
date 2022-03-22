@@ -43,14 +43,14 @@ export default {
         TA_user_id: this.user_id,
         schedule: this.schedule,
       };
-      const response = await axios.post('http://54.163.38.93/api/user/ta/editClass', data,{headers: {'Content-type': 'application/json',}});
+      const response = await axios.post('http://100.25.219.17/api/user/ta/editClass', data,{headers: {'Content-type': 'application/json',}});
       this.successfully_edited = response.data.SuccessfullyEdited;
     },
     async getInfo() {
       var data = {
         course_id: this.course_id,
       };
-      const response = await axios.post('http://54.163.38.93/api/user/ta/getsingleClass', data,{headers: {'Content-type': 'application/json',}});
+      const response = await axios.post('http://100.25.219.17/api/user/ta/getsingleClass', data,{headers: {'Content-type': 'application/json',}});
       this.name = response.data.CLASS_NAME;
       this.instructor = response.data.INSTRUCTOR_NAME;
       this.term = response.data.CLASS_TERM;
