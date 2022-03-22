@@ -43,7 +43,7 @@ export default {
              try{
                console.log("course id: " + this.CourseID);
                console.log("email: " + this.input.Email);
-              const response = await axios.post('http://54.163.38.93/api/user/instructor/classAddTA',{
+              const response = await axios.post('http://100.25.219.17/api/user/instructor/classAddTA',{
                     email_adress : this.input.Email,
                     class_id : this.CourseID
                 },{headers: {'Content-type': 'application/json',}});
