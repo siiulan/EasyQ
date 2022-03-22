@@ -363,6 +363,7 @@ Student.displayOffice = async (class_id, user_id, result) => {
                 var class_Name = item_classNumber[0].CLASS_NAME;
                 let Office_token = getOffice[0].OFFICE_HOUR_ID;
                 let response = {
+                    isActive : true, 
                     OFFICE_HOUR_ID : Office_token,
                     CLASS_NUMBER : Class_Number,
                     CLASS_ID : class_id,
