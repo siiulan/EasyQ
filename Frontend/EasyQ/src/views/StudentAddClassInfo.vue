@@ -108,7 +108,7 @@ export default {
 
             try{
                 console.log(this.userId); //for test
-                const response = await axios.post('http://54.163.38.93/api/user/student/addclass',{
+                const response = await axios.post('http://100.25.219.17/api/user/student/addclass',{
                 userId: this.userId,
                 term: this.input.term,
                 classNumber: this.input.classNumber,

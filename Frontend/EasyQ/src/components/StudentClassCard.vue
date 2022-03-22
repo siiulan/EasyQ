@@ -71,7 +71,7 @@ import axios from 'axios'
           userId: this.userId,
           // classId: this.classId
         };
-        const response = await axios.post('http://54.163.38.93/api/user/student/classes', data, {headers:{'Content-type': 'application/json',}});
+        const response = await axios.post('http://100.25.219.17/api/user/student/classes', data, {headers:{'Content-type': 'application/json',}});
         this.items = response.data;
         // this.classNumber = response.data.items.CLASS_NUMBER;
         // this.className = response.data.items.CLASS_NAME;
