@@ -95,10 +95,10 @@ export default {
         //window.location.href = "/instructor/main";
 
         if (data2.role == "student") {
-          window.location.href = "/StudentHome";
+          window.location.href = "/Studenthome";
         } else if (data2.role == "TA") {
           window.location.href = "/TAHome";
-        } else if (data2.role == "Instructor") {
+        } else if (data2.role == "instructor") {
           window.location.href = "/instructor/main";
         }
 
