@@ -340,11 +340,19 @@ Student.getClassOne = async (class_id, result) => {
 Student.displayOffice = async (class_id, user_id, result) => {
     let getOffice = await findOffice(class_id);
     if (!getOffice.length){
-        let judge = {
-            isActive : false
+        let item_classNumber = await classGetwholeinfo(class_id);
+        if (item_classNumber.length) {
+            var Class_Number = item_classNumber[0].CLASS_NUMBER;
+            var class_Name = item_classNumber[0].CLASS_NAME;
+            let response = {
+                isActive : false,
+                CLASS_NUMBER : Class_Number,
+                CLASS_ID : class_id,
+                CLASS_NAME : class_Name,
+            }
+            result(null, response);
+            return;
         }
-        result(null, judge);
-        return;
     } else {
         let item_TA = await findNameTA(getOffice[0].USER_ID);
         if (item_TA.length) {
