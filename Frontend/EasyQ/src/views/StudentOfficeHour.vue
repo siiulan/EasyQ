@@ -46,7 +46,9 @@ export default {
         //     }, 5000)
 
         this.timer = setInterval (() => {
-            this.getLength()
+            if(this.Active == true){
+                this.getLength()
+            }
         }, 1000)
                  
     },
@@ -80,7 +82,8 @@ export default {
             isActive: false,
             userQuestion: '',
             isQueue: true,
-            timer: null
+            timer: null,
+            // isActive: false
         }
     },
     // created(){
@@ -96,12 +99,25 @@ export default {
             const response = await axios.post('http://100.25.219.17/api/user/student/officehour/display',data,{headers: {'Content-type' : 'application/json',}});
             console.log("get class info",response.data)
             
-            this.className = response.data.CLASS_NAME;
-            this.classId = response.data.CLASS_ID;
-            this.classNumber = response.data.CLASS_NUMBER;
-            this.TAName = response.data.TA_NAME;
-            this.TAId = response.data.TA_ID;
-            this.officehourId = response.data.OFFICE_HOUR_ID;
+            
+            this.isActive = response.data.isActive
+            // console.log("isActive", this.isActive)
+            if(this.isActive == true)
+            {
+                this.className = response.data.CLASS_NAME;
+                this.classId = response.data.CLASS_ID;
+                this.classNumber = response.data.CLASS_NUMBER;
+                this.TAName = response.data.TA_NAME;
+                this.TAId = response.data.TA_ID;
+                this.officehourId = response.data.OFFICE_HOUR_ID;
+            }
+            else{
+                this.className = response.data.CLASS_NAME;
+                this.classId = response.data.CLASS_ID;
+                this.classNumber = response.data.CLASS_NUMBER;
+                alert("It's not in the office hour!")
+            }
+
         },
 
         async startQueue() {
@@ -112,7 +128,7 @@ export default {
             }
             const response = await axios.post('http://100.25.219.17/api/user/student/officehour/join',data,{headers: {'Content-type' : 'application/json',}});
             // console.log("This is a test point");
-            // console.log("res",response.data);
+            console.log("office_hour_join",response.data);
             this.startQ = response.data.isinQueue;
             this.className = response.data.CLASS_NAME;
             this.classId = response.data.CLASS_ID;
@@ -135,6 +151,10 @@ export default {
             const response = await axios.post('http://100.25.219.17/api/user/student/officehour/inqueue',data,{headers: {'Content-type' : 'application/json',}});
             this.startQ = response.data.isinQueue;
             console.log(response.data.isinQueue);
+            // if(this.isActive == false)
+            // {
+            //     console.log('canno')
+            // }
             if(this.startQ == true){
                 console.log("In the queue");
                 this.queueIndex = response.data.QUEUE_INDEX;
@@ -157,7 +177,7 @@ export default {
             const response = await axios.post('http://100.25.219.17/api/user/student/officehour/quit',data,{headers: {'Content-type' : 'application/json',}});
             this.isQuit = response.data.isQuit;
             this.isQueue = true;
-            if(this.isQuit == true)
+            if(this.isQuit == true || this.isActive == false)
             {
                 console.log("quit successfully");
                 alert("Quit successfully");
