@@ -235,7 +235,7 @@ TA.getClassesinfo = async (id,result) =>{
             classesinfo[i] = await getclassinfobyid(classes[i].CLASS_ID)  
         }
         for (let j=0;j<classes.length;j++){
-            // console.log("classid-j0",classesinfo[j][0].CLASS_ID)
+            console.log("instructorid-j0",classesinfo[j][0].INSTRUCTOR_ID)
             let instructname = await getnamebyid(classesinfo[j][0].INSTRUCTOR_ID)
             let classnamenum = classesinfo[j][0].CLASS_NUMBER + ' ' + classesinfo[j][0].CLASS_NAME;
             let jsonclass = {
