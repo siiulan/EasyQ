@@ -93,7 +93,7 @@ export default {
                 classId: this.classId,
                 userId: this.userId
             }
-            const response = await axios.post('http://54.163.38.93/api/user/student/officehour/display',data,{headers: {'Content-type' : 'application/json',}});
+            const response = await axios.post('http://100.25.219.17/api/user/student/officehour/display',data,{headers: {'Content-type' : 'application/json',}});
             console.log("get class info",response.data)
             
             this.className = response.data.CLASS_NAME;
@@ -110,7 +110,7 @@ export default {
                 userId: this.userId,
                 userQuestion: this.userQuestion
             }
-            const response = await axios.post('http://54.163.38.93/api/user/student/officehour/join',data,{headers: {'Content-type' : 'application/json',}});
+            const response = await axios.post('http://100.25.219.17/api/user/student/officehour/join',data,{headers: {'Content-type' : 'application/json',}});
             // console.log("This is a test point");
             // console.log("res",response.data);
             this.startQ = response.data.isinQueue;
@@ -132,7 +132,7 @@ export default {
             }
             // test officehour id
             console.log("data", data)
-            const response = await axios.post('http://54.163.38.93/api/user/student/officehour/inqueue',data,{headers: {'Content-type' : 'application/json',}});
+            const response = await axios.post('http://100.25.219.17/api/user/student/officehour/inqueue',data,{headers: {'Content-type' : 'application/json',}});
             this.startQ = response.data.isinQueue;
             console.log(response.data.isinQueue);
             if(this.startQ == true){
@@ -154,7 +154,7 @@ export default {
             }
             // isQuit: true => quit successfully
             // isQuit: false =>something error
-            const response = await axios.post('http://54.163.38.93/api/user/student/officehour/quit',data,{headers: {'Content-type' : 'application/json',}});
+            const response = await axios.post('http://100.25.219.17/api/user/student/officehour/quit',data,{headers: {'Content-type' : 'application/json',}});
             this.isQuit = response.data.isQuit;
             this.isQueue = true;
             if(this.isQuit == true)
