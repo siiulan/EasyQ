@@ -83,7 +83,7 @@ export default {
       setCookie("username", data.username, 30);
       //setCookie("password", data.password, 30);
       
-      const response = await axios.post('http://54.163.38.93/api/user/login', data,{headers: {'Content-type': 'application/json',}});
+      const response = await axios.post('http://100.25.219.17/api/user/login', data,{headers: {'Content-type': 'application/json',}});
       var data2 = response.data;
       if (data2.isVerified == true && data2.isMatched == true) {
         this.isFail = false;
@@ -125,7 +125,7 @@ export default {
       };
       /*
       let xhr = new XMLHttpRequest();
-      xhr.open("POST", "http://54.163.38.93/api/user/reset/forgotPassword", true);
+      xhr.open("POST", "http://100.25.219.17/api/user/reset/forgotPassword", true);
       xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       xhr.onloadend = function () {
         console.log(xhr.responseText);
@@ -143,7 +143,7 @@ export default {
       xhr.send(JSON.stringify(data2));
       */
 
-      const response = await axios.post('http://54.163.38.93/api/user/reset/forgotPassword', data2,{headers: {'Content-type': 'application/json',}});
+      const response = await axios.post('http://100.25.219.17/api/user/reset/forgotPassword', data2,{headers: {'Content-type': 'application/json',}});
       var data3 = response.data;
       if (data3.isUserRegistered == true) {
         console.log("true01");
