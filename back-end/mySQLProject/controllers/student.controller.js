@@ -28,7 +28,7 @@ exports.addClass_con = (req, res) => {
         })
     }
     let id = req.body.userId;
-    let term = req.body.term;
+    // let term = req.body.term;
     let class_number = req.body.classNumber;
     let invi_code = req.body.invitationCode;
     Student.classAdd(id, term, class_number, invi_code, (err, data) => {

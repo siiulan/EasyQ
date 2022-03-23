@@ -30,7 +30,7 @@ function classtest(id, role){
 //find the class information by class_number
 function classGetinfo(class_number, term){
     return new Promise((resolve, reject) =>{
-        sql.query(`SELECT * FROM class WHERE CLASS_NUMBER = ? AND CLASS_TERM = ?`, [class_number, term] ,(err,res) => {
+        sql.query(`SELECT * FROM class WHERE CLASS_NUMBER = ?`, [class_number] ,(err,res) => {
             if (err) {
                 console.log("error: ", err);
                 reject(err);
@@ -195,8 +195,8 @@ function find_TAname_byOffice (officehour_id){
     
 // }
 
-Student.classAdd = async (id , term, class_number, invi_code, result) => {
-    let item = await classGetinfo(class_number, term);
+Student.classAdd = async (id , class_number, invi_code, result) => {
+    let item = await classGetinfo(class_number);
     if(!item.length){
         let judge = {
             isclassexisted : false
