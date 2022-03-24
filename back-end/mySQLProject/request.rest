@@ -120,7 +120,7 @@ Content-Type: application/json
 
 {
     "user_id" : "4",
-	"office_hour_id" : "4a199883-1be5-40f7-894e-f6802aba23a3"
+	"office_hour_id" : "9f22bf02-2935-488a-9405-4ca374429bc5"
 }
 
 
@@ -130,7 +130,7 @@ Content-Type: application/json
 
 {
     "user_id" : "4",
-	"office_hour_id" : "aaa71948-712a-4d14-b0a2-c77d034f37e6"
+	"office_hour_id" : "9f22bf02-2935-488a-9405-4ca374429bc5"
 }
 
 
@@ -142,4 +142,14 @@ Content-Type: application/json
     "user_id" : "4",
 	"office_hour_id" : "aaa71948-712a-4d14-b0a2-c77d034f37e6"
 }
+
+###
+POST http://localhost:8080/api/user/ta/getofficehourid
+Content-Type: application/json
+
+{
+    "class_id" : "5",
+	"ta_id" : "4"
+}
+
 

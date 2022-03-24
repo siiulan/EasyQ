@@ -33,21 +33,53 @@ class OfficehourQueue{
         this.key = key;
     }
   
-    addUser = function (username){
+    addUser = async (username,result) =>{
         client.rpush([this.key, username], function(err, data){
             if(!err){
-                console.log(`redis:${username} has been added`)
+                console.log(`${username} has been added`)
             }
         });
     }
 
-    removeUser = function (username) {
-        client.lrem(this.key, username, function(err, res){
+    removeUser = async (username,result) =>{
+        //console.log('here')
+        client.lrem([this.key, 1, username], function(err, data){
             if(!err){
-                console.log(`redis:${username} has been removed`);
+                if (data==1){
+                    console.log(`${username} has been removed`);
+                } else {
+                    console.log('did not removed')
+                }
+                let response = data;
+                    result(null, response)
+                    return
+            } else {
+                console.log('something wrong with quit part')
             }
         })
     }
+ 
+    rankUser = async (username,result) =>{
+        client.lpos([this.key, username], function(err, data){
+            console.log('rank',data+1)
+            if(!err){
+                if (data!=null){
+                    let response = data+1
+                result(null,response)
+                return
+                } else {
+                    let response = data
+                    result(null,response)
+                    return
+                }
+                
+            }
+            else{
+                console.log(err);
+                console.log("error in queuelength!")
+            }
+        })
+    }    
     inlineUser = async (officehourid,result) =>{
         client.llen(this.key, function(err, res){
             if(!err){
@@ -61,16 +93,6 @@ class OfficehourQueue{
             }
         })
     }    
-
-    rankUser = function (username) {
-        client.lpos(this.key, username, function(err, data){
-            //console.log(data);
-            if(!err){
-                console.log(`redis:${username}'s rank is`, data+1);
-        
-            }
-        })   
-    }
     
     popUser = async (officehourid,result) =>{
         client.lpop(this.key, function(err, res){
