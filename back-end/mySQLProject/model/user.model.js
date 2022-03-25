@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt')
 // const { user } = require("../configs/db.config.js");
 // constructor
 const User = function(user) {
+    // nnn
   this.username = user.username;
   this.firstName = user.firstName
   this.lastName = user.lastName;
@@ -140,7 +141,8 @@ User.signUp = async (user, result) => {
             USER_ROLE: user.role,
             EMAIL_ADRESS: user.username,
             VERIFYCODE: verifyToken,
-            RESET_TOKEN: ''
+            RESET_TOKEN: '',
+            IN_QUEUE: false
         };
 
         sql.query("INSERT INTO user_info SET ?", uInfo, (err, res) => {
@@ -194,7 +196,7 @@ User.loginMatch = async (username, password, result) => {
                 id: item[0].USER_ID,
                 isVerified: item[0].VERIFIED,
                 isMatched: true,
-                role: uRole.USER_ROLE
+                role: uRole[0].USER_ROLE
             };
             result(null, judge)
             // console.log("1")

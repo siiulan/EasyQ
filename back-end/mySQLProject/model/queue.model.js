@@ -26,14 +26,16 @@ client.on('connect', () => {
                             
 client.on('error', err => {       
     global.console.log(err.message)
+
 });
+
+
 //redis class and functions
 class OfficehourQueue{
     constructor(key){
         this.key = key;
     }
-  
-    addUser = async (username,result) =>{
+    addUser = function (username){
         client.rpush([this.key, username], function(err, data){
             if(!err){
                 console.log(`${username} has been added`)
@@ -107,6 +109,7 @@ class OfficehourQueue{
             }
         })
     }
+
 
     deleteSet = function(){
         client.del(this.key, function(err, res){

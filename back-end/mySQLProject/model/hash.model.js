@@ -26,7 +26,7 @@ client.on('connect', () => {
                             
 client.on('error', err => {       
     global.console.log(err.message)
-});
+});  
 
 class OfficehourHash{
     constructor(key){
@@ -63,7 +63,6 @@ class OfficehourHash{
             }
         })
     }
-
 }
 
 module.exports = OfficehourHash;
