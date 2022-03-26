@@ -399,6 +399,7 @@ Student.displayOffice = async (class_id, user_id, result) => {
                             console.log(data)
                             if(data!=null){
                                 let response = {
+                                    isActive : true,
                                     isinQueue: true,
                                     OFFICE_HOUR_ID : Office_token,
                                     CLASS_NUMBER : Class_Number,
@@ -414,7 +415,8 @@ Student.displayOffice = async (class_id, user_id, result) => {
                             } else if(data==null) {
                                 await delete_queue_status(user_id);
                                 let response = {
-                                    isinQueue: false,
+                                    isActive : true,
+                                    isinQueue: true,
                                     MEETING_LINK : Office_info[0].MEETING_LINK,
                                     OFFICE_HOUR_ID : Office_token,
                                     CLASS_NUMBER : Class_Number,
@@ -433,6 +435,7 @@ Student.displayOffice = async (class_id, user_id, result) => {
                 } else {
                     let response = {
                         isActive : true, 
+                        isinQueue: false,
                         OFFICE_HOUR_ID : Office_token,
                         CLASS_NUMBER : Class_Number,
                         CLASS_ID : class_id,
