@@ -407,7 +407,9 @@ Student.displayOffice = async (class_id, user_id, result) => {
                 var class_Name = item_classNumber[0].CLASS_NAME;
                 let Office_token = getOffice[0].OFFICE_HOUR_ID;
                 let in_this_queue = await check_if_inqueue(user_id, Office_token)
+                console.log(in_this_queue);
                 if (in_this_queue.length){
+                    console.log('!!!!!')
                     var QueueSet  = new Queue(`${Office_token}`);
                     QueueSet.rankUser(user_id,(err,data) =>{
                         if (err)
