@@ -49,9 +49,9 @@ export default {
         //     }, 5000)
 
         this.timer = setInterval (() => {
-            if(this.Active == true){
+            // if(this.isActive == true){
                 this.officehourInfo()
-            }
+            // }
         }, 1000)
                  
     },
@@ -103,7 +103,7 @@ export default {
             }
             const response = await axios.post('http://100.25.219.17/api/user/student/officehour/display',data,{headers: {'Content-type' : 'application/json',}});
             console.log("get class info",response.data)
-            
+            console.log("post data", data)
             this.startQ= response.data.isinQueue
             this.isActive = response.data.isActive
             // console.log("isActive", this.isActive)
@@ -202,6 +202,7 @@ export default {
             // isQuit: true => quit successfully
             // isQuit: false =>something error
             const response = await axios.post('http://100.25.219.17/api/user/student/officehour/quit',data,{headers: {'Content-type' : 'application/json',}});
+            console.log("quit info",response.data)
             this.isQuit = response.data.isQuit;
             this.isQueue = true;
             if(this.isQuit == true || this.isActive == false)
