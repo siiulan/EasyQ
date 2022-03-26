@@ -29,7 +29,7 @@ export default {
     data() {
         return{
             input:{
-                term: '',
+                // term: '',
                 classNumber: '',
                 className: '',
                 invitationCode: ''
@@ -77,7 +77,7 @@ export default {
                     if(response.data.isEnrolled == true)
                     {
                         console.log('You has been enrolled in this class');
-                        alert('You has been enrolled in this class');
+                        alert('Enrolled successfully!');
                         this.isSuccess = false;
                     }
                     else{
