@@ -683,6 +683,7 @@ Student.quitOffice = async (user_id, office_hour_id, result) => {
             })
         } else {
             let judge = {
+                isQuit : false,
                 InThisQueue : false
             }
             console.log('not in this queue1', judge)
@@ -691,6 +692,7 @@ Student.quitOffice = async (user_id, office_hour_id, result) => {
         }
     } else {
         let judge = {
+            isQuit : false,
             InThisQueue : false
         }
         console.log('not in any queue2', judge)
