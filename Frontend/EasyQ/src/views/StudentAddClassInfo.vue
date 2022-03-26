@@ -1,19 +1,8 @@
 <template>
     <div class="add class info">
+        
         <form @submit.prevent="add">
-            <!-- <form > -->
-            <div class="form-group" style="margin-left: 70px; margin-top:40px ;margin-right:70px">
-                <label for="exampleFormControlSelect1">Term</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" v-model="input.term">
-                <!-- <select class="form-control" id="exampleFormControlSelect1" v-model="term">
-                <option>21 Winter</option>
-                <option>21 Spring</option>
-                <option>21 Fall</option>
-                <option>22 Winter</option>
-                <option>22 Spring</option>
-                <option>22 Fall</option>
-                </select> -->
-            </div>
+            
             <div class="row">
                 <div class="col" style="margin-left: 70px; margin-top:30px">
                     <label for="exampleFormControlInput1">Class Number</label>
@@ -21,45 +10,11 @@
                     <label for="exampleFormControlInput1" style="margin-top:30px">Invitation code</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" v-model="input.invitationCode">
                     </div>
-
-                <div class="col" style="margin-right:70px; margin-top:30px">
-                    <label for="exampleFormControlSelect1">Class Name</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" v-model="input.className">
-                </div>     
             </div>
-         
-        <!-- <div class="form-group" style="margin-left: 70px; margin-top:30px; margin-right: 150px">
-            <label for="exampleFormControlSelect2">Instructor Name</label>
-            <input type="instructor" class="form-control" id="exampleFormControlInput1">
-        </div>
-            <div class="form-group" style="margin: 70px">
-                <label for="exampleFormControlSelect2">Office hour schedule</label>
-                <div class="row">
-                    <div class="col">
-                        <select class="form-control" id="weekday">
-                            <option>Monday</option>
-                            <option>Tuesday</option>
-                            <option>Wednesday</option>
-                            <option>Thursday</option>
-                            <option>Friday</option>
-                            <option>Saturday</option>
-                            <option>Sunday</option>
-                        </select>
-                        <input type="time" class="form-control" id="exampleFormControlInput1">
-                    </div>
-                    <div class="col">
-                        <input type="time" class="form-control" id="exampleFormControlInput1">
-                    </div>
-                    <div class="col">
-                        <input type="time" class="form-control" id="exampleFormControlInput1">
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="form-group" style="margin: 70px">
-                <label for="exampleFormControlTextarea1">Class Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div> -->
-            <button type="submit" class="btn btn-primary" style="margin-left:70px; margin-top:30px" @click="add">Submit</button>
+            <button type="submit" class="btn btn-warning btn-md my-2 btn-block" style="margin-left:70px; margin-top:30px" @click="add">Submit</button>
+            <button class="btn btn-warning btn-md my-2 btn-block" style="margin-left:10px" > 
+                <router-link :to="'/StudentHome'">Return</router-link>
+            </button>
     </form>
         <div class="alert alert-success" v-if="isSuccess" style="margin-top:20px">Successfully added!</div>
     </div>
@@ -74,7 +29,7 @@ export default {
     data() {
         return{
             input:{
-                term: '',
+                // term: '',
                 classNumber: '',
                 className: '',
                 invitationCode: ''
@@ -88,17 +43,6 @@ export default {
     
     methods:{
         
-        // async getInfo(){
-        //     var data = {
-        //         courseId : this.courseId,
-        //         userId: this.userId
-        //     }
-        //     const response = await axios.post('http://54.163.38.93/api/user/student/classes', {
-        //         data
-        //     },{headers:{'Content-type': 'application/json'}});
-            
-        // },
-        
 
         async add(){
 
@@ -110,9 +54,9 @@ export default {
                 console.log(this.userId); //for test
                 const response = await axios.post('http://100.25.219.17/api/user/student/addclass',{
                 userId: this.userId,
-                term: this.input.term,
+                // term: this.input.term,
                 classNumber: this.input.classNumber,
-                className: this.input.className,
+                // className: this.input.className,
                 invitationCode: this.input.invitationCode,
                 },
                 {
@@ -133,7 +77,7 @@ export default {
                     if(response.data.isEnrolled == true)
                     {
                         console.log('You has been enrolled in this class');
-                        alert('You has been enrolled in this class');
+                        alert('Enrolled successfully!');
                         this.isSuccess = false;
                     }
                     else{
