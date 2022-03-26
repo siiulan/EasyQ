@@ -406,7 +406,7 @@ Student.displayOffice = async (class_id, user_id, result) => {
                 var Class_Number = item_classNumber[0].CLASS_NUMBER;
                 var class_Name = item_classNumber[0].CLASS_NAME;
                 let Office_token = getOffice[0].OFFICE_HOUR_ID;
-                let in_this_queue = await check_if_inqueue(user_id, Office_token)
+                let in_this_queue = await check_if_inqueue(Office_token, user_id)
                 console.log('in_this_queue', in_this_queue);
                 if (in_this_queue.length){
                     console.log('!!!!!')
