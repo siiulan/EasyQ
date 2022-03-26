@@ -638,12 +638,20 @@ Student.quitOffice = async (user_id, office_hour_id, result) => {
                     })
                 else{
                     if(data==1){
-                        await delete_queue_status(user_id);
-                        let judge = {
-                            isQuit : true
+                        let ress = await delete_queue_status(user_id);
+                        if (ress.changedRows > 0){
+                            let judge = {
+                                isQuit : true
+                            }
+                            result(null, judge);
+                            return;
+                        } else {
+                            let judge = {
+                                SomethingWrong : true
+                            }
+                            result(null, judge)
+                            return
                         }
-                        result(null, judge);
-                        return;
                     } else if (data ==0){
                         let judge = {
                             isQuit : false
