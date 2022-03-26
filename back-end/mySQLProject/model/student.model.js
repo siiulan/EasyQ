@@ -219,9 +219,9 @@ function update_student_status(user_id) {
     
 // }
 
-// async function helper(user_id) {
-//     await delete_queue_status(user_id);
-// }
+async function helper(user_id) {
+    await update_student_status(user_id);
+}
 
 Student.classAdd = async (id , class_number, invi_code, result) => {
     let item = await classGetinfo(class_number);
@@ -417,30 +417,23 @@ Student.displayOffice = async (class_id, user_id, result) => {
                                 result(null, response)
                                 return;
                             } else if(data==null) {
-                                let ress = await update_student_status(user_id);
-                                if (ress.changedRows > 0){
-                                    let response = {
-                                        isActive : true,
-                                        isinQueue: true,
-                                        MEETING_LINK : Office_info[0].MEETING_LINK,
-                                        OFFICE_HOUR_ID : Office_token,
-                                        CLASS_NUMBER : Class_Number,
-                                        CLASS_ID : class_id,
-                                        QUEUE_INDEX : data,
-                                        TA_NAME : TA_name,
-                                        CLASS_NAME : class_Name,
-                                        TA_ID : Office_info[0].USER_ID
-                                    }
-                                    console.log('be popped')
-                                    result(null, response)
-                                    return;
-                                } else {
-                                    let judge = {
-                                        SomethingWrong : true
-                                    }
-                                    result(null,judge)
-                                    return
+                                helper(user_id);
+                                // if (ress.changedRows > 0){
+                                let response = {
+                                    isActive : true,
+                                    isinQueue: true,
+                                    MEETING_LINK : Office_info[0].MEETING_LINK,
+                                    OFFICE_HOUR_ID : Office_token,
+                                    CLASS_NUMBER : Class_Number,
+                                    CLASS_ID : class_id,
+                                    QUEUE_INDEX : data,
+                                    TA_NAME : TA_name,
+                                    CLASS_NAME : class_Name,
+                                    TA_ID : Office_info[0].USER_ID
                                 }
+                                console.log('be popped')
+                                result(null, response)
+                                return;
                             }
                         }
                     })
@@ -650,20 +643,13 @@ Student.quitOffice = async (user_id, office_hour_id, result) => {
                     })
                 else{
                     if(data==1){
-                        let ress = await update_student_status(user_id);
-                        if (ress.changedRows > 0){
-                            let judge = {
-                                isQuit : true
-                            }
-                            result(null, judge);
-                            return;
-                        } else {
-                            let judge = {
-                                SomethingWrong : true
-                            }
-                            result(null, judge)
-                            return
+                        helper(user_id);
+                        // if (ress.changedRows > 0){
+                        let judge = {
+                            isQuit : true
                         }
+                        result(null, judge);
+                        return;
                     } else if (data ==0){
                         let judge = {
                             isQuit : false
