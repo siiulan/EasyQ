@@ -651,6 +651,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
 Student.quitOffice = async (user_id, office_hour_id, result) => {
     let Office_token = office_hour_id;
     let student_status = await student_info(user_id);
+    console.log('student_status', student_status);
     if (student_status.length){
         if (Office_token == student_status[0].IN_QUEUE){
             var QueueSet  = new Queue(`${Office_token}`);
@@ -667,12 +668,14 @@ Student.quitOffice = async (user_id, office_hour_id, result) => {
                         let judge = {
                             isQuit : true
                         }
+                        console.log('quitting', judge)
                         result(null, judge);
                         return;
                     } else if (data ==0){
                         let judge = {
                             isQuit : false
                         }
+                        console.log('quitting2', judge)
                         result(null, judge);
                         return;
                     }
@@ -682,6 +685,7 @@ Student.quitOffice = async (user_id, office_hour_id, result) => {
             let judge = {
                 InThisQueue : false
             }
+            console.log('not in this queue1', judge)
             result(null, judge);
             return;
         }
@@ -689,6 +693,7 @@ Student.quitOffice = async (user_id, office_hour_id, result) => {
         let judge = {
             InThisQueue : false
         }
+        console.log('not in any queue2', judge)
         result(null, judge);
         return;
     }
