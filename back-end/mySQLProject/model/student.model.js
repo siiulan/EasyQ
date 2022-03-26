@@ -413,22 +413,30 @@ Student.displayOffice = async (class_id, user_id, result) => {
                                 result(null, response)
                                 return;
                             } else if(data==null) {
-                                await delete_queue_status(user_id);
-                                let response = {
-                                    isActive : true,
-                                    isinQueue: true,
-                                    MEETING_LINK : Office_info[0].MEETING_LINK,
-                                    OFFICE_HOUR_ID : Office_token,
-                                    CLASS_NUMBER : Class_Number,
-                                    CLASS_ID : class_id,
-                                    QUEUE_INDEX : data,
-                                    TA_NAME : TA_name,
-                                    CLASS_NAME : class_Name,
-                                    TA_ID : Office_info[0].USER_ID
+                                let ress = await delete_queue_status(user_id);
+                                if (ress.changedRows > 0){
+                                    let response = {
+                                        isActive : true,
+                                        isinQueue: true,
+                                        MEETING_LINK : Office_info[0].MEETING_LINK,
+                                        OFFICE_HOUR_ID : Office_token,
+                                        CLASS_NUMBER : Class_Number,
+                                        CLASS_ID : class_id,
+                                        QUEUE_INDEX : data,
+                                        TA_NAME : TA_name,
+                                        CLASS_NAME : class_Name,
+                                        TA_ID : Office_info[0].USER_ID
+                                    }
+                                    console.log('be popped')
+                                    result(null, response)
+                                    return;
+                                } else {
+                                    let judge = {
+                                        SomethingWrong : true
+                                    }
+                                    result(null,judge)
+                                    return
                                 }
-                                console.log('be popped')
-                                result(null, response)
-                                return;
                             }
                         }
                     })
