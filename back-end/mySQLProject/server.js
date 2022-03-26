@@ -16,7 +16,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 require("./routes/registration.routes.js")(app);
 require("./routes/instructor.routes.js")(app);
+// <<<<<<< TA
+require("./routes/ta.routes.js")(app);
+// =======
 require("./routes/student.routes.js")(app);
+// >>>>>>> backEnd
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

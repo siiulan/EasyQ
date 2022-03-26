@@ -36,7 +36,7 @@ class OfficehourHash{
     addQuestion = function (username, user_question){
         client.hset([this.key, username, user_question], function(err, data){
             if(!err){
-                console.log(`${username}'s question has been added'`)
+                console.log(`redis:${username}'s question has been added'`)
             }
         });
     }
@@ -46,6 +46,7 @@ class OfficehourHash{
             if(!err){
                 let response = data
                 result(null,response)
+                console.log('redis: got a question!')
                 return
                 
             }
@@ -62,8 +63,6 @@ class OfficehourHash{
             }
         })
     }
-
-
 }
 
 module.exports = OfficehourHash;

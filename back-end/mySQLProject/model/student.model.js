@@ -485,7 +485,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
         let item_TA = await findNameTA(getOffice[0].USER_ID);
         if (item_TA.length){
             let TA_name = item_TA[0].FIRST_NME+' '+ item_TA[0].LAST_NME;
-            console.log(TA_name);
+            //console.log(TA_name);
             let item_classNumber = await classGetwholeinfo(class_id);
             if (item_classNumber.length){
                 var Class_Number = item_classNumber[0].CLASS_NUMBER;
