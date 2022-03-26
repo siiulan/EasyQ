@@ -28,7 +28,7 @@ function student_info (user_id){
 }
 
 //find the class information by class_number
-function classGetinfo(class_number, term){
+function classGetinfo(class_number){
     return new Promise((resolve, reject) =>{
         sql.query(`SELECT * FROM class WHERE CLASS_NUMBER = ?`, [class_number] ,(err,res) => {
             if (err) {
