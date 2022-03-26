@@ -18,6 +18,9 @@
         </div> -->
       </div>
     </section>
+    <button class="btn btn-warning btn-md my-2 btn-block" style="margin-left:60px" > 
+                <router-link :to="'/StudentHome'">Return</router-link>
+            </button>
   </div>
 </template>
 <script>

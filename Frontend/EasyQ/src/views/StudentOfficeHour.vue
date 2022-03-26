@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <button class="btn btn-warning btn-md my-2 btn-block"  > 
+                <router-link :to="'/StudentHome'">Return</router-link>
+    </button>
        <div class="row">
            <div class="col">
                <form @submit.prevent="startQueue">
@@ -23,8 +26,8 @@
                         <div class="col-sm-10">The position of queueing: {{queueIndex}}</div>
                         <div class="col-sm-10">Meeting Link: {{meetingLink}}</div>
                         <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary" style="margin-top:10px; margin-right:20px" v-if="isQueue">Queue</button>
-                        <button type="quit" class="btn btn-primary" style="margin-top:10px"  @click="quitQueue">
+                        <button type="submit" class="btn btn-warning btn-md my-2 btn-block" style="margin-top:10px; margin-right:20px" v-if="isQueue">Queue</button>
+                        <button type="quit" class="btn btn-warning btn-md my-2 btn-block" style="margin-top:10px"  @click="quitQueue">
                             <router-link to= "/StudentHome">Quit</router-link>
                         </button>
                     </div>
@@ -40,14 +43,14 @@ import axios from 'axios';
 export default {
 
     mounted: function() {
-        this.officehourInfo();
+        // this.officehourInfo();
         // window.setInterval(() => {
         //     this.getLength()
         //     }, 5000)
 
         this.timer = setInterval (() => {
             if(this.Active == true){
-                this.getLength()
+                this.officehourInfo()
             }
         }, 1000)
                  
@@ -83,6 +86,8 @@ export default {
             userQuestion: '',
             isQueue: true,
             timer: null,
+            alreadyinqueue: false,
+            alreadyotherqueue: false,
             // isActive: false
         }
     },
@@ -99,10 +104,10 @@ export default {
             const response = await axios.post('http://100.25.219.17/api/user/student/officehour/display',data,{headers: {'Content-type' : 'application/json',}});
             console.log("get class info",response.data)
             
-            
+            this.startQ= response.data.isinQueue
             this.isActive = response.data.isActive
             // console.log("isActive", this.isActive)
-            if(this.isActive == true)
+            if(this.isActive == true && this.startQ == false)
             {
                 this.className = response.data.CLASS_NAME;
                 this.classId = response.data.CLASS_ID;
@@ -110,12 +115,25 @@ export default {
                 this.TAName = response.data.TA_NAME;
                 this.TAId = response.data.TA_ID;
                 this.officehourId = response.data.OFFICE_HOUR_ID;
+                // this.queueIndex = response.data.QUEUE_INDEX;
+                // this.meetingLink = response.data.MEETING_LINK;
+            }
+            else if(this.isActive == true && this.startQ == true)
+            {
+                this.className = response.data.CLASS_NAME;
+                this.classId = response.data.CLASS_ID;
+                this.classNumber = response.data.CLASS_NUMBER;
+                this.TAName = response.data.TA_NAME;
+                this.TAId = response.data.TA_ID;
+                this.officehourId = response.data.OFFICE_HOUR_ID;
+                this.queueIndex = response.data.QUEUE_INDEX;
+                this.meetingLink = response.data.MEETING_LINK;
             }
             else{
                 this.className = response.data.CLASS_NAME;
                 this.classId = response.data.CLASS_ID;
                 this.classNumber = response.data.CLASS_NUMBER;
-                alert("It's not in the office hour!")
+                alert("There’s no office hour now")
             }
 
         },
@@ -138,33 +156,42 @@ export default {
             this.officehourId = response.data.OFFICE_HOUR_ID;
             this.queueIndex = response.data.QUEUE_INDEX;
             this.isQueue = false;
+            this.alreadyinqueue = response.data.AlreadyInThisQueue;
+            this.alreadyotherqueue = response.data.AlreadyInOtherQueue;
+            if(this.alreadyinqueue == true){
+                alert("You have already been in the queue. ")
+            }
+            if(this.alreadyotherqueue == true){
+                alert("You have already been in other queue.")
+            }
             // this.isActive = response.isActive
         },
-        async getLength() {
-            var data = {
-                classId: this.classId,
-                userId: this.userId,
-                officehourId: this.officehourId
-            }
-            // test officehour id
-            console.log("data", data)
-            const response = await axios.post('http://100.25.219.17/api/user/student/officehour/inqueue',data,{headers: {'Content-type' : 'application/json',}});
-            this.startQ = response.data.isinQueue;
-            console.log(response.data.isinQueue);
-            // if(this.isActive == false)
-            // {
-            //     console.log('canno')
-            // }
-            if(this.startQ == true){
-                console.log("In the queue");
-                this.queueIndex = response.data.QUEUE_INDEX;
-            }
-            else{
-                console.log("Not in the queue");
-                this.queueIndex = response.data.QUEUE_INDEX;
-                // this.meetingLink = response.data.MEETING_LINK
-            }     
-        },
+        // async getLength() {
+        //     var data = {
+        //         classId: this.classId,
+        //         userId: this.userId,
+        //         officehourId: this.officehourId
+        //     }
+        //     // test officehour id
+        //     console.log("data", data)
+        //     const response = await axios.post('http://100.25.219.17/api/user/student/officehour/inqueue',data,{headers: {'Content-type' : 'application/json',}});
+        //     this.startQ = response.data.isinQueue;
+        //     console.log(response.data.isinQueue);
+        //     // if(this.isActive == false)
+        //     // {
+        //     //     console.log('canno')
+        //     // }
+        //     if(this.startQ == true){
+        //         console.log("In the queue");
+        //         this.queueIndex = response.data.QUEUE_INDEX;
+        //         this.meetingLink = response.data.MEETING_LINK;
+        //     }
+        //     else{
+        //         console.log("Not in the queue");
+        //         this.queueIndex = response.data.QUEUE_INDEX;
+        //         // this.meetingLink = response.data.MEETING_LINK
+        //     }     
+        // },
 
         async quitQueue() {
             var data = { 
@@ -182,7 +209,7 @@ export default {
                 console.log("quit successfully");
                 alert("Quit successfully");
             }
-            else{
+            else {
                 console.log("Something wrong");
                 alert("Something wrong");
             }
