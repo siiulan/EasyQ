@@ -489,7 +489,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                 let student_status = await student_info(user_id);
                 if (student_status.length){
                     let student_office_id = student_status[0].IN_QUEUE;
-                    if (student_office_id == null){
+                    if (student_office_id == 0){
                         var QueueSet  = new Queue(`${Office_token}`);
                         var HashSet = new Hash(`${Office_token}hash`);
                         await QueueSet.addUser(user_id);
