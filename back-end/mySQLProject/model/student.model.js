@@ -440,14 +440,14 @@ Student.displayOffice = async (class_id, user_id, result) => {
                                 let response = {
                                     isActive : true,
                                     isinQueue: true,
-                                    MEETING_LINK : Office_info[0].MEETING_LINK,
+                                    MEETING_LINK : getOffice[0].MEETING_LINK,
                                     OFFICE_HOUR_ID : Office_token,
                                     CLASS_NUMBER : Class_Number,
                                     CLASS_ID : class_id,
                                     QUEUE_INDEX : data,
                                     TA_NAME : TA_name,
                                     CLASS_NAME : class_Name,
-                                    TA_ID : Office_info[0].USER_ID
+                                    TA_ID : getOffice[0].USER_ID
                                 }
                                 console.log('be popped')
                                 result(null, response)
