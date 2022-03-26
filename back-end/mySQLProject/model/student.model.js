@@ -172,7 +172,7 @@ function check_if_inqueue(offcie_hour_id, user_id) {
     })
 }
 
-function delete_queue_status(user_id) {
+function update_student_status(user_id) {
     return new Promise((resolve, reject) => {
         sql.query(`UPDATE user_info SET IN_QUEUE = ? WHERE USER_ID = ?`, [null, user_id], (err, res) =>{
             if (err){
@@ -217,6 +217,10 @@ function delete_queue_status(user_id) {
 //     })
     
     
+// }
+
+// async function helper(user_id) {
+//     await delete_queue_status(user_id);
 // }
 
 Student.classAdd = async (id , class_number, invi_code, result) => {
@@ -413,7 +417,7 @@ Student.displayOffice = async (class_id, user_id, result) => {
                                 result(null, response)
                                 return;
                             } else if(data==null) {
-                                let ress = await delete_queue_status(user_id);
+                                let ress = await update_student_status(user_id);
                                 if (ress.changedRows > 0){
                                     let response = {
                                         isActive : true,
@@ -646,7 +650,7 @@ Student.quitOffice = async (user_id, office_hour_id, result) => {
                     })
                 else{
                     if(data==1){
-                        let ress = await delete_queue_status(user_id);
+                        let ress = await update_student_status(user_id);
                         if (ress.changedRows > 0){
                             let judge = {
                                 isQuit : true
