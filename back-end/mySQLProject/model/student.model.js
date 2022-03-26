@@ -174,7 +174,19 @@ function check_if_inqueue(offcie_hour_id, user_id) {
 
 function update_student_status(user_id) {
     return new Promise((resolve, reject) => {
-        sql.query(`UPDATE user_info SET IN_QUEUE = ? WHERE USER_ID = ?`, [null, user_id], (err, res) =>{
+        sql.query(`UPDATE user_info SET IN_QUEUE = ? WHERE USER_ID = ?`, [0, user_id], (err, res) =>{
+            if (err){
+                console.log("error: ", err);
+                reject(err);
+            }
+            resolve(res);
+        })
+    })
+}
+
+function add_office_id(user_id, office_hour_id){
+    return new Promise((resolve, reject) => {
+        sql.query(`UPDATE user_info SET IN_QUEUE = ? WHERE USER_ID = ?`, [office_hour_id, user_id], (err, res) => {
             if (err){
                 console.log("error: ", err);
                 reject(err);
@@ -221,6 +233,10 @@ function update_student_status(user_id) {
 
 async function helper(user_id) {
     await update_student_status(user_id);
+}
+
+async function helper_office(user_id, office_hour_id){
+    await add_office_id(user_id, office_hour_id);
 }
 
 Student.classAdd = async (id , class_number, invi_code, result) => {
@@ -501,6 +517,7 @@ Student.joinOffice = async (class_id, user_id, question, result) => {
                                         err.message || "some error occured"
                                 })
                             else{
+                                helper_office(user_id, Office_token)
                                 console.log('join else part')
                                 let response = {
                                     isinQueue: true,
