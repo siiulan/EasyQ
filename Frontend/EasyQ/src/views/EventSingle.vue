@@ -18,6 +18,9 @@
         </div> -->
       </div>
     </section>
+    <button class="btn btn-warning btn-md my-2 btn-block" style="margin-left:60px" > 
+                <router-link :to="'/StudentHome'">Return</router-link>
+    </button>
   </div>
 </template>
 <script>
@@ -42,7 +45,7 @@ import axios from 'axios';
           classId : this.classId,
         }
         console.log(this.classId)
-        const response = await axios.post('http://54.163.38.93/api/user/student/classes/class',data,{headers: {'Content-type' : 'application/json',}});
+        const response = await axios.post('http://100.25.219.17/api/user/student/classes/class',data,{headers: {'Content-type' : 'application/json',}});
         
         console.log(response.data);
         this.className = response.data.CLASS_NAME;
