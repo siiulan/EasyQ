@@ -1,5 +1,6 @@
 const { password } = require("../configs/db.config.js");
 const Instructor = require("../model/instructor.model.js");
+let lib = require("../configs/nodemailer.config.js")
 
 exports.getClass = (req, res) => {
     // validate request
@@ -127,12 +128,11 @@ exports.registeredConfirmation = (req, res) => {
                 err.message || "Some error occurred while sending confirmation email"
             });
         if (data){
-            res.json(data)
             // redirecting url to
-            // res.redirect(`${lib.url}/regconfirm`)
+            res.redirect(`${lib.url}/TAConfirm/success`)
         } else {
             // redirecting url to
-            // res.redirect(`${lib.url}//regfail`)
+            res.redirect(`${lib.url}/TAConfirm/fail`)
         }
     });
 }
@@ -193,11 +193,19 @@ exports.unregisteredConfirmation = (req, res) => {
     }
 
     Instructor.unregisteredConfirmation(invitation_token, user, (err, data) => {
-        if (err)
+        if (err) {
             res.status(500).send({
               message:
                 err.message || "Some error occurred while creating the user."
             });
-        else res.json(data)
+        } else {
+            if (data){
+                // redirecting url to
+                res.redirect(`${lib.url}/TAConfirm/success`)
+            } else {
+                // redirecting url to
+                res.redirect(`${lib.url}/TAConfirm/fail`)
+            }
+        } 
     });
 }
