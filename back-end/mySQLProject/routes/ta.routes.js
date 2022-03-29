@@ -8,6 +8,7 @@ module.exports = app => {
     router.post('/popstudent',tas.popstudent) //okay
     router.post('/getqueuelength',tas.getqueuelength) //okay
     router.post('/endofficehour', tas.endofficehour) //okay
-
+    router.post('/getofficehourid', tas.getofficehourid) //okay
+    
     app.use('/api/user/ta', router)
 };

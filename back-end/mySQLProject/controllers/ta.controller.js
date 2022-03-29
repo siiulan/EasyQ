@@ -133,3 +133,21 @@ exports.editClass = (req,res)=>{
         else res.json(data)
     })
 }
+
+exports.getofficehourid = (req,res)=>{
+    if(!req.body){
+        res.status(400).send(
+            {message:"Content cannot be empty！"}
+        )
+    }
+    let classid = req.body.class_id
+    let taid = req.body.ta_id
+    TA.getOHid(classid,taid,(err,data) =>{
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "some error occured"
+            });
+        else res.json(data)
+    })
+}
