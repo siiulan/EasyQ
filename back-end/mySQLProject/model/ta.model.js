@@ -221,7 +221,7 @@ function getclassinfobyid(classid){
                 reject(err);
             }
             resolve(res)
-            // console.log("function",res)
+            console.log("function",res)
         });
     })
 }
@@ -235,7 +235,6 @@ TA.getClassesinfo = async (id,result) =>{
             classesinfo[i] = await getclassinfobyid(classes[i].CLASS_ID)  
         }
         for (let j=0;j<classes.length;j++){
-            console.log("classid-j0",classesinfo[j][0].INSTRUCTOR_ID)
             let instructname = await getnamebyid(classesinfo[j][0].INSTRUCTOR_ID)
             let classnamenum = classesinfo[j][0].CLASS_NUMBER + ' ' + classesinfo[j][0].CLASS_NAME;
             let jsonclass = {
@@ -297,6 +296,7 @@ TA.editClassinfo = async (id,taid,schedule,result)=>{
     result(null,response)
     return    
 }
+
 
 TA.getOHid = async (classid,taid,result)=>{
     sql.query(`SELECT * FROM office_hour WHERE USER_ID = ? AND CLASS_ID =? AND ACTIVE = true`, [taid,classid], (err, res) => {
