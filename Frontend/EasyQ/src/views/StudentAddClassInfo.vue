@@ -11,12 +11,14 @@
                     <input type="text" class="form-control" id="exampleFormControlInput1" v-model="input.invitationCode">
                     </div>
             </div>
-            <button type="submit" class="btn btn-warning btn-md my-2 btn-block" style="margin-left:70px; margin-top:30px" @click="add">Submit</button>
-            <button class="btn btn-warning btn-md my-2 btn-block" style="margin-left:10px" > 
+            <!-- <button type="submit" class="btn btn-warning btn-md my-2 btn-block" style="margin-left:70px; margin-top:30px" @click="add">Submit</button> -->
+            <button type="submit" class="btn btn-warning btn-md my-2 btn-block" style="margin-left:70px; margin-top:30px">Submit</button> 
+            
+    </form>
+    <button class="btn btn-warning btn-md my-2 btn-block" style="margin-left:70px" > 
                 <router-link :to="'/StudentHome'">Return</router-link>
             </button>
-    </form>
-        <div class="alert alert-success" v-if="isSuccess" style="margin-top:20px">Successfully added!</div>
+        <!-- <div class="alert alert-success" v-if="isSuccess" style="margin-top:20px">Successfully added!</div> -->
     </div>
 </template>
 <script>
@@ -77,7 +79,7 @@ export default {
                     if(response.data.isEnrolled == true)
                     {
                         console.log('You has been enrolled in this class');
-                        alert('Enrolled successfully!');
+                        alert('You have been enrolled!');
                         this.isSuccess = false;
                     }
                     else{
@@ -88,7 +90,8 @@ export default {
                             this.isSuccess = false;
                         }
                         else{
-                            this.isSuccess = true;    
+                            this.isSuccess = true;  
+                            alert("Enrolled Successfully!")  
                         }
                     }
                 }
