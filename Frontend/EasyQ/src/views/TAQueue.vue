@@ -70,6 +70,8 @@ export default {
         if (response.data.existOH == true) {
           this.ohid = response.data.office_hour_id;
           this.vlink = response.data.meeting_link;
+          this.button_val = "End Meeting";
+          this.started = true;
         }
     },
     async start_end() {
