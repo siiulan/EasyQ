@@ -31,7 +31,7 @@ class OfficehourQueue{
     constructor(key){
         this.key = key;
     }
-  
+
     addUser = async (username,result) =>{
         client.rpush([this.key, username], function(err, data){
             if(!err){

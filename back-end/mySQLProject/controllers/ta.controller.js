@@ -31,7 +31,7 @@ exports.popstudent = (req,res)=>{
     let taid = req.body.user_id
     let officehourid = req.body.office_hour_id
     //judge if taid match with classid
-    TA.Popstudent(officehourid,(err,data) =>{
+    TA.Popstudent(taid,officehourid,(err,data) =>{
         if (err)
             res.status(500).send({
                 message:
@@ -50,7 +50,7 @@ exports.getqueuelength = (req,res)=>{
     let taid = req.body.user_id
     let officehourid = req.body.office_hour_id
     //judge if taid match with classid
-    TA.Getqueuelength(officehourid,(err,data) =>{
+    TA.Getqueuelength(taid,officehourid,(err,data) =>{
         if (err)
             res.status(500).send({
                 message:
@@ -69,7 +69,7 @@ exports.endofficehour = (req,res)=>{
     let taid = req.body.user_id
     let officehourid = req.body.office_hour_id
     //judge if taid match with classid
-    TA.Endofficehour(officehourid,(err,data) =>{
+    TA.Endofficehour(taid,officehourid,(err,data) =>{
         if (err)
             res.status(500).send({
                 message:
@@ -122,12 +122,27 @@ exports.editClass = (req,res)=>{
         )
     }
     let id = req.body.course_id
-    let name = req.body.coursename
-    let number = req.body.coursenumber
-    let info = req.body.schedule
-    let term = req.body.term
-    let instructor = req.body.instructor
-    TA.editClassinfo(id,name,number,info,term,instructor,(err,data) =>{
+    let taid = req.body.TA_user_id
+    let schedule = req.body.schedule
+    TA.editClassinfo(id,taid,schedule,(err,data) =>{
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "some error occured"
+            });
+        else res.json(data)
+    })
+}
+
+exports.getofficehourid = (req,res)=>{
+    if(!req.body){
+        res.status(400).send(
+            {message:"Content cannot be empty！"}
+        )
+    }
+    let classid = req.body.class_id
+    let taid = req.body.ta_id
+    TA.getOHid(classid,taid,(err,data) =>{
         if (err)
             res.status(500).send({
                 message:
