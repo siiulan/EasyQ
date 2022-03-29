@@ -2,14 +2,13 @@ const redis = require('redis');
 const { reject } = require("async");
 const devSetting = require("../configs/devMode.config");  
 
-RDS_PORT = 6379;                //端口号 
-RDS_HOST = '127.0.0.1';    //服务器IP  要连接的A服务器redis  
-var RDS_PWD = '123456';     //密码
+RDS_PORT = 6379;             
+RDS_HOST = '127.0.0.1';    
+var RDS_PWD = '123456';     
 if(devSetting.devMode == 1){
     RDS_PWD = 'Z6VOjC2DKlq6SsYZPONts7Db4RTcfjANWZ2Qe5xW+Msy6+XQp/aaSNMT5KjVNbOlH58B0l7N41XYjg9J';
 }
-// RDS_OPTS = {}                 //设置项  
-// const client = redis.createClient(RDS_PORT,RDS_HOST,RDS_OPTS);  
+
 const client = redis.createClient({
     host : '127.0.0.1',  
     no_ready_check: true,
@@ -26,16 +25,14 @@ client.on('connect', () => {
                             
 client.on('error', err => {       
     global.console.log(err.message)
-
 });
-
-
 //redis class and functions
 class OfficehourQueue{
     constructor(key){
         this.key = key;
     }
-    addUser = function (username){
+
+    addUser = async (username,result) =>{
         client.rpush([this.key, username], function(err, data){
             if(!err){
                 console.log(`${username} has been added`)
@@ -109,7 +106,6 @@ class OfficehourQueue{
             }
         })
     }
-
 
     deleteSet = function(){
         client.del(this.key, function(err, res){

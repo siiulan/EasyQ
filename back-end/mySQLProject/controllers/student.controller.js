@@ -28,10 +28,10 @@ exports.addClass_con = (req, res) => {
         })
     }
     let id = req.body.userId;
-    let term = req.body.term;
+    // let term = req.body.term;
     let class_number = req.body.classNumber;
     let invi_code = req.body.invitationCode;
-    Student.classAdd(id, term, class_number, invi_code, (err, data) => {
+    Student.classAdd(id, class_number, invi_code, (err, data) => {
         if (err)
             res.status(500).send({
               message:
@@ -101,7 +101,7 @@ exports.joinOffice_con = (req, res) => {
     let class_id = req.body.classId;
     let user_id = req.body.userId;
     let question = req.body.userQuestion;
-    console.log('controller', req.body)
+    //console.log('controller', req.body)
     Student.joinOffice(class_id, user_id, question, (err, data) => {
         if (err)
             res.status(500).send({
@@ -111,24 +111,24 @@ exports.joinOffice_con = (req, res) => {
         else res.json(data);
     })
 }
-exports.intheOffice_con = (req, res) => {
-    if (!req.body){
-        res.status(400).send({
-            message: "Content can not be empty"
-        })
-    }
-    let user_id = req.body.userId;
-    let officehour_id = req.body.office_hour_Id;
-    let class_id = req.body.classId;
-    Student.intheOffice(user_id, officehour_id, class_id, (err, data) => {
-        if (err)
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while quitting the office hour."
-            });
-        else res.json(data);
-    })
-}
+// exports.intheOffice_con = (req, res) => {
+//     if (!req.body){
+//         res.status(400).send({
+//             message: "Content can not be empty"
+//         })
+//     }
+//     let user_id = req.body.userId;
+//     let officehour_id = req.body.office_hour_Id;
+//     let class_id = req.body.classId;
+//     Student.intheOffice(user_id, officehour_id, class_id, (err, data) => {
+//         if (err)
+//             res.status(500).send({
+//               message:
+//                 err.message || "Some error occurred while quitting the office hour."
+//             });
+//         else res.json(data);
+//     })
+// }
 
 exports.quitOffice_con = (req, res) => {
     if (!req.body){
