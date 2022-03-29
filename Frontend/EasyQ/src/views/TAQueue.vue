@@ -11,10 +11,8 @@
     </span>
     <span id="right" class="half d-flex flex-column">
         <div class="mt-5 mb-3 ms-5 text-white h4">Meeting Information</div>
-        <div class="mt-1 mb-1 ms-5 text-white fs-6">Meeting Description</div>
-        <input class="ms-5 me-5 higher" v-model="vdes" />
         <div class="mt-1 mb-1 ms-5 text-white fs-6">Meeting Link</div>
-        <input class="ms-5 me-5" v-model="vlink"/>
+        <input class="ms-5 me-5 higher" v-model="vlink"/>
         <button class="cente mt-4 btn btn-warning col-xl-3" @click="start_end">{{button_val}}</button>
     </span>
   </div>
@@ -24,6 +22,7 @@ import axios from 'axios'
 export default {
   mounted: function () {
     this.setStartButton();
+    this.getInfo();
     this.timer = window.setInterval(() => {
       if (this.started==true){
         this.getlength()
@@ -61,6 +60,17 @@ export default {
             this.button_val = "End Meeting"
       }
       console.log(this.class_id);
+    },
+    async getInfo() {
+        var data = {
+          ta_id: this.user_id,
+          class_id: this.class_id,
+        };
+        const response = await axios.post('http://100.25.219.17/api/user/ta/getofficehourid', data,{headers: {'Content-type': 'application/json',}});
+        if (response.data.existOH == true) {
+          this.ohid = response.data.office_hour_id;
+          this.vlink = response.data.meeting_link;
+        }
     },
     async start_end() {
       if (this.started == false) {
@@ -142,9 +152,10 @@ function getCookie(cname) {
     position: fixed;
 }
 .higher {
-    height: 12%;
+    height: 22%;
 }
 .cente {
     align-self:center;
 }
+
 </style>
