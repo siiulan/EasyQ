@@ -101,11 +101,8 @@ Content-Type: application/json
 
 {
     "course_id" : "4",
-	"coursename" : "name",
-	"coursenumber" : "number",
 	"schedule" : "schedule",
-	"term" : "Spring 2022",
-	"instructor": "5"
+	"TA_user_id" : "4a2e4581-a9e9-4462-9266-576213a89d2a"
 }
 ###
 POST http://localhost:8080/api/user/ta/startofficehour
@@ -124,7 +121,7 @@ Content-Type: application/json
 
 {
     "user_id" : "4",
-	"office_hour_id" : "4a199883-1be5-40f7-894e-f6802aba23a3"
+	"office_hour_id" : "9f22bf02-2935-488a-9405-4ca374429bc5"
 }
 
 
@@ -134,7 +131,7 @@ Content-Type: application/json
 
 {
     "user_id" : "4",
-	"office_hour_id" : "aaa71948-712a-4d14-b0a2-c77d034f37e6"
+	"office_hour_id" : "9f22bf02-2935-488a-9405-4ca374429bc5"
 }
 
 
@@ -144,9 +141,21 @@ Content-Type: application/json
 
 {
     "user_id" : "4",
-	"office_hour_id" : "666"
+	"office_hour_id" : "aaa71948-712a-4d14-b0a2-c77d034f37e6"
 }
 
+<<<<<<< HEAD
+###
+POST http://localhost:8080/api/user/ta/getofficehourid
+Content-Type: application/json
+
+{
+    "class_id" : "5",
+	"ta_id" : "4"
+}
+
+
+=======
 //=======
 ### class existed, student haven't been enrolled in this class and the code is right
 POST http://localhost:8080/api/user/student/addclass
@@ -245,3 +254,4 @@ Content-Type: application/json
 	"userQuestion" : "this is the question"
 }
 //>>>>>>> backEnd
+
