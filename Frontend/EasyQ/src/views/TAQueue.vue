@@ -62,6 +62,7 @@ export default {
       console.log(this.class_id);
     },
     async getInfo() {
+        console.log("good1");
         var data = {
           ta_id: this.user_id,
           class_id: this.class_id,
@@ -70,6 +71,7 @@ export default {
         if (response.data.existOH == true) {
           this.ohid = response.data.office_hour_id;
           this.vlink = response.data.meeting_link;
+          console.log("good2");
           this.button_val = "End Meeting";
           this.started = true;
         }
