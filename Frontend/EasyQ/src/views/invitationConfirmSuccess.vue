@@ -60,7 +60,7 @@ export default {
         last_name: this.last_name,
         password: this.password2,
       };
-      var url = 'http://100.25.219.17/api/user/instructor/unregisteredInvitationConfirmation/'+token;
+      var url = 'http://100.25.219.17/api/user/instructor/unregisteredInvitationConfirmation/'+this.token;
       const response = await axios.post(url, data,{headers: {'Content-type': 'application/json',}});
       this.success = response.data.success;
       this.exist = response.data.exist;
