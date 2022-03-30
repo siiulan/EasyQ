@@ -70,7 +70,7 @@ function sendInivitationEmail (email, name, class_name, invitation_token, is_reg
     registered_message = `<h1>TA Invitation from EasyQ</h1>
     <h2>Hello,</h2>
     <p>Instructor ${name} invited you to become a TA in the class ${class_name} on EasyQ. To use our office hour queue service, click the link to finish your registration </p>
-    <a href=${url}/api/user/instructor/invitationConfirm/${invitation_token}> Click here</a>
+    <a href=${url}/invitationConfirm/${invitation_token}> Click here</a>
     </div>`;
   }
   transport.sendMail({
