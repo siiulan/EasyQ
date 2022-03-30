@@ -330,14 +330,13 @@ Student.getClassAll = async (id, result) => {
         console.log(response)
         result(null, response);
         return
-    } 
-    // else {
-    //     let judge = {
-    //         isEmpty : true
-    //     }
-    //     result(null, judge);
-    //     return;
-    // }
+    } else {
+        let judge = {
+
+        }
+        result(null, judge);
+        return;
+    }
 }
 
 Student.getClassOne = async (class_id, result) => {
