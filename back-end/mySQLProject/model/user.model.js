@@ -32,7 +32,7 @@ function check_user_registration (username){
 
 function check_user_login (username, password){
     return new Promise((resolve, reject) => {
-        let qry = `SELECT * FROM login_authentication WHERE EMAIL_ADRESS = ?`
+        let qry = `SELECT * FROM login_authentication LEFT JOIN user_info ON user_info.USER_ID = login_authentication.USER_ID WHERE login_authentication.EMAIL_ADRESS = ?`
         sql.query(qry, [username], (err, res) => {
             if (err) {
                 console.log("error: ", err);
@@ -194,6 +194,7 @@ User.loginMatch = async (username, password, result) => {
             console.log(uRole[0])
             let judge = { 
                 id: item[0].USER_ID,
+                name: item[0].FIRST_NME + ' ' + item[0].LAST_NME,
                 isVerified: item[0].VERIFIED,
                 isMatched: true,
                 role: uRole[0].USER_ROLE
