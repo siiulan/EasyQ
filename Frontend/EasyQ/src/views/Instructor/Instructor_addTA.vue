@@ -41,8 +41,8 @@ export default {
     methods:{
         async AddTA(){
              try{
-               console.log("course id: " + this.CourseID);
-               console.log("email: " + this.input.Email);
+               //console.log("course id: " + this.CourseID);
+               //console.log("email: " + this.input.Email);
               const response = await axios.post('http://100.25.219.17/api/user/instructor/classAddTA',{
                     email_adress : this.input.Email,
                     class_id : this.CourseID
