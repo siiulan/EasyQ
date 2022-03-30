@@ -32,7 +32,7 @@
       </div>
       <div id="forgotpanel" class="d-flex flex-column qpanel" v-if="!show1">
         <strong class="center top1 h2">Forgot your password?</strong>
-        <p class="inp">
+        <p class="inph">
           You can reset your password by entering your email here, and we will
           send you a link to reset your password.
         </p>
@@ -226,6 +226,12 @@ function setCookie(cname, cvalue, exdays) {
   margin-left: 10%;
   margin-right: 10%;
   height: 15%;
+}
+.inph {
+  margin-top: 15px;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 20%;
 }
 .bt {
   color: white;
