@@ -332,7 +332,7 @@ Student.getClassAll = async (id, result) => {
         return
     } else {
         let judge = {
-            isEmpty : true
+
         }
         result(null, judge);
         return;
