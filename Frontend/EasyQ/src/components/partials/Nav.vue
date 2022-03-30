@@ -25,8 +25,18 @@
         <router-link v-if="role === 'instructor' " to="/instructor/main" class="navbar-item" >Home</router-link>
         <router-link v-if="role === 'student' " to="/Studenthome" class="navbar-item" >Home</router-link>
         <router-link v-if="role === 'TA' " to="/TAHome" class="navbar-item">Home</router-link>
+        <router-link v-if="role === 'Student' " to="/StudentHome" class="navbar-item" >Student Home Page</router-link>
 
         <router-link to="/about" class="navbar-item">About</router-link>
+        <router-link v-if="role == 'Student' " to="/TAHome" class="navbar-item">TA Home Page</router-link>
+        <router-link v-if="role == 'TA' " to="/StudentHome" class="navbar-item">Student Home Page</router-link>
+        <!-- <button type="button" class="btn btn-outline-primary" v-if="role === 'TA'">
+            <router-link v-if="role === 'Student' " to="/StudentHome" class="navbar-item">Student Home Page</router-link>
+        </button> -->
+        <!-- <button type="button" class="btn btn-outline-primary" v-if="role === 'Stuent'">
+            <router-link v-if="role === 'TA' " to="/TAHome" class="navbar-item">TA Home Page</router-link>
+        </button> -->
+         
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
