@@ -20,10 +20,12 @@
     </div>
     <div id="navbar" class="navbar-menu" v-bind:class="{'is-active': isOpen}">
       <div class="navbar-start">
-        <router-link v-if="role === null " to="/" class="navbar-item" @click="submitlogin">Home</router-link>
-        <router-link v-if="role === 'instructor' " to="/instructor/main" class="navbar-item" @click="submitlogin">Home</router-link>
-        <router-link v-if="role === 'student' " to="/instructor/main" class="navbar-item" @click="submitlogin">Home</router-link>
-        <router-link v-if="role === 'TA' " to="/instructor/main" class="navbar-item" @click="submitlogin">Home</router-link>
+        <!-- <router-link to="/" class="navbar-item" @click="submitlogin">Home</router-link> -->
+        <router-link v-if="role === null " to="/" class="navbar-item">Home</router-link>
+        <router-link v-if="role === 'instructor' " to="/instructor/main" class="navbar-item" >Home</router-link>
+        <router-link v-if="role === 'student' " to="/Studenthome" class="navbar-item" >Home</router-link>
+        <router-link v-if="role === 'TA' " to="/TAHome" class="navbar-item">Home</router-link>
+
         <router-link to="/about" class="navbar-item">About</router-link>
       </div>
       <div class="navbar-end">

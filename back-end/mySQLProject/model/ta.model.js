@@ -235,7 +235,6 @@ TA.getClassesinfo = async (id,result) =>{
             classesinfo[i] = await getclassinfobyid(classes[i].CLASS_ID)  
         }
         for (let j=0;j<classes.length;j++){
-            console.log("classesinfo",classesinfo[j][0])
             let instructname = await getnamebyid(classesinfo[j][0].INSTRUCTOR_ID)
             let classnamenum = classesinfo[j][0].CLASS_NUMBER + ' ' + classesinfo[j][0].CLASS_NAME;
             let jsonclass = {
@@ -296,6 +295,34 @@ TA.editClassinfo = async (id,taid,schedule,result)=>{
     }
     result(null,response)
     return    
+}
+
+
+TA.getOHid = async (classid,taid,result)=>{
+    sql.query(`SELECT * FROM office_hour WHERE USER_ID = ? AND CLASS_ID =? AND ACTIVE = true`, [taid,classid], (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            reject(err);
+        }
+        if (res.length){
+            let officehour_id = res[0].OFFICE_HOUR_ID
+            let meetinglink = res[0].MEETING_LINK
+            let response ={
+                existOH: true,
+                office_hour_id: officehour_id,
+                meeting_link: meetinglink
+            }
+            result(null,response)
+            return  
+        }
+        else{
+            let response ={
+                existOH: false
+            }
+            result(null,response)
+            return
+        }
+    });  
 }
 
 module.exports = TA;
