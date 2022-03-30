@@ -451,7 +451,7 @@ Instructor.classAddTA = async (email_adress, class_id, result) => {
         // store the token into the database
         await storeToken(invitation_token, class_id, email_adress, 'invite-unregistered-TA')
         // send invitation link by nodemailer
-        lib.sendInivitationEmail(email_adress, name, class_name, invitation_token, true)
+        lib.sendInivitationEmail(email_adress, name, class_name, invitation_token, false)
         let response = {
             exist : false,
             success : true
