@@ -2,8 +2,10 @@
 <div class="container-fluid py-5 h-100">
     <display2 style="font-size:200%"><strong>Course Details</strong></display2>
     <div class="card" style="width: 70rem;height: 30rem">
-
        <div class="card-body">
+        <button class="btn btn-warning mr-2 btn-md " v-show="editable == 0" > 
+             <router-link :to="'/instructor/CourseDetail/' + 'Classlist/' +  Detailed_Course.CLASS_ID ">  Classlist   </router-link>
+        </button>
         <form @submit.prevent=" handleEdit">
             <div class="alert alert-danger" v-show="EditStatus === 1 && editable === 0">
              <strong> Class Edit Success </strong>
@@ -27,24 +29,19 @@
             <label for="detailclassinfo">Course Desciption</label>
             <textarea class="form-control" id="classinfo" v-model="Detailed_Course.CLASS_INFO" rows="3"  :disabled="editable == 0"></textarea>
             </div>
-            <button type="submit" class="btn btn-warning mr-2 btn-lg btn-block" v-show="editable == 1"> Change</button>
+            <button type="submit" class="btn btn-warning mr-2 btn-lg btn-block" v-show="editable == 1" > Update </button>
         </form>
         <a  class="btn btn-primary mr-2 btn-md" @click="RemoveCourse" v-show="editable == 0" style ="position: absolute; bottom: 0;left:0;">Remove Course</a>
         <div class="alert alert-danger" v-show="RemoveStatus === false">
              <strong> Class Removal Failed </strong>
         </div>
         <!--<a href="#" class="btn btn-primary align-bottom">Edit</a> -->
-        <button class="btn btn-warning mr-2 btn-lg " v-show="editable == 0" style ="position: absolute; bottom: 0;right:0;" > 
-             <router-link :to="'/instructor/CourseDetail/' + 'Classlist/' +  Detailed_Course.CLASS_ID ">  Classlist   </router-link>
-        </button>
         <a  class="btn btn-primary mr-2 btn-md" @click="EnableEdit()" v-show="editable == 0" style ="position: absolute; top : 0 ;right:0;">Edit</a>
     </div>
-
-  </div>
-  <span>Editable: {{this.editable}}</span>
-  <button class="btn btn-warning mr-2 btn-lg btn-block" style ="position: absolute; bottom: 0;right:0;" > 
-             <router-link to='/instructor/main'>  Return   </router-link>
+    <button class="btn btn-warning mr-2 btn-md btn-block" style ="position: absolute; bottom:0;right:0;" > 
+             <router-link to='/instructor/main'>  Back  </router-link>
   </button>
+  </div>
 
 </div>
 </template>

@@ -6,7 +6,7 @@
     <h5 class="card-title" style="font-size:130%"> Course Number :  {{Course.CLASS_NUMBER}}</h5>
     <h6 class="card-subtitle mb-2 text-muted" style="font-size:130%">Course Name : {{Course.CLASS_NAME}} </h6>
     <h6 class="card-subtitle mb-2 text-muted" style="font-size:130%">Term : {{Course.CLASS_TERM}} </h6>
-    <h6 class="card-subtitle mb-2 text-muted" style="font-size:130%">Instructor : {{Course.INSTRUCTOR_ID}} </h6>
+    <h6 class="card-subtitle mb-2 text-muted" style="font-size:130%">Instructor : {{Name}} </h6>
     <p class="card-text" style="font-size:130%"> Description : {{Course.CLASS_INFO}}</p>
     <button class="btn btn-warning btn-md my-2 btn-block" > 
         <router-link :to="'/instructor/CourseDetail/' + Course.CLASS_NUMBER ">Detail</router-link>
@@ -39,6 +39,7 @@ import axios from 'axios'
                 Courselist: [
                 ],
                 user_ID : "",
+                Name : this.$store.getters.Get_Name,
             }
         },
         methods:{
