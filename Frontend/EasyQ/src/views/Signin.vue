@@ -91,6 +91,7 @@ export default {
         setCookie("loggedin", "true", 30);
         console.log("check if id is fetched:" + data2.id)
         this.$store.dispatch('Set_User_ID',data2.id);
+        this.$store.dispatch('Set_Name',data2.name);
         this.$store.dispatch('Set_Login',true);
         this.$store.dispatch('Set_Role',data2.role);
         
