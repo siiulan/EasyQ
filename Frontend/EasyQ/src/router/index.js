@@ -89,7 +89,7 @@ export default new Router({
       component: () => import('../views/TAConfirmfail.vue')
     },
     {
-      path: '/api/user/instructor/invitationConfirm/:invitation_token',
+      path: '/invitationConfirm/:invitation_token',
       name: 'invitationConfirmSuccess',
       component: () => import('../views/invitationConfirmSuccess.vue')
     },
