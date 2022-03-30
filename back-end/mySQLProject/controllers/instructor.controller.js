@@ -199,7 +199,7 @@ exports.unregisteredConfirmation = (req, res) => {
                 err.message || "Some error occurred while creating the user."
             });
         } else {
-            if (data){
+            if (data.success){
                 // redirecting url to
                 res.redirect(`${lib.url}/TAConfirm/success`)
             } else {
