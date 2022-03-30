@@ -6,7 +6,7 @@
     <h5 class="card-title"> Course Number :  {{item.CLASS_NUMBER}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">Course Name:{{ item. CLASS_NAME}} </h6>
     <h6 class="card-subtitle mb-2 text-muted">Instructor : {{item.INSTRUCTOR_NAME}} </h6>
-    <button class="btn btn-warning btn-md my-2 btn-block" > 
+    <button class="btn btn-warning btn-md my-2 btn-block"> 
         <router-link :to="'/StudentOfficeHour/' + item.CLASS_ID ">Join</router-link>
     </button>
     <button class="btn btn-warning btn-md my-2 btn-block" style="margin-left: 10px"> 
@@ -25,6 +25,7 @@
       </div>
     </div>
 </div>
+
 </template>
   
 <script>
@@ -33,7 +34,7 @@ import axios from 'axios'
     mounted: function(){
       this.getInfo();
     },
-    data() {
+    data() {  
       return{
         userId: getCookie("id"),
         items: []
@@ -57,11 +58,12 @@ import axios from 'axios'
         };
         const response = await axios.post('http://100.25.219.17/api/user/student/classes', data, {headers:{'Content-type': 'application/json',}});
         this.items = response.data;
+
         // this.classNumber = response.data.items.CLASS_NUMBER;
         // this.className = response.data.items.CLASS_NAME;
         // this.instructorName = response.data.items.INSTRUCTOR_NAME;
         // this.classId = response.data.items.CLASS_ID;
-        console.log(response.data);
+        console.log('items', response.data);
         
 
         
@@ -86,45 +88,7 @@ import axios from 'axios'
   }
 </script>
 <style lang="scss" scoped>
-  // .card1 {
-  //   height: 150px;
-  //   width: 1300px;
-  //   background-color: rgba(248, 227, 196, 0.35);
-  //   background-size: cover;
-  //   display: block;
-  // }
-  // .card-content {
-  //       padding-top: 50px;
-  //       // position: absolute;
-  //       color: rgb(0, 0, 0);
-  //       background-color: rgba(248, 227, 196, 0.35);
-  //       top: 0;
-  //       padding: 10px;
-  //       height: 150px;
-  //       margin: 2;
-  //   h2 {
-  //     text-align: left;
-  //     margin-left: 30px;
-  //     margin-top: 15px;
-  //   }
-  //   button {
-  //       background-color: #a3b6f1;
-  //       border: none;
-  //       color: white;
-  //       text-decoration: none;
-  //       display: inline-block;
-  //       font-size: 20px;
-  //       transition-duration: 0.4s;
-  //       // float: right;
-  //       margin-top: -70px;
-  //       display: block;
-  //       text-align: center;
-  //       font-weight: bold;
-  //   }
-  //   button:hover{
-  //       background-color: #4caf50;
-  //       color: white;
-  //   }
-    
-  // }
+ .container-fluid{
+   width: 1290px
+}
 </style>

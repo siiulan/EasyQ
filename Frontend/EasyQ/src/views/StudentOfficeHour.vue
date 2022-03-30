@@ -2,7 +2,7 @@
     <div class="container">
         <button class="btn btn-warning btn-md my-2 btn-block"  > 
                 <router-link :to="'/StudentHome'">Return</router-link>
-    </button>
+        </button>
        <div class="row">
            <div class="col">
                <form @submit.prevent="startQueue">
@@ -234,5 +234,3 @@ function getCookie(cname){
     return "";
 }
 </script>
-
-
