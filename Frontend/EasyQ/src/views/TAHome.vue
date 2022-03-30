@@ -2,7 +2,7 @@
   <div id="main" class="d-flex flex-column ms-5">
     <div class="ms-5 mb-3 h-25 h3">Course List</div>
     <li v-for="item in items" :key="item.CLASS_NAME">
-        <router-link :to="'/TAQueue/' + item.CLASS_ID" class="ms-5 mb-3 h-25 w-75 border shadow-sm d-flex flex-column">
+        <router-link :to="'/TAQueue/' + item.CLASS_ID" class="ms-5 mb-3 h025 w-75 border shadow-sm d-flex flex-column">
             <div class="ms-2 mt-2 fs-5">{{ item.CLASS_NAME }}</div>
             <div class="ms-2 mb-3 d-flex flex-row fs-6 w-100">
                 <div class="col-xl-3">Instructor: {{item.INSTRUCTOR_NAME}}</div>
@@ -66,6 +66,9 @@ li
 }
 a {
     color: #000000;
+}
+.h025 {
+  height: 95px;
 }
 
 </style>

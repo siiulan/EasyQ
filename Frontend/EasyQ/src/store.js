@@ -13,7 +13,8 @@ const store = new Vuex.Store({
         instructor_Courselist : [],
         instructor_Detail_Coursename : "",
         logged_in : false,
-        role : null
+        role : null,
+        Name : null
       };
     },
     mutations: {
@@ -29,8 +30,10 @@ const store = new Vuex.Store({
       },
       Set_Role(state,role){
         state.role = role;
-      }
-  
+      },
+      Set_Name(state,name){
+        state.Name = name;
+      } 
     },
   
     getters:{
@@ -45,6 +48,9 @@ const store = new Vuex.Store({
       },
       Get_Role(state){
         return state.role;
+      },
+      Get_Name(state){
+        return state.Name;
       }
     },
 
@@ -60,6 +66,9 @@ const store = new Vuex.Store({
       },
       Set_Role(context,role){
         context.commit('Set_Role',role);
+      },
+      Set_Name(context,name){
+        context.commit('Set_Name',name);
       }
     } 
   })

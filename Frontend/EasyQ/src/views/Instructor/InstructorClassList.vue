@@ -66,9 +66,9 @@ export default {
     },
     created(){
         this.CourseID = this.$route.params.CLASSID;
-        console.log("COURSE ID:" + this.CourseID);
+        //console.log("COURSE ID:" + this.CourseID);
         this.GetStudent();
-        console.log("this member list:" + this.memberList.length);
+        //console.log("this member list:" + this.memberList.length);
     }
 }
 </script>
